@@ -108,6 +108,6 @@ typedef long __PTRDIFF_TYPE__;
 #define interrupts() sei()
 #define noInterrupts() cli()
 
-#include "GUITest.ino"
+#include "GUITest2.ino"
 #endif
 #endif

@@ -16,6 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="GUITest.ino" />
+    <None Include="GUITest2.ino" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="__vm\.GUITest.vsarduino.h">
