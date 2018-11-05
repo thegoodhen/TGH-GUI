@@ -56,7 +56,9 @@ void setup() {
 	USE_SERIAL.println("WiFi.localIP()");
 	USE_SERIAL.println(WiFi.localIP());
 	gui.begin();
-	gui.add(&b);
+
+	Button* c=new Button("kokon", "slepice", printText);
+	gui.add(c);
 
 }
 
