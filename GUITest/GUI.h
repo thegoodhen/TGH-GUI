@@ -9,11 +9,21 @@ class GUI
 public:
 	GUI()
 	{
+		
+	}
+	/**
+	Send the text out using Websockets
+	*/
+	int sendText(String theText)
+	{
+
+		return 1;
 	}
 
 	void add(GUIElement ge)
 	{
 		elements.push_back(ge);
+		ge.setGUI(this);
 	}
 	GUIElement* find(String s)
 	{
