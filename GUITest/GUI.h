@@ -34,7 +34,7 @@ public:
 	
 
 
-	static void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length);
+	void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length);
 	
 
 	/**
@@ -55,14 +55,14 @@ public:
 	String getScript();
 	
 
-	void add(GUIElement  ge);
+	void add(GUIElement*  ge);
 	
 	GUIElement* find(String s);
 	
 
-	int handleRequest(JsonObject obj);
+	int handleRequest(JsonObject& obj);
 	
 
 private:
-	std::vector<GUIElement> elements;
+	std::vector<GUIElement*> elements;
 };

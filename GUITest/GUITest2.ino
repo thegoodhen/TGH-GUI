@@ -24,6 +24,7 @@
 
 ESP8266WiFiMulti WiFiMulti;
 GUI gui;
+Button b("kokon", "slepice", printText);
 
 
 void printText()
@@ -55,8 +56,7 @@ void setup() {
 	USE_SERIAL.println("WiFi.localIP()");
 	USE_SERIAL.println(WiFi.localIP());
 	gui.begin();
-	Button b("kokon", "slepice", printText);
-	gui.add(b);
+	gui.add(&b);
 
 }
 

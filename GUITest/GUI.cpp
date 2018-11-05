@@ -2,6 +2,7 @@
 
 
 #include "GUI.h"
+using namespace std::placeholders;  // For _1 in the bind call
 
 ESP8266WebServer server(80);
 WebSocketsServer webSocket = WebSocketsServer(81);
@@ -15,7 +16,10 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 		// start webSocket server
 		webSocket.begin();
 		//void webSocketEvent(uint8_t num, WStype_t type, uint8_t* payload, size_t length);
-		webSocket.onEvent(webSocketEvent);
+
+	//std::function<void(uint8_t num, WStype_t type, uint8_t* payload, size_t length)> f1 = std::bind(&GUI::webSocketEvent, this);
+	auto f1 = std::bind(&GUI::webSocketEvent, this, _1, _2, _3, _4);
+		webSocket.onEvent(f1);
 
 		if (MDNS.begin("esp8266")) {
 			USE_SERIAL.println("MDNS responder started");
@@ -67,6 +71,10 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 							   break;
 		case WStype_TEXT:
 			USE_SERIAL.printf("[%u] get Text: %s\n", num, payload);
+			StaticJsonBuffer<1000> jb;
+			JsonObject& obj = jb.parseObject(payload);
+			this->handleRequest(obj);
+
 			break;
 		}
 
@@ -86,10 +94,11 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 	{
 		String returnString;
 		returnString += getHeader();
+		returnString += getScript();
 		for (std::vector<int>::size_type i = 0; i != elements.size(); i++) {
 			{
-				Serial.println(i);
-				returnString += elements[i].getHTML();
+				//Serial.println(i);
+				returnString += elements[i]->getHTML();
 			}
 		}
 		returnString += getFooter();
@@ -130,30 +139,33 @@ theSocket.onmessage = function (event) {\n\
 </head>";
 	}
 
-	void GUI::add(GUIElement ge)
+	void GUI::add(GUIElement* ge)
 	{
 		elements.push_back(ge);
-		ge.setGUI(this);
+		ge->setGUI(this);
 	}
 	GUIElement* GUI::find(String s)
 	{
 		for (std::vector<int>::size_type i = 0; i != elements.size(); i++) {
-			if (elements[i].getId() == s)
+			if (elements[i]->getId() == s)
 			{
-				return &elements[i];
+				return elements[i];
 			}
 		}
 		return NULL;
 	}
 
-	int GUI::handleRequest(JsonObject obj)
+	int GUI::handleRequest(JsonObject& obj)
 	{
-		if (strcmp(obj["type"], "event"))
+		Serial.println("handle req");
+		if (strcmp(obj["type"], "event")==0)
 		{
-			String id = obj["evType"];
+			//Serial.println("je to event");
+			String id = obj["id"];
 			GUIElement* ge = find(id);
 			if (ge != NULL)
 			{
+			//Serial.println("neni to null");
 				return ge->handleEvent(obj);
 			}
 			else

@@ -19,7 +19,7 @@
 	}
 	String GUIElement::getHTML()
 	{
-		return "";
+		return "guiElement";
 	}
 	String GUIElement::getId()
 	{
