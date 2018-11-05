@@ -88,6 +88,7 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 		returnString += getHeader();
 		for (std::vector<int>::size_type i = 0; i != elements.size(); i++) {
 			{
+				Serial.println(i);
 				returnString += elements[i].getHTML();
 			}
 		}

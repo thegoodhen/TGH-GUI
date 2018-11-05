@@ -1,5 +1,5 @@
 #pragma once
-#include "GUIElement.hpp"
+#include "GUIElement.h"
 #include <functional>
 
 class Button : public GUIElement
@@ -24,7 +24,7 @@ public:
 		}
 		return 1;
 	}
-	String getHTML()
+	String getHTML() override
 	{
 		return "<button id=\"" + id + "\" onclick='sendJSON({type:\"event\", id: this.id, evType:\"click\"})'>" + text + "</button>\n";
 	}

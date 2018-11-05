@@ -107,7 +107,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Button.hpp" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="GUI.cpp" />
     <ClInclude Include="GUIElement.h" />
     <ClInclude Include="__vm\.GUITest.vsarduino.h" />

@@ -19,11 +19,17 @@
 #include <Hash.h>
 #include "GUI.h"
 
+#include "Button.h"
 
 
 ESP8266WiFiMulti WiFiMulti;
 GUI gui;
 
+
+void printText()
+{
+	USE_SERIAL.println("gek gek");
+}
 
 void setup() {
 	//USE_SERIAL.begin(921600);
@@ -49,8 +55,11 @@ void setup() {
 	USE_SERIAL.println("WiFi.localIP()");
 	USE_SERIAL.println(WiFi.localIP());
 	gui.begin();
+	Button b("kokon", "slepice", printText);
+	gui.add(b);
 
 }
+
 
 void loop() {
 	gui.loop();
