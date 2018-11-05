@@ -1,3 +1,4 @@
+
 /*
  * WebSocketServer_LEDcontrol.ino
  *
@@ -5,6 +6,9 @@
  *
  */
 
+#include <WebSocketsClient.h>
+#include <WebSockets.h>
+#include "GUIElement.h"
 #include <Arduino.h>
 
 #include <ESP8266WiFi.h>
@@ -13,7 +17,7 @@
 #include <ESP8266WebServer.h>
 #include <ESP8266mDNS.h>
 #include <Hash.h>
-#include <GUI.h>
+#include "GUI.h"
 
 
 

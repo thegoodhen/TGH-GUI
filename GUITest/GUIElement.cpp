@@ -1,32 +1,32 @@
-#pragma once
+// 
+// 
+// 
 
-#include "Arduino.h"
-#include "ArduinoJson.h"
-#include "GUI.h"
-class GUI;
+#include "GUIElement.h"
 
-class GUIElement
-{
-public:
 
-	void setGUI(GUI* _gui)
+//#pragma once
+
+
+
+	void GUIElement::setGUI(GUI* _gui)
 	{
 		gui = _gui;
 	}
-	virtual int handleEvent(JsonObject& obj)
+	int GUIElement::handleEvent(JsonObject& obj)
 	{
 		return 1;
 	}
-	virtual String getHTML()
+	String GUIElement::getHTML()
 	{
 		return "";
 	}
-	String getId()
+	String GUIElement::getId()
 	{
 		return id;
 	}
 
-	int setText(String theText)
+	int GUIElement::setText(String theText)
 	{
 		DynamicJsonBuffer jb(theText.length() + 100);
 		JsonObject& obj = jb.createObject();
@@ -36,10 +36,6 @@ public:
 		String sentString;
 		obj.printTo(sentString);
 		gui->sendText(sentString);
+		return 0;
 
 	}
-protected:
-	String id;
-	String text;
-	GUI* gui;
-};
