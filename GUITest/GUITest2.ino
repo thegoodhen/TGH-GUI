@@ -64,5 +64,11 @@ void setup() {
 
 
 void loop() {
+	static unsigned long lastMillis;
 	gui.loop();
+	if (millis() > lastMillis + 1000)
+	{
+		lastMillis = millis();
+		gui.sendText("kdak kdak kokodak");
+	}
 }

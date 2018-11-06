@@ -125,7 +125,7 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 	{
 		return " <head>\n\
 <script>\n\
-var theSocket = new WebSocket(\"ws://192.168.0.102:81\", [\'arduino\']);\n\
+var theSocket = new WebSocket(\"ws://+location.hostname:81\", [\'arduino\']);\n\
 \n\
 function sendJSON(theJSON)\n\
 {\n\
