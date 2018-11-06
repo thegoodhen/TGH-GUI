@@ -69,6 +69,11 @@ void loop() {
 	if (millis() > lastMillis + 1000)
 	{
 		lastMillis = millis();
-		gui.sendText("kdak kdak kokodak");
+		//gui.sendText("kdak kdak kokodak");
+		if (gui.find("slepice") == NULL)
+		{
+			//Serial.println("pozor, je to null");
+		}
+		gui.find("kokon")->setText((String)"kokon" + (lastMillis / 1000));
 	}
 }

@@ -125,7 +125,7 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 	{
 		return " <head>\n\
 <script>\n\
-var theSocket = new WebSocket(\"ws://+location.hostname:81\", [\'arduino\']);\n\
+var theSocket = new WebSocket(\"ws://\"+location.hostname+\":81\", [\'arduino\']);\n\
 \n\
 function sendJSON(theJSON)\n\
 {\n\
@@ -133,7 +133,17 @@ function sendJSON(theJSON)\n\
 }\n\
 \n\
 theSocket.onmessage = function (event) {\n\
-  console.log(event.data);\n\
+  var msg=JSON.parse(event.data);\n\
+  switch(msg.type)\n\
+  {\n\
+	case \"setText\":\n\
+		document.getElementById(msg.id).innerHTML = msg.newText;		\n\
+	break;\n\
+	default:\n\
+		console.log(\"got invalid request\");\n\
+	break;\n\
+\n\
+  }\n\
 }\n\
 </script>\n\
 </head>";
