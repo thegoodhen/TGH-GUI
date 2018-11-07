@@ -17,6 +17,21 @@
 	{
 		return 1;
 	}
+	int GUIElement::handleResponse(JsonObject& obj)
+	{
+		Serial.println("response");
+		Serial.println(millis());
+		if (strcmp(obj["subType"],"getText")==0)
+		{
+			String str=(obj["text"]);
+			Serial.println("handle Response");
+			//*retreiveStringOutArg = str;
+			retreiveTextCallback(str);
+		}
+		return 0;
+	}
+
+
 	String GUIElement::getHTML()
 	{
 		return "guiElement";
@@ -38,4 +53,23 @@
 		gui->sendText(sentString);
 		return 0;
 
+	}
+	/*
+	A non-blocking function, which allows the user to request that a the String supplied by them will sometime
+	in the future be filled up with the text of the (remote) user interface element. In case of text boxes,
+	this text should be the content of the textbox, in case of listboxes, it should be the currently selected item, etc.
+	*/
+	void GUIElement::retreiveText(std::function<void(String)> func)
+	{
+		Serial.println("request");
+		Serial.println(millis());
+		//retreiveStringOutArg = theText;//set the pointer
+		retreiveTextCallback = func;
+		StaticJsonBuffer<500> jb;
+		JsonObject& obj = jb.createObject();
+		obj["type"] = "getText";
+		obj["id"] = id;
+		String str;
+		obj.printTo(str);
+		this->gui->sendText(str);
 	}

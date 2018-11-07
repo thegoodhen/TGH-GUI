@@ -123,7 +123,7 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 
 	String GUI::getScript()
 	{
-		return " <head>\n\
+		return "<head>\n\
 <script>\n\
 var theSocket = new WebSocket(\"ws://\"+location.hostname+\":81\", [\'arduino\']);\n\
 \n\
@@ -139,6 +139,9 @@ theSocket.onmessage = function (event) {\n\
 	case \"setText\":\n\
 		document.getElementById(msg.id).innerHTML = msg.newText;		\n\
 	break;\n\
+	case \"getText\":\n\
+		sendJSON({type: \"response\", id: msg.id, subType: \"getText\", text: document.getElementById(msg.id).innerHTML});\n\
+		break;\n\
 	default:\n\
 		console.log(\"got invalid request\");\n\
 	break;\n\
@@ -183,6 +186,23 @@ theSocket.onmessage = function (event) {\n\
 				return 1;
 			}
 		}
-		return 0;
+		if (strcmp(obj["type"], "response")==0)
+		{
+			Serial.println("lplp");
+			//Serial.println("je to response");
+			String id = obj["id"];
+			GUIElement* ge = find(id);
+			if (ge != NULL)
+			{
+				Serial.println("neni to null");
+				return ge->handleResponse(obj);
+			}
+			else
+			{
+				return 1;
+			}
+		}
+
+		return 1;
 	}
 

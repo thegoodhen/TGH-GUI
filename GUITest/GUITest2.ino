@@ -75,5 +75,18 @@ void loop() {
 			//Serial.println("pozor, je to null");
 		}
 		gui.find("kokon")->setText((String)"kokon" + (lastMillis / 1000));
+		String test;
+
+		//std::function<void(void)> f = std::bind(&HardwareSerial::println, (HardwareSerial)Serial);
+		gui.find("kokon")->retreiveText(printSerial);
+		//while (test == "");
+
+
+		Serial.println(test);
 	}
+}
+
+void printSerial(String s)
+{
+	Serial.println(s);
 }
