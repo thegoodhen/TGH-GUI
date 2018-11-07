@@ -107,6 +107,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Button.cpp" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="GUI.cpp" />
     <ClInclude Include="GUIElement.h" />
