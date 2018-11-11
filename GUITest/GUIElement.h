@@ -30,6 +30,8 @@ public:
 	int setText(String theText);
 	void retreiveText(std::function<void(String)> func);
 	void retrieveProperty(std::function<void(String)> func, String propertyName);
+	String retrieveProperty(String propertyName);
+	String retrieveProperty(String propertyName, int timeout);
 	//void retreiveText(String * theText);
 protected:
 	String id;
@@ -39,4 +41,10 @@ protected:
 	GUI* gui;
 	//String* retreiveStringOutArg;//the pointer to the string to which we store the reply when requesting the textual value of the element
 	std::function<void(String)> retreiveTextCallback;
+	std::function<void(String)> retreivePropertyCallback;
+	boolean responseFlag=false;
+	void storePropertyResponse(String s);
+	//a flag which gets set to true when the reply arrives
+	void clearResponseFlag();
+	String propertyResponseString;//the String object for storing the value of the property returned from the client side after calling retrieveProperty
 };

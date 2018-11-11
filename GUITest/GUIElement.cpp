@@ -4,6 +4,10 @@
 
 #include "GUIElement.h"
 
+#include <Arduino.h>
+#include "Schedule.h"
+
+using namespace std::placeholders;  // For _1 in the bind call
 
 //#pragma once
 
@@ -27,6 +31,14 @@
 			Serial.println("handle Response");
 			//*retreiveStringOutArg = str;
 			retreiveTextCallback(str);
+		}
+
+		if (strcmp(obj["subType"],"getProperty")==0)
+		{
+			String str=(obj["value"]);
+			Serial.println("got some getProperty response");
+			//*retreiveStringOutArg = str;
+			retreivePropertyCallback(str);
 		}
 		return 0;
 	}
@@ -80,10 +92,10 @@
 	*/
 	void GUIElement::retrieveProperty(std::function<void(String)> func, String propertyName)//TODO: handle multiple requests at the same time!
 	{
-		Serial.println("request");
+		Serial.println("retProperty");
 		Serial.println(millis());
 		//retreiveStringOutArg = theText;//set the pointer
-		retreiveTextCallback = func;
+		retreivePropertyCallback = func;
 		StaticJsonBuffer<500> jb;
 		JsonObject& obj = jb.createObject();
 		obj["type"] = "getProperty";
@@ -93,3 +105,47 @@
 		obj.printTo(str);
 		this->gui->sendText(str);
 	}
+
+	/*
+	Blocking function, which requests a property to be retrieved and then waits for the reply; returns empty string on timeout
+	*/
+	String GUIElement::retrieveProperty(String propertyName)
+	{
+		return GUIElement::retrieveProperty(propertyName, 1000);
+	}
+
+	String GUIElement::retrieveProperty(String propertyName, int timeout)
+{
+		clearResponseFlag();
+		auto f1 = std::bind(&GUIElement::storePropertyResponse, this,_1);
+		retrieveProperty(f1, propertyName);
+		Serial.println("waiting for property response");
+		unsigned long startMillis = millis();
+		while (millis()<(startMillis+timeout))
+		{
+			this->gui->loop();
+			run_scheduled_functions();
+			ets_post(1, 0, 0);
+			//esp_schedule();
+			if (this->responseFlag == true)
+			{
+				return this->propertyResponseString;
+			}
+		}
+	}
+
+	/*
+	Stores the response to "retrieveProperty" into the propertyResponseString field
+	*/
+	void GUIElement::storePropertyResponse(String s)
+	{
+		Serial.println("storing property response");
+		Serial.println(s);
+		this->propertyResponseString = s;
+		this->responseFlag = true;
+	}
+	void GUIElement::clearResponseFlag()
+	{
+		this->responseFlag = false;
+	}
+

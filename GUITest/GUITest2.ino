@@ -89,9 +89,10 @@ void loop() {
 		//while (test == "");
 		gui.find("lbl1")->setText((String)analogRead(A0));
 
+		String s=gui.find("txt1")->retrieveProperty("value");
 
 
-		Serial.println(test);
+		Serial.println(s);
 	}
 }
 
@@ -100,7 +101,9 @@ void printSerial(String s)
 	Serial.println(s);
 }
 
-void printTAContents()
+void printTAContents()//the problem may be in recursion...
 {
-		gui.find("txt1")->retreiveText(printSerial);
+		//gui.find("txt1")->retrieveProperty(printSerial, "value");
+		String s=gui.find("txt1")->retrieveProperty("value");
+		Serial.println(s);
 }

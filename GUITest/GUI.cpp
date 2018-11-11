@@ -142,6 +142,9 @@ theSocket.onmessage = function (event) {
 	case "getText":
 		sendJSON({type: "response", id: msg.id, subType: "getText", text: document.getElementById(msg.id).innerHTML});
 		break;
+	case "getProperty":
+		sendJSON({type: "response", id: msg.id, subType: "getProperty", propertyName: msg.propertyName, value: document.getElementById(msg.id)[msg.propertyName]});
+		break;
 	default:
 		console.log("got invalid request");
 	break;
@@ -188,7 +191,7 @@ theSocket.onmessage = function (event) {
 		}
 		if (strcmp(obj["type"], "response")==0)
 		{
-			Serial.println("lplp");
+			//Serial.println("lplp");
 			//Serial.println("je to response");
 			String id = obj["id"];
 			GUIElement* ge = find(id);
