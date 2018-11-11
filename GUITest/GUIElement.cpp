@@ -73,3 +73,23 @@
 		obj.printTo(str);
 		this->gui->sendText(str);
 	}
+
+	/*
+	A non-blocking function, which allows the user to request that a the String supplied by them will sometime
+	in the future be filled up with a textual representation of some property of the (remote) user interface element. 
+	*/
+	void GUIElement::retrieveProperty(std::function<void(String)> func, String propertyName)//TODO: handle multiple requests at the same time!
+	{
+		Serial.println("request");
+		Serial.println(millis());
+		//retreiveStringOutArg = theText;//set the pointer
+		retreiveTextCallback = func;
+		StaticJsonBuffer<500> jb;
+		JsonObject& obj = jb.createObject();
+		obj["type"] = "getProperty";
+		obj["id"] = id;
+		obj["propertyName"] = propertyName;
+		String str;
+		obj.printTo(str);
+		this->gui->sendText(str);
+	}

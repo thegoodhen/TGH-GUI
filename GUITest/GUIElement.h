@@ -29,6 +29,7 @@ public:
 	String getId();
 	int setText(String theText);
 	void retreiveText(std::function<void(String)> func);
+	void retrieveProperty(std::function<void(String)> func, String propertyName);
 	//void retreiveText(String * theText);
 protected:
 	String id;

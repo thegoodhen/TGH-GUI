@@ -22,6 +22,8 @@
 #include "Button.h"
 #include "Label.h"
 
+#include "ElementTypes.h"
+
 
 ESP8266WiFiMulti WiFiMulti;
 GUI gui;
@@ -58,7 +60,7 @@ void setup() {
 	USE_SERIAL.println(WiFi.localIP());
 	gui.begin();
 
-	Button* c=new Button("kokon", "slepice", printText);
+	Button* c=new Button("kokon", "slepice", printTAContents);
 	gui.add(c);
 	Label* l = new Label("lbl1", "label");
 	gui.add(l);
@@ -96,4 +98,9 @@ void loop() {
 void printSerial(String s)
 {
 	Serial.println(s);
+}
+
+void printTAContents()
+{
+		gui.find("txt1")->retreiveText(printSerial);
 }

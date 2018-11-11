@@ -123,33 +123,33 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 
 	String GUI::getScript()
 	{
-		return "<head>\n\
-<script>\n\
-var theSocket = new WebSocket(\"ws://\"+location.hostname+\":81\", [\'arduino\']);\n\
-\n\
-function sendJSON(theJSON)\n\
-{\n\
-  theSocket.send(JSON.stringify(theJSON));\n\
-}\n\
-\n\
-theSocket.onmessage = function (event) {\n\
-  var msg=JSON.parse(event.data);\n\
-  switch(msg.type)\n\
-  {\n\
-	case \"setText\":\n\
-		document.getElementById(msg.id).innerHTML = msg.newText;		\n\
-	break;\n\
-	case \"getText\":\n\
-		sendJSON({type: \"response\", id: msg.id, subType: \"getText\", text: document.getElementById(msg.id).innerHTML});\n\
-		break;\n\
-	default:\n\
-		console.log(\"got invalid request\");\n\
-	break;\n\
-\n\
-  }\n\
-}\n\
-</script>\n\
-</head>";
+		return R"(<head>
+<script>
+var theSocket = new WebSocket("ws://"+location.hostname+":81", ['arduino']);
+
+function sendJSON(theJSON)
+{
+  theSocket.send(JSON.stringify(theJSON));
+}
+
+theSocket.onmessage = function (event) {
+  var msg=JSON.parse(event.data);
+  switch(msg.type)
+  {
+	case "setText":
+		document.getElementById(msg.id).innerHTML = msg.newText;		
+	break;
+	case "getText":
+		sendJSON({type: "response", id: msg.id, subType: "getText", text: document.getElementById(msg.id).innerHTML});
+		break;
+	default:
+		console.log("got invalid request");
+	break;
+
+  }
+}
+</script>
+</head>)";
 	}
 
 	void GUI::add(GUIElement* ge)
