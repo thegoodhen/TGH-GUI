@@ -34,7 +34,7 @@
 
 	String GUIElement::getHTML()
 	{
-		return "guiElement";
+		return "<"+this->elementType+" id=\""+id+"\" "+this->callbacksString+">"+text+"</"+elementType+">";
 	}
 	String GUIElement::getId()
 	{

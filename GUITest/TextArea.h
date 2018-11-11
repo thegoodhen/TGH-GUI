@@ -2,13 +2,13 @@
 #include "GUIElement.h"
 #include <functional>
 
-class Button : public GUIElement
+class TextArea: public GUIElement
 {
 public:
-	Button(String _id, String _text, std::function<void()>clickCallback);
+	TextArea(String _id, String _text);
 	
 
-	int handleEvent(JsonObject &obj) override;
+	//int handleEvent(JsonObject &obj) override;
 	
 	//String getHTML() override;
 private:

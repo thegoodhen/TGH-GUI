@@ -33,6 +33,8 @@ public:
 protected:
 	String id;
 	String text;
+	String elementType = "div";
+	String callbacksString = "";
 	GUI* gui;
 	//String* retreiveStringOutArg;//the pointer to the string to which we store the reply when requesting the textual value of the element
 	std::function<void(String)> retreiveTextCallback;

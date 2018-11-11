@@ -4,9 +4,12 @@
 
 	Button::Button(String _id, String _text, std::function<void()>clickCallback)
 	{
+
 		id = _id;
 		text = _text;
 		clickCB = clickCallback;
+		elementType = "button";
+		callbacksString = "onclick='sendJSON({type:\"event\", id: this.id, evType:\"click\"})';";
 	}
 
 	int Button::handleEvent(JsonObject &obj) 
@@ -21,7 +24,9 @@
 		}
 		return 1;
 	}
+	/*
 	String Button::getHTML() 
 	{
 		return "<button id=\"" + id + "\" onclick='sendJSON({type:\"event\", id: this.id, evType:\"click\"})'>" + text + "</button>\n";
 	}
+*/

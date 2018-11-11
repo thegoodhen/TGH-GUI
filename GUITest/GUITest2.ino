@@ -20,6 +20,7 @@
 #include "GUI.h"
 
 #include "Button.h"
+#include "Label.h"
 
 
 ESP8266WiFiMulti WiFiMulti;
@@ -59,6 +60,10 @@ void setup() {
 
 	Button* c=new Button("kokon", "slepice", printText);
 	gui.add(c);
+	Label* l = new Label("lbl1", "label");
+	gui.add(l);
+	TextArea* t = new TextArea("txt1", "some text");
+	gui.add(t);
 
 }
 
@@ -66,7 +71,7 @@ void setup() {
 void loop() {
 	static unsigned long lastMillis;
 	gui.loop();
-	if (millis() > lastMillis + 1000)
+	if (millis() > lastMillis + 100)
 	{
 		lastMillis = millis();
 		//gui.sendText("kdak kdak kokodak");
@@ -74,12 +79,14 @@ void loop() {
 		{
 			//Serial.println("pozor, je to null");
 		}
-		gui.find("kokon")->setText((String)"kokon" + (lastMillis / 1000));
+		//gui.find("kokon")->setText((String)"kokon" + (lastMillis / 1000));
 		String test;
 
 		//std::function<void(void)> f = std::bind(&HardwareSerial::println, (HardwareSerial)Serial);
-		gui.find("kokon")->retreiveText(printSerial);
+		//gui.find("kokon")->retreiveText(printSerial);
 		//while (test == "");
+		gui.find("lbl1")->setText((String)analogRead(A0));
+
 
 
 		Serial.println(test);
