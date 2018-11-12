@@ -66,6 +66,8 @@ void setup() {
 	gui.add(l);
 	TextArea* t = new TextArea("txt1", "some text");
 	gui.add(t);
+	Slider* s = new Slider("sl1", "some slider");
+	gui.add(s);
 
 }
 
