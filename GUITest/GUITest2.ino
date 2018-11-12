@@ -89,10 +89,10 @@ void loop() {
 		//while (test == "");
 		gui.find("lbl1")->setText((String)analogRead(A0));
 
-		String s=gui.find("txt1")->retrieveProperty("value");
+		//String s=gui.find("txt1")->retrieveProperty("value");
 
 
-		Serial.println(s);
+		//Serial.println(s);
 	}
 }
 
