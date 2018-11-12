@@ -6,7 +6,7 @@
 	{
 		id = _id;
 		text = _text;
-		elementType = "p";
+		elementType = "div";
 	}
 
 	/*

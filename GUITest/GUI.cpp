@@ -115,9 +115,10 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 	}
 	String GUI::getHeader()
 	{
-		return "<!DOCTYPE html>\n\
-<html>\n\
-\n";
+		return R"(<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+)";
 	}
 	String GUI::getFooter()
 	{

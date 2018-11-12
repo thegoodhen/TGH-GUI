@@ -9,6 +9,11 @@
 		elementType = "TextArea";
 	}
 
+	String TextArea::retrieveText() 
+	{
+		return this->retrieveProperty("value");
+	}
+
 	/*
 	String Button::getHTML() 
 	{

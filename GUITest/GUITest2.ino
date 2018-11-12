@@ -101,7 +101,7 @@ void printSerial(String s)
 	Serial.println(s);
 }
 
-void printTAContents()//the problem may be in recursion...
+void printTAContents()
 {
 		//gui.find("txt1")->retrieveProperty(printSerial, "value");
 		String s=gui.find("txt1")->retrieveProperty("value");

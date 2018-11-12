@@ -28,7 +28,7 @@ public:
 	virtual String getHTML();
 	String getId();
 	int setText(String theText);
-	void retreiveText(std::function<void(String)> func);
+	virtual	String retrieveText();
 	void retrieveProperty(std::function<void(String)> func, String propertyName);
 	String retrieveProperty(String propertyName);
 	String retrieveProperty(String propertyName, int timeout);

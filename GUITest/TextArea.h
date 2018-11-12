@@ -6,7 +6,9 @@ class TextArea: public GUIElement
 {
 public:
 	TextArea(String _id, String _text);
+
 	
+	String retrieveText() override;
 
 	//int handleEvent(JsonObject &obj) override;
 	

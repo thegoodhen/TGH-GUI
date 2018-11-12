@@ -71,19 +71,9 @@ using namespace std::placeholders;  // For _1 in the bind call
 	in the future be filled up with the text of the (remote) user interface element. In case of text boxes,
 	this text should be the content of the textbox, in case of listboxes, it should be the currently selected item, etc.
 	*/
-	void GUIElement::retreiveText(std::function<void(String)> func)
+	String GUIElement::retrieveText()
 	{
-		Serial.println("request");
-		Serial.println(millis());
-		//retreiveStringOutArg = theText;//set the pointer
-		retreiveTextCallback = func;
-		StaticJsonBuffer<500> jb;
-		JsonObject& obj = jb.createObject();
-		obj["type"] = "getText";
-		obj["id"] = id;
-		String str;
-		obj.printTo(str);
-		this->gui->sendText(str);
+		return this->retrieveProperty("InnerHtml");
 	}
 
 	/*
