@@ -67,7 +67,10 @@ void setup() {
 	TextArea* t = new TextArea("txt1", "some text");
 	gui.add(t);
 	Slider* s = new Slider("sl1", "some slider");
+	Serial.println("getId");
+	Serial.println(s->getId());
 	gui.add(s);
+	s->onInput(displayNumber);
 
 }
 
@@ -101,6 +104,12 @@ void loop() {
 void printSerial(String s)
 {
 	Serial.println(s);
+}
+
+void displayNumber(int i)
+{
+	Serial.println("i:");
+	Serial.println(i);
 }
 
 void printTAContents()

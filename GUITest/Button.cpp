@@ -9,7 +9,9 @@
 		text = _text;
 		clickCB = clickCallback;
 		elementType = "button";
-		callbacksString = "onclick='sendJSON({type:\"event\", id: this.id, evType:\"click\"})';";
+
+		addClientSideCallback("onclick", R"(sendJSON({type:"event", id: this.id, evType:"click"}))");
+		//callbacksString = "onclick='sendJSON({type:\"event\", id: this.id, evType:\"click\"})';";
 	}
 
 	int Button::handleEvent(JsonObject &obj) 

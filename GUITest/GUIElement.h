@@ -46,5 +46,8 @@ protected:
 	void storePropertyResponse(String s);
 	//a flag which gets set to true when the reply arrives
 	void clearResponseFlag();
+	String getCallbackString();
 	String propertyResponseString;//the String object for storing the value of the property returned from the client side after calling retrieveProperty
+	std::vector<String> callbackStrings;//the vector containing all the javascript callbacks for this element
+	void addClientSideCallback(String eventName, String eventCode);
 };
