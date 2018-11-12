@@ -50,8 +50,10 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 	}
 	void GUI::loop()
 	{
-		webSocket.loop();
+		this->msgInString = "";
+		webSocket.loop();//handle the websocket events and what not
 		server.handleClient();
+		handleRequest();
 	}
 
 
@@ -71,9 +73,10 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 							   break;
 		case WStype_TEXT:
 			USE_SERIAL.printf("[%u] get Text: %s\n", num, payload);
-			StaticJsonBuffer<1000> jb;
-			JsonObject& obj = jb.parseObject(payload);
-			this->handleRequest(obj);
+			//StaticJsonBuffer<1000> jb;
+			//JsonObject& obj = jb.parseObject(payload);
+			//this->handleRequest(obj);
+			this->msgInString = (char*)payload;
 
 			break;
 		}
@@ -171,9 +174,19 @@ theSocket.onmessage = function (event) {
 		return NULL;
 	}
 
+	int GUI::handleRequest()
+	{
+			StaticJsonBuffer<1000> jb;
+			JsonObject& obj = jb.parseObject(msgInString);
+			if (!obj.success())
+			{
+				return 1;
+			}
+			this->handleRequest(obj);
+			return 0;
+	}
 	int GUI::handleRequest(JsonObject& obj)
 	{
-		Serial.println("handle req");
 		if (strcmp(obj["type"], "event")==0)
 		{
 			//Serial.println("je to event");
@@ -197,7 +210,7 @@ theSocket.onmessage = function (event) {
 			GUIElement* ge = find(id);
 			if (ge != NULL)
 			{
-				Serial.println("neni to null");
+				//Serial.println("neni to null");
 				return ge->handleResponse(obj);
 			}
 			else

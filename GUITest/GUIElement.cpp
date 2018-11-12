@@ -132,6 +132,7 @@ using namespace std::placeholders;  // For _1 in the bind call
 				return this->propertyResponseString;
 			}
 		}
+		return "";
 	}
 
 	/*

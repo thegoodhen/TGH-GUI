@@ -60,9 +60,12 @@ public:
 	GUIElement* find(String s);
 	
 
+	int handleRequest();
+
 	int handleRequest(JsonObject& obj);
 	
 
 private:
 	std::vector<GUIElement*> elements;
+	String msgInString = "";//String for storing the incoming messages
 };
