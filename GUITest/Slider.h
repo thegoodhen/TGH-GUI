@@ -14,8 +14,9 @@ public:
 	
 	String getHTML() override;
 	void onInput(std::function<void(int)> f);
+	void onClick(std::function<void(int)> f);
 private:
-	std::function<void()> clickCB = NULL;
+	std::function<void(int)> onClickCB = NULL;
 	std::function<void(int)> onInputCB = NULL;
 	int theMin = 0;
 	int theMax = 1023;

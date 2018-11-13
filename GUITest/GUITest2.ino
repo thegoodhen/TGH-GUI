@@ -68,7 +68,7 @@ void setup() {
 	gui.add(t);
 	Slider* s = new Slider("sl1", "some slider");
 	gui.add(s);
-	s->onInput(displayNumber);
+	s->onClick(displayNumber);
 
 }
 

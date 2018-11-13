@@ -16,6 +16,16 @@
 
 	int Slider::handleEvent(JsonObject &obj) 
 	{
+
+		if (strcmp(obj["evType"], "onMouseUp") == 0)
+		{
+			if (onClickCB != NULL)
+			{
+				int val = obj["value"];	
+				onClickCB(val);
+				return 0;
+			}
+		}
 		if (strcmp(obj["evType"], "onInput") == 0)
 		{
 			if (onInputCB != NULL)
@@ -41,5 +51,13 @@
 		String CBString = "sendJSON({type:\"event\", id: this.id, evType:\"onInput\", value: this.value})";
 		this->onInputCB = f;
 		this->addClientSideCallback("oninput", CBString);
+	}
+
+	void Slider::onClick(std::function<void(int)> f)
+	{
+
+		String CBString = "sendJSON({type:\"event\", id: this.id, evType:\"onMouseUp\", value: this.value})";
+		this->onClickCB = f;
+		this->addClientSideCallback("onmouseup", CBString);
 	}
 
