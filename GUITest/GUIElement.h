@@ -28,13 +28,14 @@ public:
 	virtual String getHTML();
 	String getId();
 	int setText(String theText);
+	String getText();
 	virtual	String retrieveText();
 	void retrieveProperty(std::function<void(String)> func, String propertyName);
 	String retrieveProperty(String propertyName);
 	String retrieveProperty(String propertyName, int timeout);
 	//void retreiveText(String * theText);
-protected:
 	String id;
+protected:
 	String text;
 	String elementType = "div";
 	String callbacksString = "";

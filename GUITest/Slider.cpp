@@ -2,10 +2,6 @@
 #include "Slider.h"
 #include <functional>
 
-	Slider::Slider(String _id, String _text)
-	{
-		Slider(_id, _text, 0, 1023);
-	}
 	Slider::Slider(String _id, String _text, int _min, int _max)
 	{
 		id = _id;
@@ -20,11 +16,12 @@
 
 	int Slider::handleEvent(JsonObject &obj) 
 	{
-		if (strcmp(obj["evType"], "click") == 0)
+		if (strcmp(obj["evType"], "onInput") == 0)
 		{
-			if (clickCB != NULL)
+			if (onInputCB != NULL)
 			{
-				clickCB();
+				int val = obj["value"];	
+				onInputCB(val);
 				return 0;
 			}
 		}
@@ -41,7 +38,7 @@
 	void Slider::onInput(std::function<void(int)> f)
 	{
 
-		String CBString = "sendJSON({type:\"event\", id: this.id, evType:\"onInput\"})";
+		String CBString = "sendJSON({type:\"event\", id: this.id, evType:\"onInput\", value: this.value})";
 		this->onInputCB = f;
 		this->addClientSideCallback("oninput", CBString);
 	}

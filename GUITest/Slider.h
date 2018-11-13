@@ -5,9 +5,9 @@
 class Slider : public GUIElement
 {
 public:
-	Slider(String _id, String _text);
+	//Slider(String _id, String _text);
 
-	Slider(String _id, String _text, int _min, int _max);
+	Slider(String _id, String _text, int _min=0, int _max=1023);
 	
 
 	int handleEvent(JsonObject &obj) override;

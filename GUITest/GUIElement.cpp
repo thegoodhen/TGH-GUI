@@ -66,6 +66,12 @@ int GUIElement::setText(String theText)
 	return 0;
 
 }
+
+String GUIElement::getText()
+{
+	return this->text;
+}
+
 /*
 A non-blocking function, which allows the user to request that a the String supplied by them will sometime
 in the future be filled up with the text of the (remote) user interface element. In case of text boxes,
