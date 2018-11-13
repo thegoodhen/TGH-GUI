@@ -29,6 +29,7 @@ public:
 	String getId();
 	int setText(String theText);
 	String getText();
+	int retrieveIntValue();
 	virtual	String retrieveText();
 	void retrieveProperty(std::function<void(String)> func, String propertyName);
 	String retrieveProperty(String propertyName);

@@ -72,6 +72,17 @@ String GUIElement::getText()
 	return this->text;
 }
 
+
+
+int GUIElement::retrieveIntValue()
+{
+	String s = this->retrieveProperty("value");
+	const char* str = s.c_str();
+	char* ptr;
+	return strtol(str, &ptr, 10);//yea, but handle some error checking as well please
+}
+
+
 /*
 A non-blocking function, which allows the user to request that a the String supplied by them will sometime
 in the future be filled up with the text of the (remote) user interface element. In case of text boxes,
