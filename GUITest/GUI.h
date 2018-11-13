@@ -55,6 +55,8 @@ public:
 	String getScript();
 	
 
+	void addln(GUIElement * ge);
+
 	void add(GUIElement*  ge);
 	
 	GUIElement* find(String s);

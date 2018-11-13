@@ -109,6 +109,7 @@
   <ItemGroup>
     <ClInclude Include="Button.cpp" />
     <ClInclude Include="Button.h" />
+    <ClInclude Include="Checkbox.h" />
     <ClInclude Include="ElementTypes.h" />
     <ClInclude Include="GUI.cpp" />
     <ClInclude Include="GUIElement.h" />
@@ -119,6 +120,7 @@
     <ClInclude Include="__vm\.GUITest2.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Checkbox.cpp" />
     <ClCompile Include="GUI.h" />
     <ClCompile Include="GUIElement.cpp" />
     <ClCompile Include="Label.cpp" />

@@ -61,14 +61,18 @@ void setup() {
 	gui.begin();
 
 	Button* c=new Button("kokon", "slepice", printTAContents);
-	gui.add(c);
+	gui.addln(c);
 	Label* l = new Label("lbl1", "label");
-	gui.add(l);
+	gui.addln(l);
 	TextArea* t = new TextArea("txt1", "some text");
-	gui.add(t);
+	gui.addln(t);
 	Slider* s = new Slider("sl1", "some slider");
-	gui.add(s);
+	gui.addln(s);
 	s->onClick(displayNumber);
+
+	Checkbox* ch = new Checkbox("cb1", "some checkbox");
+	gui.addln(ch);
+	ch->onClick(displayNumber);
 
 }
 

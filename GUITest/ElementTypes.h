@@ -3,4 +3,5 @@
 #include "Label.h"
 #include "TextArea.h"
 #include "Slider.h"
+#include "Checkbox.h"
 //#include

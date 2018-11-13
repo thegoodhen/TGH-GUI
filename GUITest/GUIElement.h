@@ -36,6 +36,7 @@ public:
 	String retrieveProperty(String propertyName, int timeout);
 	//void retreiveText(String * theText);
 	String id;
+	void setLineBreak(boolean theBreak);
 protected:
 	String text;
 	String elementType = "div";
@@ -52,4 +53,5 @@ protected:
 	String propertyResponseString;//the String object for storing the value of the property returned from the client side after calling retrieveProperty
 	std::vector<String> callbackStrings;//the vector containing all the javascript callbacks for this element
 	void addClientSideCallback(String eventName, String eventCode);
+	boolean lineBreak=false;
 };

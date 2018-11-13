@@ -159,6 +159,11 @@ theSocket.onmessage = function (event) {
 </head>)";
 	}
 
+	void GUI::addln(GUIElement* ge)
+	{
+		this->add(ge);
+		ge->setLineBreak(true);
+	}
 	void GUI::add(GUIElement* ge)
 	{
 		elements.push_back(ge);

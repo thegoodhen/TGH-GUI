@@ -41,7 +41,8 @@
 	String Slider::getHTML() 
 	{
 		char tempStr[200];//But of course, what if the id is too long? Well, then we are f***ed!
-		sprintf(tempStr, "<input type=\"range\" min=\"%d\" max=\"%d\" value=\"%d\" class=\"slider\" id=\"%s\" %s>", theMin, theMax, theVal, id.c_str(), this->getCallbackString().c_str());
+		const char* lineBreakStr = this->lineBreak ? "<br>\n" : "\n";
+		sprintf(tempStr, "<input type=\"range\" min=\"%d\" max=\"%d\" value=\"%d\" class=\"slider\" id=\"%s\" %s>%s", theMin, theMax, theVal, id.c_str(), this->getCallbackString().c_str(), lineBreakStr);
 		return tempStr;
 	}
 

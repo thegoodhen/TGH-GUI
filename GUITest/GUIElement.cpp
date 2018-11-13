@@ -46,7 +46,8 @@ int GUIElement::handleResponse(JsonObject& obj)
 
 String GUIElement::getHTML()
 {
-	return "<" + this->elementType + " id=\"" + id + "\" " + this->getCallbackString() + ">" + text + "</" + elementType + ">";
+	const char* lineBreakStr = this->lineBreak ? "<br>\n" : "\n";
+	return "<" + this->elementType + " id=\"" + id + "\" " + this->getCallbackString() + ">" + text + "</" + elementType + ">"+lineBreakStr;
 }
 String GUIElement::getId()
 {
@@ -140,6 +141,11 @@ String GUIElement::retrieveProperty(String propertyName, int timeout)
 		}
 	}
 	return "";
+}
+
+void GUIElement::setLineBreak(boolean theBreak)
+{
+	this->lineBreak = theBreak;
 }
 
 /*
