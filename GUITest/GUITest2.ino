@@ -114,10 +114,10 @@ void displayNumber(int client, int i)
 	Serial.println(i);
 }
 
-void printTAContents()
+void printTAContents(int clientNo)
 {
 		//gui.find("txt1")->retrieveProperty(printSerial, "value");
 		//String s=gui.find("txt1")->retrieveProperty("value");
-		int i = gui.find("sl1")->retrieveIntValue();
+		int i = gui.find("sl1")->retrieveIntValue(clientNo);
 		Serial.println(i);
 }

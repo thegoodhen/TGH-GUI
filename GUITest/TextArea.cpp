@@ -9,9 +9,9 @@
 		elementType = "TextArea";
 	}
 
-	String TextArea::retrieveText() 
+	String TextArea::retrieveText(int clientNo) 
 	{
-		return this->retrieveProperty("value");
+		return this->retrieveProperty(clientNo, "value");
 	}
 
 	/*

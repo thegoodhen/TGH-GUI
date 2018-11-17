@@ -38,6 +38,8 @@ public:
 	//String retrieveProperty(String propertyName);
 	String retrieveProperty(int clientNumber, String propertyName);
 	String retrieveProperty(int clientNumber, String propertyName, int timeout);
+	//int setProperty(String propertyName, String propertyValue);
+	int setProperty(int clientNumber, String propertyName, String propertyValue);
 	//String retrieveProperty(String propertyName, int timeout);
 	//void retreiveText(String * theText);
 	String id;

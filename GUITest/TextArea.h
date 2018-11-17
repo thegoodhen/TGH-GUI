@@ -8,7 +8,7 @@ public:
 	TextArea(String _id, String _text);
 
 	
-	String retrieveText() override;
+	String retrieveText(int clientNo) override;
 
 	//int handleEvent(JsonObject &obj) override;
 	

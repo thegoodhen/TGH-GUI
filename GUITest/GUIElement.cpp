@@ -81,9 +81,24 @@ int GUIElement::setText(String theText)
 	obj["newText"] = theText;
 	String sentString;
 	obj.printTo(sentString);
-	gui->sendText(sentString);
+	gui->sendText(ALL_CLIENTS, sentString);
 	return 0;
 }
+
+int GUIElement::setProperty(int clientNum, String propertyName, String propertyValue)
+{
+	DynamicJsonBuffer jb(propertyName.length()+propertyValue.length()+200);
+	JsonObject& obj = jb.createObject();
+	obj["type"] = "setProperty";
+	obj["id"] = id;
+	obj["propertyName"] = propertyName;
+	obj["value"] = propertyValue;
+	String sentString;
+	obj.printTo(sentString);
+	gui->sendText(clientNum, sentString);
+	return 0;
+}
+
 
 String GUIElement::getText()
 {
