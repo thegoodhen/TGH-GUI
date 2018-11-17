@@ -54,6 +54,24 @@ String GUIElement::getId()
 	return id;
 }
 
+int GUIElement::setText(int clientNo, String theText)
+{
+	DynamicJsonBuffer jb(theText.length() + 100);
+	JsonObject& obj = jb.createObject();
+	obj["type"] = "setText";
+	obj["id"] = id;
+	obj["newText"] = theText;
+	String sentString;
+	obj.printTo(sentString);
+	gui->sendText(clientNo, sentString);
+	return 0;
+}
+
+
+//TODO: maybe ditch this function altogether? Superfluous with the introduction of setProperty
+/**
+Broadcasts the request to set some text to all the connected clients
+**/
 int GUIElement::setText(String theText)
 {
 	DynamicJsonBuffer jb(theText.length() + 100);
@@ -65,7 +83,6 @@ int GUIElement::setText(String theText)
 	obj.printTo(sentString);
 	gui->sendText(sentString);
 	return 0;
-
 }
 
 String GUIElement::getText()
@@ -75,9 +92,9 @@ String GUIElement::getText()
 
 
 
-int GUIElement::retrieveIntValue()
+int GUIElement::retrieveIntValue(int clientNo)
 {
-	String s = this->retrieveProperty("value");
+	String s = this->retrieveProperty(clientNo, "value");
 	const char* str = s.c_str();
 	char* ptr;
 	return strtol(str, &ptr, 10);//yea, but handle some error checking as well please
@@ -89,16 +106,16 @@ A non-blocking function, which allows the user to request that a the String supp
 in the future be filled up with the text of the (remote) user interface element. In case of text boxes,
 this text should be the content of the textbox, in case of listboxes, it should be the currently selected item, etc.
 */
-String GUIElement::retrieveText()
+String GUIElement::retrieveText(int clientNo)
 {
-	return this->retrieveProperty("InnerHtml");
+	return this->retrieveProperty(clientNo, "InnerHtml");
 }
 
 /*
 A non-blocking function, which allows the user to request that a the String supplied by them will sometime
 in the future be filled up with a textual representation of some property of the (remote) user interface element.
 */
-void GUIElement::retrieveProperty(std::function<void(String)> func, String propertyName)//TODO: handle multiple requests at the same time!
+void GUIElement::retrieveProperty(int clientNumber, std::function<void(String)> func, String propertyName)//TODO: handle multiple requests at the same time!
 {
 	Serial.println("retProperty");
 	Serial.println(millis());
@@ -111,22 +128,22 @@ void GUIElement::retrieveProperty(std::function<void(String)> func, String prope
 	obj["propertyName"] = propertyName;
 	String str;
 	obj.printTo(str);
-	this->gui->sendText(str);
+	this->gui->sendText(clientNumber, str);
 }
 
 /*
 Blocking function, which requests a property to be retrieved and then waits for the reply; returns empty string on timeout
 */
-String GUIElement::retrieveProperty(String propertyName)
+String GUIElement::retrieveProperty(int clientNumber, String propertyName)//TODO: exit if client not connected
 {
-	return GUIElement::retrieveProperty(propertyName, 1000);
+	return GUIElement::retrieveProperty(clientNumber, propertyName, 1000);
 }
 
-String GUIElement::retrieveProperty(String propertyName, int timeout)
+String GUIElement::retrieveProperty(int clientNumber, String propertyName, int timeout)
 {
 	clearResponseFlag();
 	auto f1 = std::bind(&GUIElement::storePropertyResponse, this, _1);
-	retrieveProperty(f1, propertyName);
+	retrieveProperty(clientNumber, f1, propertyName);
 	Serial.println("waiting for property response");
 	unsigned long startMillis = millis();
 	while (millis() < (startMillis + timeout))

@@ -43,6 +43,10 @@ public:
 	*/
 	int sendText(String theText);
 	
+	int sendText(int clientNum, String theText);
+
+	int sendTextToAllBut(int clientNum, String theText);
+
 	String getHTML();
 	
 

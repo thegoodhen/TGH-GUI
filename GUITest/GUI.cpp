@@ -85,15 +85,38 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 	}
 
 	/**
-	Send the text out using Websockets
-	*/
+	Broadcast text to all connected clients
+	**/
 	int GUI::sendText(String theText)
 	{
-		webSocket.sendTXT(0,theText);//TODO: make sure this also works for other user than just the 0th.
+		webSocket.broadcastTXT(theText);
+	}
+	
+
+	/**
+	Send the text out using Websockets
+	*/
+	int GUI::sendText(int clientNum, String theText)
+	{
+		webSocket.sendTXT(clientNum,theText);
 		//server.send(200, "text/html", "<html><head><script>var connection = new WebSocket('ws://'+location.hostname+':81/', ['arduino']);connection.onopen = function () {  connection.send('Connect ' + new Date()); }; connection.onerror = function (error) {    console.log('WebSocket Error ', error);};connection.onmessage = function (e) {  console.log('Server: ', e.data);};function sendRGB() {  var r = parseInt(document.getElementById('r').value).toString(16);  var g = parseInt(document.getElementById('g').value).toString(16);  var b = parseInt(document.getElementById('b').value).toString(16);  if(r.length < 2) { r = '0' + r; }   if(g.length < 2) { g = '0' + g; }   if(b.length < 2) { b = '0' + b; }   var rgb = '#'+r+g+b;    console.log('RGB: ' + rgb); connection.send(rgb); }</script></head><body>LED Control:<br/><br/>R: <input id=\"r\" type=\"range\" min=\"0\" max=\"255\" step=\"1\" oninput=\"sendRGB();\" /><br/>G: <input id=\"g\" type=\"range\" min=\"0\" max=\"255\" step=\"1\" oninput=\"sendRGB();\" /><br/>B: <input id=\"b\" type=\"range\" min=\"0\" max=\"255\" step=\"1\" oninput=\"sendRGB();\" /><br/></body></html>");
 		//server.send(200, "text/html", theText);
 		return 0;
 	}
+
+	int GUI::sendTextToAllBut(int clientNo, String theText)
+	{
+		boolean allGood = true;
+		for (int i = 0;i < webSocket.connectedClients();i++)
+		{
+			if (i != clientNo)
+			{
+				allGood=allGood|webSocket.sendTXT(i, theText);
+			}
+		}
+		return allGood;
+	}
+
 	String GUI::getHTML()
 	{
 		String returnString;
