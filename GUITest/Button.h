@@ -5,12 +5,12 @@
 class Button : public GUIElement
 {
 public:
-	Button(String _id, String _text, std::function<void()>clickCallback);
+	Button(String _id, String _text, std::function<void(int)>clickCallback);
 	
 
-	int handleEvent(JsonObject &obj) override;
+	int handleEvent(int clientNo, JsonObject &obj) override;
 	
 	//String getHTML() override;
 private:
-	std::function<void()> clickCB = NULL;
+	std::function<void(int)> clickCB = NULL;
 };

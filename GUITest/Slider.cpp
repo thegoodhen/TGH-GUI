@@ -14,7 +14,7 @@
 		theMax = _max;
 	}
 
-	int Slider::handleEvent(JsonObject &obj) 
+	int Slider::handleEvent(int clientNum, JsonObject &obj) 
 	{
 
 		if (strcmp(obj["evType"], "onMouseUp") == 0)
@@ -22,7 +22,7 @@
 			if (onClickCB != NULL)
 			{
 				int val = obj["value"];	
-				onClickCB(val);
+				onClickCB(clientNum, val);
 				return 0;
 			}
 		}
@@ -31,7 +31,7 @@
 			if (onInputCB != NULL)
 			{
 				int val = obj["value"];	
-				onInputCB(val);
+				onInputCB(clientNum, val);
 				return 0;
 			}
 		}
@@ -46,7 +46,7 @@
 		return tempStr;
 	}
 
-	void Slider::onInput(std::function<void(int)> f)
+	void Slider::onInput(std::function<void(int, int)> f)
 	{
 
 		String CBString = "sendJSON({type:\"event\", id: this.id, evType:\"onInput\", value: this.value})";
@@ -54,7 +54,7 @@
 		this->addClientSideCallback("oninput", CBString);
 	}
 
-	void Slider::onClick(std::function<void(int)> f)
+	void Slider::onClick(std::function<void(int, int)> f)
 	{
 
 		String CBString = "sendJSON({type:\"event\", id: this.id, evType:\"onMouseUp\", value: this.value})";

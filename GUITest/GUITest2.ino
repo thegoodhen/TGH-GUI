@@ -30,7 +30,7 @@ GUI gui;
 Button b("kokon", "slepice", printText);
 
 
-void printText()
+void printText(int clientNum)
 {
 	USE_SERIAL.println("gek gek");
 }
@@ -108,7 +108,7 @@ void printSerial(String s)
 	Serial.println(s);
 }
 
-void displayNumber(int i)
+void displayNumber(int client, int i)
 {
 	Serial.println("i:");
 	Serial.println(i);

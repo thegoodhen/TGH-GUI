@@ -17,7 +17,7 @@ void GUIElement::setGUI(GUI* _gui)
 {
 	gui = _gui;
 }
-int GUIElement::handleEvent(JsonObject& obj)
+int GUIElement::handleEvent(int clientNum, JsonObject& obj)
 {
 	return 1;
 }

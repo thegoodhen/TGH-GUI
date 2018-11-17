@@ -77,6 +77,7 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 			//JsonObject& obj = jb.parseObject(payload);
 			//this->handleRequest(obj);
 			this->msgInString = (char*)payload;
+			this->clientNo = num;
 
 			break;
 		}
@@ -188,10 +189,10 @@ theSocket.onmessage = function (event) {
 			{
 				return 1;
 			}
-			this->handleRequest(obj);
+			this->handleRequest(clientNo, obj);
 			return 0;
 	}
-	int GUI::handleRequest(JsonObject& obj)
+	int GUI::handleRequest(int clNum, JsonObject& obj)
 	{
 		if (strcmp(obj["type"], "event")==0)
 		{
@@ -201,7 +202,7 @@ theSocket.onmessage = function (event) {
 			if (ge != NULL)
 			{
 			//Serial.println("neni to null");
-				return ge->handleEvent(obj);
+				return ge->handleEvent(clNum, obj);
 			}
 			else
 			{

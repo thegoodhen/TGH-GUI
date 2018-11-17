@@ -23,7 +23,7 @@ class GUIElement
 public:
 
 	void setGUI(GUI* _gui);
-	virtual int handleEvent(JsonObject& obj);
+	virtual int handleEvent(int clientNum, JsonObject& obj);
 	int handleResponse(JsonObject & obj);
 	virtual String getHTML();
 	String getId();

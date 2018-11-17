@@ -10,14 +10,14 @@ public:
 	Slider(String _id, String _text, int _min=0, int _max=1023);
 	
 
-	int handleEvent(JsonObject &obj) override;
+	int handleEvent(int clientNum, JsonObject &obj) override;
 	
 	String getHTML() override;
-	void onInput(std::function<void(int)> f);
-	void onClick(std::function<void(int)> f);
+	void onInput(std::function<void(int, int)> f);
+	void onClick(std::function<void(int, int)> f);
 private:
-	std::function<void(int)> onClickCB = NULL;
-	std::function<void(int)> onInputCB = NULL;
+	std::function<void(int, int)> onClickCB = NULL;
+	std::function<void(int, int)> onInputCB = NULL;
 	int theMin = 0;
 	int theMax = 1023;
 	int theVal = 512;

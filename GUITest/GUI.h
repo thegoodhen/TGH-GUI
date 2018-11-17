@@ -31,10 +31,11 @@ public:
 	GUI();
 	void begin();
 	void loop();
+
+	void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length);
 	
 
 
-	void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length);
 	
 
 	/**
@@ -64,10 +65,13 @@ public:
 
 	int handleRequest();
 
-	int handleRequest(JsonObject& obj);
+	int handleRequest(int clNum, JsonObject & obj);
+
+	//int handleRequest(JsonObject& obj);
 	
 
 private:
 	std::vector<GUIElement*> elements;
 	String msgInString = "";//String for storing the incoming messages
+	int clientNo = 0;
 };

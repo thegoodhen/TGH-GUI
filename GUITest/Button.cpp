@@ -2,7 +2,7 @@
 #include "Button.h"
 #include <functional>
 
-	Button::Button(String _id, String _text, std::function<void()>clickCallback)
+	Button::Button(String _id, String _text, std::function<void(int)>clickCallback)
 	{
 
 		id = _id;
@@ -14,13 +14,13 @@
 		//callbacksString = "onclick='sendJSON({type:\"event\", id: this.id, evType:\"click\"})';";
 	}
 
-	int Button::handleEvent(JsonObject &obj) 
+	int Button::handleEvent(int clientNum, JsonObject &obj) 
 	{
 		if (strcmp(obj["evType"], "click") == 0)
 		{
 			if (clickCB != NULL)
 			{
-				clickCB();
+				clickCB(clientNum);
 				return 0;
 			}
 		}

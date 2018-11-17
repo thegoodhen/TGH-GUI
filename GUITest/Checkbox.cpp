@@ -2,7 +2,7 @@
 #include "Checkbox.h"
 #include <functional>
 
-	Checkbox::Checkbox(String _id, String _text, std::function<void(boolean)> clickCallback)
+	Checkbox::Checkbox(String _id, String _text, std::function<void(int, boolean)> clickCallback)
 	{
 
 		id = _id;
@@ -18,14 +18,14 @@
 		//callbacksString = "onclick='sendJSON({type:\"event\", id: this.id, evType:\"click\"})';";
 	}
 
-	int Checkbox::handleEvent(JsonObject &obj) 
+	int Checkbox::handleEvent(int clientNum, JsonObject &obj) 
 	{
 		if (strcmp(obj["evType"], "onClick") == 0)
 		{
 			if (onClickCB != NULL)
 			{
 				boolean checked = (strcmp(obj["value"], "true") == 0);
-				onClickCB(checked);
+				onClickCB(clientNum, checked);
 				return 0;
 			}
 		}
@@ -42,7 +42,7 @@
 	}
 
 
-	void Checkbox::onClick(std::function<void(boolean)> f)
+	void Checkbox::onClick(std::function<void(int, boolean)> f)
 	{
 
 		String CBString = "sendJSON({type:\"event\", id: this.id, evType:\"onClick\", value: this.checked})";
