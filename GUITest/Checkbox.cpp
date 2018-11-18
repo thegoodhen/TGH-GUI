@@ -64,3 +64,73 @@
 		return "<button id=\"" + id + "\" onclick='sendJSON({type:\"event\", id: this.id, evType:\"click\"})'>" + text + "</button>\n";
 	}
 */
+
+	//w3c stuff down there, I kinda just took it from their tutorials
+	String Checkbox::getCSS()
+	{
+		return R"(
+/* The switch - the box around the switchSlider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The switchSlider */
+.switchSlider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.switchSlider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .switchSlider {
+  background-color: #2196F3;
+}
+
+input:focus + .switchSlider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .switchSlider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded switchSliders */
+.switchSlider.round {
+  border-radius: 34px;
+}
+
+.switchSlider.round:before {
+  border-radius: 50%;
+}
+
+)";
+	}

@@ -246,3 +246,8 @@ void GUIElement::setSynced(boolean _synced)
 {
 	this->isSynced = _synced;
 }
+
+String GUIElement::getCSS()
+{
+	return "";
+}

@@ -115,6 +115,7 @@
     <ClInclude Include="GUIElement.h" />
     <ClInclude Include="Label.h" />
     <ClInclude Include="Slider.h" />
+    <ClInclude Include="SpiffsUtils.h" />
     <ClInclude Include="TextArea.h" />
     <ClInclude Include="__vm\.GUITest.vsarduino.h" />
     <ClInclude Include="__vm\.GUITest2.vsarduino.h" />
@@ -125,6 +126,7 @@
     <ClCompile Include="GUIElement.cpp" />
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="Slider.cpp" />
+    <ClCompile Include="SpiffsUtils.cpp" />
     <ClCompile Include="TextArea.cpp" />
   </ItemGroup>
   <PropertyGroup>

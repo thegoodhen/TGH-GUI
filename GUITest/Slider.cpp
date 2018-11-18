@@ -56,10 +56,13 @@
 	
 	String Slider::getHTML() 
 	{
-		char tempStr[200];//But of course, what if the id is too long? Well, then we are f***ed!
+		char tempStr[400];//But of course, what if the id is too long? Well, then we are f***ed!
 		const char* lineBreakStr = this->lineBreak ? "<br>\n" : "\n";
-		sprintf(tempStr, "<input type=\"range\" min=\"%d\" max=\"%d\" value=\"%d\" class=\"slider\" id=\"%s\" %s>%s", theMin, theMax, theVal, id.c_str(), this->getCallbackString().c_str(), lineBreakStr);
-		return tempStr;
+		String containerString = "<div class=\"elementContainer\"";
+		String labelString = "<label id=\""+this->id+"_lbl"+(String)"\" for=\"" + (String)this->id + "\" class=elementLabel>" + this->text + "</label>";
+		sprintf(tempStr, "<input type=\"range\" class=\"slider\" min=\"%d\" max=\"%d\" value=\"%d\" class=\"slider\" id=\"%s\" %s>%s", theMin, theMax, theVal, id.c_str(), this->getCallbackString().c_str(), lineBreakStr);
+		String containerStringEnd = "</div>";
+		return containerString+labelString+(String)tempStr+containerStringEnd;
 	}
 
 	void Slider::onInput(std::function<void(int, int)> f)

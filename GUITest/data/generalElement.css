@@ -1,0 +1,29 @@
+
+.elementContainer{
+ 
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content:space-between;
+ 
+  padding:10px;
+  background: none;
+  border-radius: 10px; 
+ -webkit-transition: background 0.5s;
+  transition: background 0.5s;
+  
+  max-width: 1000px;
+  min-width:200px;
+
+}
+
+
+.elementContainer:hover{
+   background: #f2f2f2;
+}
+
+
+.elementLabel
+{
+    margin:10px;
+}

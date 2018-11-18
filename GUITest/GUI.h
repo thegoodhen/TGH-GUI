@@ -19,6 +19,7 @@
 #include <Hash.h>
 
 #include <WebSocketsServer.h>
+#include "SpiffsUtils.h"
 #define USE_SERIAL Serial
 #define ALL_CLIENTS -1
 

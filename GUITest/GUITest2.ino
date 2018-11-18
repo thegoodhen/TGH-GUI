@@ -6,6 +6,7 @@
  *
  */
 
+#include "SpiffsUtils.h"
 #include <WebSocketsClient.h>
 #include <WebSockets.h>
 #include "GUIElement.h"

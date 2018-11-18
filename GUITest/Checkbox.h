@@ -13,6 +13,7 @@ public:
 	String getHTML() override;
 
 	void onClick(std::function<void(int, boolean)> f);
+	String getCSS() override;
 	
 	//String getHTML() override;
 private:

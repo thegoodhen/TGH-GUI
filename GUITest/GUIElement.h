@@ -46,6 +46,7 @@ public:
 	String id;
 	void setLineBreak(boolean theBreak);
 	void setSynced(boolean _synced);
+	virtual String getCSS();
 protected:
 	String text;
 	String elementType = "div";

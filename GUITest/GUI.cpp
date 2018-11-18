@@ -41,6 +41,13 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 	server.on("/", f);
 	//this->getHTML();
 
+ SPIFFS.begin();                           // Start the SPI Flash Files System
+  
+  server.onNotFound([]() {                              // If the client requests any URI
+		if (!handleFileRead(server, server.uri()))                  // send it if it exists
+      server.send(404, "text/plain", "404: Not Found"); // otherwise, respond with a 404 (Not Found) error
+  });
+
 		server.begin();
 
 		// Add service to MDNS
@@ -170,6 +177,9 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 		return R"(<!DOCTYPE html>
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="./generalElement.css">
+<link rel="stylesheet" type="text/css" href="./slider.css">
+<link rel="stylesheet" type="text/css" href="./switch.css">
 )";
 	}
 	String GUI::getFooter()
