@@ -17,10 +17,18 @@
 	int Slider::handleEvent(int clientNum, JsonObject &obj) 
 	{
 
-		if (strcmp(obj["evType"], "onMouseUp") == 0)
+		if (strcmp(obj["evType"], "onMouseUp") == 0)//TODO: make this work with touch devices
 		{
 			if (onClickCB != NULL)
 			{
+
+				if (isSynced)
+				{
+					String v = obj["value"];
+					//Serial.println("checked:");
+					//Serial.println(v);
+					this->setPropertyOfAllBut(clientNum, "value", v);//synchronize the slider between clients
+				}
 				int val = obj["value"];	
 				onClickCB(clientNum, val);
 				return 0;
@@ -30,6 +38,14 @@
 		{
 			if (onInputCB != NULL)
 			{
+
+				if (isSynced)
+				{
+					String v = obj["value"];
+					//Serial.println("checked:");
+					//Serial.println(v);
+					this->setPropertyOfAllBut(clientNum, "value", v);//synchronize the slider between clients
+				}
 				int val = obj["value"];	
 				onInputCB(clientNum, val);
 				return 0;

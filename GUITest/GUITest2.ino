@@ -68,11 +68,15 @@ void setup() {
 	gui.addln(t);
 	Slider* s = new Slider("sl1", "some slider");
 	gui.addln(s);
-	s->onClick(displayNumber);
+	//s->onClick(displayNumber);//if both are enabled, esp crashes... why?!
+	s->onInput(displayNumber);
+
+	s->setSynced(true);
 
 	Checkbox* ch = new Checkbox("cb1", "some checkbox");
 	gui.addln(ch);
 	ch->onClick(displayNumber);
+	ch->setSynced(true);
 
 }
 
@@ -94,7 +98,8 @@ void loop() {
 		//std::function<void(void)> f = std::bind(&HardwareSerial::println, (HardwareSerial)Serial);
 		//gui.find("kokon")->retreiveText(printSerial);
 		//while (test == "");
-		gui.find("lbl1")->setText((String)analogRead(A0));
+		//gui.find("lbl1")->setText(ALL_CLIENTS, (String)analogRead(A0));
+		//gui.find("sl1")->setProperty(ALL_CLIENTS, "value", (String)analogRead(A0));
 
 		//String s=gui.find("txt1")->retrieveProperty("value");
 

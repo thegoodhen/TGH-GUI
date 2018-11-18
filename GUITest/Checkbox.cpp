@@ -22,8 +22,16 @@
 	{
 		if (strcmp(obj["evType"], "onClick") == 0)
 		{
+
 			if (onClickCB != NULL)
 			{
+				if (isSynced)
+				{
+					String v = obj["value"];
+					Serial.println("checked:");
+					Serial.println(v);
+					this->setPropertyOfAllBut(clientNum, "checked", v);//synchronize the switch between clients
+				}
 				boolean checked = (strcmp(obj["value"], "true") == 0);
 				onClickCB(clientNum, checked);
 				return 0;

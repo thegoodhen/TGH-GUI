@@ -93,9 +93,9 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 	{
 		if (clientNum == ALL_CLIENTS)
 		{
-			webSocket.broadcastTXT(theText);
+			return webSocket.broadcastTXT(theText);
 		}
-		webSocket.sendTXT(clientNum,theText);
+		return webSocket.sendTXT(clientNum,theText);
 		//server.send(200, "text/html", "<html><head><script>var connection = new WebSocket('ws://'+location.hostname+':81/', ['arduino']);connection.onopen = function () {  connection.send('Connect ' + new Date()); }; connection.onerror = function (error) {    console.log('WebSocket Error ', error);};connection.onmessage = function (e) {  console.log('Server: ', e.data);};function sendRGB() {  var r = parseInt(document.getElementById('r').value).toString(16);  var g = parseInt(document.getElementById('g').value).toString(16);  var b = parseInt(document.getElementById('b').value).toString(16);  if(r.length < 2) { r = '0' + r; }   if(g.length < 2) { g = '0' + g; }   if(b.length < 2) { b = '0' + b; }   var rgb = '#'+r+g+b;    console.log('RGB: ' + rgb); connection.send(rgb); }</script></head><body>LED Control:<br/><br/>R: <input id=\"r\" type=\"range\" min=\"0\" max=\"255\" step=\"1\" oninput=\"sendRGB();\" /><br/>G: <input id=\"g\" type=\"range\" min=\"0\" max=\"255\" step=\"1\" oninput=\"sendRGB();\" /><br/>B: <input id=\"b\" type=\"range\" min=\"0\" max=\"255\" step=\"1\" oninput=\"sendRGB();\" /><br/></body></html>");
 		//server.send(200, "text/html", theText);
 		return 0;
@@ -108,6 +108,7 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 		{
 			if (i != clientNo)
 			{
+				Serial.println(theText);
 				allGood=allGood|webSocket.sendTXT(i, theText);
 			}
 		}
@@ -131,9 +132,39 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 
 	void GUI::sendHTML()
 	{
+		//this code is taken from: https://www.esp8266.com/viewtopic.php?f=8&t=16830&start=4
+		server.sendHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+		server.sendHeader("Pragma", "no-cache");
+		server.sendHeader("Expires", "-1");
+		server.setContentLength(CONTENT_LENGTH_UNKNOWN);
+		// here begin chunked transfer
+		//String returnString;
+
+		server.send(200,"text/html","");
+		server.sendContent(getHeader());
+		server.sendContent(getScript());
+
+		for (std::vector<int>::size_type i = 0; i != elements.size(); i++) {
+			{
+				//Serial.println(i);
+				server.sendContent(elements[i]->getHTML());
+				//returnString += elements[i]->getHTML();
+			}
+		}
+
+		server.sendContent(getFooter());
+		server.sendContent("");//transfer done
+		server.client().stop();
+		//returnString += getFooter();
+		//return returnString;
+	}
+
+	/*void GUI::sendHTML()
+	{
 		server.send(200,"text/html",getHTML());
 
-	}
+	}*/
+
 	String GUI::getHeader()
 	{
 		return R"(<!DOCTYPE html>
@@ -171,6 +202,14 @@ theSocket.onmessage = function (event) {
 		sendJSON({type: "response", id: msg.id, subType: "getProperty", propertyName: msg.propertyName, value: document.getElementById(msg.id)[msg.propertyName]});
 		break;
 	case "setProperty":
+		if(msg.value=="false")//do we want to do it like this actually?
+		{
+			msg.value=false;
+		}
+		if(msg.value=="true")//do we want to do it like this actually?
+		{
+			msg.value=true;
+		}
 		document.getElementById(msg.id)[msg.propertyName]=msg.value;
 		break;
 	default:

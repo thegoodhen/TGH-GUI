@@ -28,22 +28,24 @@ public:
 	virtual String getHTML();
 	String getId();
 	int setText(int clientNo, String theText);
-	int setText(String theText);
+	//int setText(String theText);
 	String getText();
 	int retrieveIntValue(int clientNo);
 	//virtual	String retrieveText();
 	virtual String retrieveText(int clientNo);
 	//void retrieveProperty(std::function<void(String)> func, String propertyName);
-	void retrieveProperty(int clientNumber, std::function<void(String)> func, String propertyName);
+	int retrieveProperty(int clientNumber, std::function<void(String)> func, String propertyName);
 	//String retrieveProperty(String propertyName);
 	String retrieveProperty(int clientNumber, String propertyName);
 	String retrieveProperty(int clientNumber, String propertyName, int timeout);
 	//int setProperty(String propertyName, String propertyValue);
 	int setProperty(int clientNumber, String propertyName, String propertyValue);
+	int setPropertyOfAllBut(int clientNo, String propertyName, String propertyValue);
 	//String retrieveProperty(String propertyName, int timeout);
 	//void retreiveText(String * theText);
 	String id;
 	void setLineBreak(boolean theBreak);
+	void setSynced(boolean _synced);
 protected:
 	String text;
 	String elementType = "div";
@@ -61,4 +63,5 @@ protected:
 	std::vector<String> callbackStrings;//the vector containing all the javascript callbacks for this element
 	void addClientSideCallback(String eventName, String eventCode);
 	boolean lineBreak=false;
+	boolean isSynced=false;
 };

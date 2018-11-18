@@ -54,6 +54,7 @@ String GUIElement::getId()
 	return id;
 }
 
+/*
 int GUIElement::setText(int clientNo, String theText)
 {
 	DynamicJsonBuffer jb(theText.length() + 100);
@@ -66,15 +67,16 @@ int GUIElement::setText(int clientNo, String theText)
 	gui->sendText(clientNo, sentString);
 	return 0;
 }
+*/
 
 
-//TODO: maybe ditch this function altogether? Superfluous with the introduction of setProperty
 /**
 Broadcasts the request to set some text to all the connected clients
 **/
-int GUIElement::setText(String theText)
+int GUIElement::setText(int clientNum, String theText)
 {
-	DynamicJsonBuffer jb(theText.length() + 100);
+	/*
+	DynamicJsonBuffer  jb(theText.length() + 100);
 	JsonObject& obj = jb.createObject();
 	obj["type"] = "setText";
 	obj["id"] = id;
@@ -83,6 +85,8 @@ int GUIElement::setText(String theText)
 	obj.printTo(sentString);
 	gui->sendText(ALL_CLIENTS, sentString);
 	return 0;
+	*/
+	return setProperty(clientNum, "innerHtml", theText);
 }
 
 int GUIElement::setProperty(int clientNum, String propertyName, String propertyValue)
@@ -97,6 +101,22 @@ int GUIElement::setProperty(int clientNum, String propertyName, String propertyV
 	obj.printTo(sentString);
 	gui->sendText(clientNum, sentString);
 	return 0;
+}
+
+//TODO: Think about how we can refactor this 
+int GUIElement::setPropertyOfAllBut(int clientNo, String propertyName, String propertyValue)
+{
+	DynamicJsonBuffer jb(propertyName.length()+propertyValue.length()+200);
+	JsonObject& obj = jb.createObject();
+	obj["type"] = "setProperty";
+	obj["id"] = id;
+	obj["propertyName"] = propertyName;
+	obj["value"] = propertyValue;
+	String sentString;
+	obj.printTo(sentString);
+	gui->sendTextToAllBut(clientNo, sentString);
+	return 0;
+
 }
 
 
@@ -130,7 +150,7 @@ String GUIElement::retrieveText(int clientNo)
 A non-blocking function, which allows the user to request that a the String supplied by them will sometime
 in the future be filled up with a textual representation of some property of the (remote) user interface element.
 */
-void GUIElement::retrieveProperty(int clientNumber, std::function<void(String)> func, String propertyName)//TODO: handle multiple requests at the same time!
+int GUIElement::retrieveProperty(int clientNumber, std::function<void(String)> func, String propertyName)//TODO: handle multiple requests at the same time!
 {
 	Serial.println("retProperty");
 	Serial.println(millis());
@@ -143,7 +163,7 @@ void GUIElement::retrieveProperty(int clientNumber, std::function<void(String)> 
 	obj["propertyName"] = propertyName;
 	String str;
 	obj.printTo(str);
-	this->gui->sendText(clientNumber, str);
+	return this->gui->sendText(clientNumber, str);
 }
 
 /*
@@ -151,14 +171,17 @@ Blocking function, which requests a property to be retrieved and then waits for 
 */
 String GUIElement::retrieveProperty(int clientNumber, String propertyName)//TODO: exit if client not connected
 {
-	return GUIElement::retrieveProperty(clientNumber, propertyName, 1000);
+	return GUIElement::retrieveProperty(clientNumber, propertyName, 250);
 }
 
 String GUIElement::retrieveProperty(int clientNumber, String propertyName, int timeout)
 {
 	clearResponseFlag();
 	auto f1 = std::bind(&GUIElement::storePropertyResponse, this, _1);
-	retrieveProperty(clientNumber, f1, propertyName);
+	if (retrieveProperty(clientNumber, f1, propertyName) != 0)//something went wrong!
+	{
+		return "ERROR_RETRIEVING_PROPERTY";
+	}
 	Serial.println("waiting for property response");
 	unsigned long startMillis = millis();
 	while (millis() < (startMillis + timeout))
@@ -219,3 +242,7 @@ String GUIElement::getCallbackString()
 	return returnString;
 }
 
+void GUIElement::setSynced(boolean _synced)
+{
+	this->isSynced = _synced;
+}
