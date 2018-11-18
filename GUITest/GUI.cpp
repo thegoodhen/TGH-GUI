@@ -149,12 +149,13 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 
 		server.send(200,"text/html","");
 		server.sendContent(getHeader());
-		server.sendContent(getScript());
+		server.sendContent(getScript());//TODO: move script to SPIFFS
 
 		for (std::vector<int>::size_type i = 0; i != elements.size(); i++) {
 			{
 				//Serial.println(i);
-				server.sendContent(elements[i]->getHTML());
+				elements[i]->sendHtml(server);
+				//server.sendContent(elements[i]->getHTML());
 				//returnString += elements[i]->getHTML();
 			}
 		}

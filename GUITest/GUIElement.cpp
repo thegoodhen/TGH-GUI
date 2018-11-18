@@ -44,11 +44,21 @@ int GUIElement::handleResponse(JsonObject& obj)
 }
 
 
+/*
+@Deprecated
+*/
 String GUIElement::getHTML()
 {
 	const char* lineBreakStr = this->lineBreak ? "<br>\n" : "\n";
 	return "<" + this->elementType + " id=\"" + id + "\" " + this->getCallbackString() + ">" + text + "</" + elementType + ">"+lineBreakStr;
 }
+
+
+void GUIElement::sendHtml(ESP8266WebServer& server)
+{
+	server.sendContent(getHTML());//this is just for now, getHtml is obsolete
+}
+
 String GUIElement::getId()
 {
 	return id;
@@ -247,7 +257,16 @@ void GUIElement::setSynced(boolean _synced)
 	this->isSynced = _synced;
 }
 
-String GUIElement::getCSS()
+void GUIElement::startElementContainer(ESP8266WebServer& server)
 {
-	return "";
+	server.sendContent("<div class=\"elementContainer\">\n");
+	char labelStr[400];
+	String lblName = this->id + "_lbl";
+	sprintf(labelStr, "<label id=\"%s\"for=\"%s\" class=\"elementLabel\">%s</label>\n", lblName.c_str(), this->id.c_str(), this->text.c_str());
+	server.sendContent(labelStr);
+}
+
+void GUIElement::endElementContainer(ESP8266WebServer& server)
+{
+	server.sendContent("</div>\n");
 }

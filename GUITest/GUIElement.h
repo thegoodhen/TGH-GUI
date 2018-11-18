@@ -13,6 +13,7 @@
 #include <ArduinoJson.h>
 #include "GUI.h"
 #include <functional>
+#include <ESP8266WebServer.h>
 class GUI;
 
 
@@ -26,6 +27,7 @@ public:
 	virtual int handleEvent(int clientNum, JsonObject& obj);
 	int handleResponse(JsonObject & obj);
 	virtual String getHTML();
+	virtual void sendHtml(ESP8266WebServer& server);
 	String getId();
 	int setText(int clientNo, String theText);
 	//int setText(String theText);
@@ -46,7 +48,6 @@ public:
 	String id;
 	void setLineBreak(boolean theBreak);
 	void setSynced(boolean _synced);
-	virtual String getCSS();
 protected:
 	String text;
 	String elementType = "div";
@@ -65,4 +66,7 @@ protected:
 	void addClientSideCallback(String eventName, String eventCode);
 	boolean lineBreak=false;
 	boolean isSynced=false;
+
+	void startElementContainer(ESP8266WebServer& server);
+	void endElementContainer(ESP8266WebServer& server);
 };

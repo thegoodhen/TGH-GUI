@@ -12,8 +12,10 @@ public:
 
 	String getHTML() override;
 
+	void sendHtml(ESP8266WebServer & server) override;
+
 	void onClick(std::function<void(int, boolean)> f);
-	String getCSS() override;
+	//String getCSS() override;
 	
 	//String getHTML() override;
 private:
