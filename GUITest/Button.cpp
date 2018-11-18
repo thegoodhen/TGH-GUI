@@ -32,3 +32,14 @@
 		return "<button id=\"" + id + "\" onclick='sendJSON({type:\"event\", id: this.id, evType:\"click\"})'>" + text + "</button>\n";
 	}
 */
+
+	void Button::sendHtml(ESP8266WebServer& server)
+	{
+		server.sendContent("<button class=\"button\", id=\"");
+		server.sendContent(this->id);
+		server.sendContent("\", ");
+		server.sendContent(this->getCallbackString());
+		server.sendContent(">");
+		server.sendContent(this->text);
+		server.sendContent("</button>");
+	}

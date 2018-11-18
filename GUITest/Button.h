@@ -9,6 +9,8 @@ public:
 	
 
 	int handleEvent(int clientNo, JsonObject &obj) override;
+
+	void sendHtml(ESP8266WebServer & server) override;
 	
 	//String getHTML() override;
 private:
