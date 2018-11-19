@@ -12,9 +12,11 @@
 #include "Arduino.h"
 #include <ArduinoJson.h>
 #include "GUI.h"
+//#include "Container.h"
 #include <functional>
 #include <ESP8266WebServer.h>
 class GUI;
+class Container;
 
 
 
@@ -48,6 +50,9 @@ public:
 	String id;
 	void setLineBreak(boolean theBreak);
 	void setSynced(boolean _synced);
+	void setContainer(Container* c);
+	Container * getContainer();
+	virtual String getElementType();
 protected:
 	String text;
 	String elementType = "div";
@@ -69,4 +74,5 @@ protected:
 
 	void startElementContainer(ESP8266WebServer& server);
 	void endElementContainer(ESP8266WebServer& server);
+	Container* enclosingContainer;
 };

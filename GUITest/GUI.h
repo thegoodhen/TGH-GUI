@@ -74,6 +74,7 @@ public:
 	int handleRequest(int clNum, JsonObject & obj);
 
 	//int handleRequest(JsonObject& obj);
+	std::vector<GUIElement*>* getElements();
 	
 
 private:

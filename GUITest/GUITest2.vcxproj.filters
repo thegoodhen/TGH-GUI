@@ -54,6 +54,15 @@
     <ClInclude Include="SpiffsUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Container.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GUIElement.cpp">
@@ -75,6 +84,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SpiffsUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Container.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="hBox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

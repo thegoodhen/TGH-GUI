@@ -154,7 +154,12 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 		for (std::vector<int>::size_type i = 0; i != elements.size(); i++) {
 			{
 				//Serial.println(i);
-				elements[i]->sendHtml(server);
+				// the containers publish all their elements whenever we call their "sendHtml()"; therefore we only need to publish the elements that have no container
+				//and the containers themselves.
+				if(elements[i]->getContainer()==NULL) //|| elements[i]->getElementType()=="CONTAINER")
+				{
+					elements[i]->sendHtml(server);
+				}
 				//server.sendContent(elements[i]->getHTML());
 				//returnString += elements[i]->getHTML();
 			}
@@ -182,7 +187,9 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 <link rel="stylesheet" type="text/css" href="./slider.css">
 <link rel="stylesheet" type="text/css" href="./switch.css">
 <link rel="stylesheet" type="text/css" href="./button.css">
-<link rel="stylesheet" type="text/css" href="./textInputs.css">
+<link rel="stylesheet" type="text/css" href="./textInput.css">
+<link rel="stylesheet" type="text/css" href="./hBox.css">
+<link rel="stylesheet" type="text/css" href="./vBox.css">
 )";
 	}
 	String GUI::getFooter()
@@ -242,6 +249,10 @@ theSocket.onmessage = function (event) {
 	}
 	void GUI::add(GUIElement* ge)
 	{
+		if (this->find(ge->getId()))//if already there, fail; TODO: change the return type to int to signal errors
+		{
+			return;
+		}
 		elements.push_back(ge);
 		ge->setGUI(this);
 	}
@@ -304,3 +315,7 @@ theSocket.onmessage = function (event) {
 		return 1;
 	}
 
+	std::vector<GUIElement*>* GUI::getElements()
+	{
+		return &(this->elements);
+	}

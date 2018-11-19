@@ -110,24 +110,30 @@
     <ClInclude Include="Button.cpp" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Checkbox.h" />
+    <ClInclude Include="Container.h" />
     <ClInclude Include="ElementTypes.h" />
     <ClInclude Include="GUI.cpp" />
     <ClInclude Include="GUIElement.h" />
+    <ClInclude Include="hBox.h" />
     <ClInclude Include="Label.h" />
     <ClInclude Include="Slider.h" />
     <ClInclude Include="SpiffsUtils.h" />
     <ClInclude Include="TextArea.h" />
+    <ClInclude Include="vBox.h" />
     <ClInclude Include="__vm\.GUITest.vsarduino.h" />
     <ClInclude Include="__vm\.GUITest2.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Checkbox.cpp" />
+    <ClCompile Include="Container.cpp" />
     <ClCompile Include="GUI.h" />
     <ClCompile Include="GUIElement.cpp" />
+    <ClCompile Include="hBox.cpp" />
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="Slider.cpp" />
     <ClCompile Include="SpiffsUtils.cpp" />
     <ClCompile Include="TextArea.cpp" />
+    <ClCompile Include="vBox.cpp" />
   </ItemGroup>
   <PropertyGroup>
     <DebuggerFlavor>VisualMicroDebugger</DebuggerFlavor>

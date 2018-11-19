@@ -1,0 +1,10 @@
+.hBox{
+display: flex;
+flex-flow:row wrap;
+padding:10px;
+//margin: 10px auto;
+//justify-content: space-around;
+justify-content: center;
+border: 2px solid none;
+border-radius: 25px;
+}

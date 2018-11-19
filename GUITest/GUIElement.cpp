@@ -257,6 +257,7 @@ void GUIElement::setSynced(boolean _synced)
 	this->isSynced = _synced;
 }
 
+//TODO: this is not related to vBoxes and hBoxes at all, it's just the wrapper containing the label of this element and the element itself, it should be renamed!
 void GUIElement::startElementContainer(ESP8266WebServer& server)
 {
 	server.sendContent("<div class=\"elementContainer\">\n");
@@ -266,7 +267,23 @@ void GUIElement::startElementContainer(ESP8266WebServer& server)
 	server.sendContent(labelStr);
 }
 
+//TODO: this is not related to vBoxes and hBoxes at all, it's just the wrapper containing the label of this element and the element itself, it should be renamed!
 void GUIElement::endElementContainer(ESP8266WebServer& server)
 {
 	server.sendContent("</div>\n");
+}
+
+void GUIElement::setContainer(Container* c)
+{
+	this->enclosingContainer = c;
+}
+
+Container* GUIElement::getContainer()
+{
+	return this->enclosingContainer;
+}
+
+String GUIElement::getElementType()
+{
+	return "NORMAL";
 }

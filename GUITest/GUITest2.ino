@@ -6,6 +6,8 @@
  *
  */
 
+#include "vBox.h"
+#include "Container.h"
 #include "SpiffsUtils.h"
 #include <WebSocketsClient.h>
 #include <WebSockets.h>
@@ -61,21 +63,30 @@ void setup() {
 	USE_SERIAL.println(WiFi.localIP());
 	gui.begin();
 
+	vBox* vb = new vBox("vBox");
+	hBox* hb = new hBox("hBox");
+	vBox* vb2 = new vBox("vBox2");
+	gui.add(hb);
+	hb->add(vb);
+	hb->add(vb2);
+
 	Button* c=new Button("kokon", "slepice", printTAContents);
-	gui.addln(c);
+	vb->add(c);
 	Label* l = new Label("lbl1", "label");
-	gui.addln(l);
+	vb->add(l);
 	TextArea* t = new TextArea("txt1", "some text");
-	gui.addln(t);
+	vb->add(t);
 	Slider* s = new Slider("sl1", "some slider");
-	gui.addln(s);
+	vb->add(s);
+	Slider* s2 = new Slider("sl2", "some slider");
+	vb2->add(s2);
 	//s->onClick(displayNumber);//if both are enabled, esp crashes... why?!
 	s->onInput(displayNumber);
 
 	s->setSynced(true);
 
 	Checkbox* ch = new Checkbox("cb1", "some checkbox");
-	gui.addln(ch);
+	vb->add(ch);
 	ch->onClick(displayNumber);
 	ch->setSynced(true);
 

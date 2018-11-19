@@ -4,4 +4,6 @@
 #include "TextArea.h"
 #include "Slider.h"
 #include "Checkbox.h"
+#include "vBox.h"
+#include "hBox.h"
 //#include
