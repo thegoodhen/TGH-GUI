@@ -96,7 +96,7 @@ int GUIElement::setText(int clientNum, String theText)
 	gui->sendText(ALL_CLIENTS, sentString);
 	return 0;
 	*/
-	return setProperty(clientNum, "innerHtml", theText);
+	return setProperty(clientNum, "innerHTML", theText);
 }
 
 int GUIElement::setProperty(int clientNum, String propertyName, String propertyValue)

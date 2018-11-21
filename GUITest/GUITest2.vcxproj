@@ -121,6 +121,7 @@
     <ClInclude Include="SpiffsUtils.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="TextArea.h" />
+    <ClInclude Include="TGH_GUI.h" />
     <ClInclude Include="vBox.h" />
     <ClInclude Include="__vm\.GUITest.vsarduino.h" />
     <ClInclude Include="__vm\.GUITest2.vsarduino.h" />
