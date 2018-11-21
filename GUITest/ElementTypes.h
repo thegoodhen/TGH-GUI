@@ -6,4 +6,6 @@
 #include "Checkbox.h"
 #include "vBox.h"
 #include "hBox.h"
+#include "Heading.h"
+#include "Text.h"
 //#include

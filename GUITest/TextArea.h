@@ -13,6 +13,7 @@ public:
 	//int handleEvent(JsonObject &obj) override;
 	
 	//String getHTML() override;
+	void sendHtml(ESP8266WebServer& server) override;
 private:
 	std::function<void()> clickCB = NULL;
 };

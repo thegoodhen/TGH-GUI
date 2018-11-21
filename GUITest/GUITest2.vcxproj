@@ -115,9 +115,11 @@
     <ClInclude Include="GUI.cpp" />
     <ClInclude Include="GUIElement.h" />
     <ClInclude Include="hBox.h" />
+    <ClInclude Include="Heading.h" />
     <ClInclude Include="Label.h" />
     <ClInclude Include="Slider.h" />
     <ClInclude Include="SpiffsUtils.h" />
+    <ClInclude Include="Text.h" />
     <ClInclude Include="TextArea.h" />
     <ClInclude Include="vBox.h" />
     <ClInclude Include="__vm\.GUITest.vsarduino.h" />
@@ -129,9 +131,11 @@
     <ClCompile Include="GUI.h" />
     <ClCompile Include="GUIElement.cpp" />
     <ClCompile Include="hBox.cpp" />
+    <ClCompile Include="Heading.cpp" />
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="Slider.cpp" />
     <ClCompile Include="SpiffsUtils.cpp" />
+    <ClCompile Include="Text.cpp" />
     <ClCompile Include="TextArea.cpp" />
     <ClCompile Include="vBox.cpp" />
   </ItemGroup>

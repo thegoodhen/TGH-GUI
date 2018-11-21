@@ -190,6 +190,7 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 <link rel="stylesheet" type="text/css" href="./textInput.css">
 <link rel="stylesheet" type="text/css" href="./hBox.css">
 <link rel="stylesheet" type="text/css" href="./vBox.css">
+<link rel="stylesheet" type="text/css" href="./text.css">
 )";
 	}
 	String GUI::getFooter()

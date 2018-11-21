@@ -242,7 +242,7 @@ void GUIElement::addClientSideCallback(String eventName, String eventCode)
 
 String GUIElement::getCallbackString()
 {
-	String returnString = "";
+	String returnString = " ";
 	//returnString+
 	for (std::vector<String>::size_type i = 0; i != callbackStrings.size(); i++) {
 		{

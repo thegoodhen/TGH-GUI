@@ -14,6 +14,23 @@
 		return this->retrieveProperty(clientNo, "value");
 	}
 
+	void TextArea::sendHtml(ESP8266WebServer& server)
+	{
+		this->startElementContainer(server);
+
+		server.sendContent("<TextArea ");
+		server.sendContent("id=\"");
+		server.sendContent(this->id);
+		server.sendContent("\", ");
+		server.sendContent(this->getCallbackString());
+		server.sendContent(">\n");
+		server.sendContent("</TextArea>\n");
+
+		this->endElementContainer(server);
+	}
+
+
+
 	/*
 	String Button::getHTML() 
 	{

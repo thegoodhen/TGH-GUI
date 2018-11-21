@@ -2,12 +2,13 @@
 #include "GUIElement.h"
 #include <functional>
 
-class Label : public GUIElement
+class Text: public GUIElement
 {
 public:
-	Label(String _id, String _text);
+	Text(String _id, String _text, boolean _oneLine=false);
 	//String getHTML() override;
 	void sendHtml(ESP8266WebServer& server) override;
 private:
+	boolean oneLine;
 	//std::function<void()> clickCB = NULL;
 };

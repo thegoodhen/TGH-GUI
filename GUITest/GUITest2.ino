@@ -72,7 +72,7 @@ void setup() {
 
 	Button* c=new Button("kokon", "slepice", printTAContents);
 	vb->add(c);
-	Label* l = new Label("lbl1", "label");
+	Label* l = new Label("lbl1", "Label");
 	vb->add(l);
 	TextArea* t = new TextArea("txt1", "some text");
 	vb->add(t);
@@ -80,6 +80,9 @@ void setup() {
 	vb->add(s);
 	Slider* s2 = new Slider("sl2", "some slider");
 	vb2->add(s2);
+
+	Text* text= new Text("t1", "Here is some text.\n It's really cool and what not.");
+	vb2->add(text);
 	//s->onClick(displayNumber);//if both are enabled, esp crashes... why?!
 	s->onInput(displayNumber);
 
