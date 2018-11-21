@@ -15,6 +15,7 @@
 //#include "Container.h"
 #include <functional>
 #include <ESP8266WebServer.h>
+#include "Debugging.h"
 class GUI;
 class Container;
 
@@ -34,7 +35,7 @@ public:
 	int setText(int clientNo, String theText);
 	//int setText(String theText);
 	String getText();
-	int retrieveIntValue(int clientNo);
+	virtual int retrieveIntValue(int clientNo);
 	//virtual	String retrieveText();
 	virtual String retrieveText(int clientNo);
 	//void retrieveProperty(std::function<void(String)> func, String propertyName);

@@ -68,18 +68,27 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 
 		switch (type) {
 		case WStype_DISCONNECTED:
+
+			#ifdef TGH_DEBUG
 			USE_SERIAL.printf("[%u] Disconnected!\n", num);
+			#endif
 			break;
 		case WStype_CONNECTED: {
 			IPAddress ip = webSocket.remoteIP(num);
+
+			#ifdef TGH_DEBUG
 			USE_SERIAL.printf("[%u] Connected from %d.%d.%d.%d url: %s\n", num, ip[0], ip[1], ip[2], ip[3], payload);
+			#endif
 
 			// send message to client
 			webSocket.sendTXT(num, "Connected");
 		}
 							   break;
 		case WStype_TEXT:
+
+			#ifdef TGH_DEBUG
 			USE_SERIAL.printf("[%u] get Text: %s\n", num, payload);
+			#endif
 			//StaticJsonBuffer<1000> jb;
 			//JsonObject& obj = jb.parseObject(payload);
 			//this->handleRequest(obj);
@@ -102,7 +111,7 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 		{
 			return webSocket.broadcastTXT(theText);
 		}
-		return webSocket.sendTXT(clientNum,theText);
+		return !webSocket.sendTXT(clientNum,theText);
 		//server.send(200, "text/html", "<html><head><script>var connection = new WebSocket('ws://'+location.hostname+':81/', ['arduino']);connection.onopen = function () {  connection.send('Connect ' + new Date()); }; connection.onerror = function (error) {    console.log('WebSocket Error ', error);};connection.onmessage = function (e) {  console.log('Server: ', e.data);};function sendRGB() {  var r = parseInt(document.getElementById('r').value).toString(16);  var g = parseInt(document.getElementById('g').value).toString(16);  var b = parseInt(document.getElementById('b').value).toString(16);  if(r.length < 2) { r = '0' + r; }   if(g.length < 2) { g = '0' + g; }   if(b.length < 2) { b = '0' + b; }   var rgb = '#'+r+g+b;    console.log('RGB: ' + rgb); connection.send(rgb); }</script></head><body>LED Control:<br/><br/>R: <input id=\"r\" type=\"range\" min=\"0\" max=\"255\" step=\"1\" oninput=\"sendRGB();\" /><br/>G: <input id=\"g\" type=\"range\" min=\"0\" max=\"255\" step=\"1\" oninput=\"sendRGB();\" /><br/>B: <input id=\"b\" type=\"range\" min=\"0\" max=\"255\" step=\"1\" oninput=\"sendRGB();\" /><br/></body></html>");
 		//server.send(200, "text/html", theText);
 		return 0;

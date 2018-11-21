@@ -8,4 +8,5 @@
 #include "hBox.h"
 #include "Heading.h"
 #include "Text.h"
+#include "TextInput.h"
 //#include

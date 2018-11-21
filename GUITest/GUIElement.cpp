@@ -23,12 +23,12 @@ int GUIElement::handleEvent(int clientNum, JsonObject& obj)
 }
 int GUIElement::handleResponse(JsonObject& obj)
 {
-	Serial.println("response");
-	Serial.println(millis());
+	tghDbg("response");
+	tghDbg((String)millis());
 	if (strcmp(obj["subType"], "getText") == 0)
 	{
 		String str = (obj["text"]);
-		Serial.println("handle Response");
+		tghDbg("handle Response");
 		//*retreiveStringOutArg = str;
 		retreiveTextCallback(str);
 	}
@@ -36,7 +36,7 @@ int GUIElement::handleResponse(JsonObject& obj)
 	if (strcmp(obj["subType"], "getProperty") == 0)
 	{
 		String str = (obj["value"]);
-		Serial.println("got some getProperty response");
+		tghDbg("got some getProperty response");
 		//*retreiveStringOutArg = str;
 		retreivePropertyCallback(str);
 	}
@@ -162,8 +162,8 @@ in the future be filled up with a textual representation of some property of the
 */
 int GUIElement::retrieveProperty(int clientNumber, std::function<void(String)> func, String propertyName)//TODO: handle multiple requests at the same time!
 {
-	Serial.println("retProperty");
-	Serial.println(millis());
+	tghDbg("retProperty");
+	tghDbg((String)millis());
 	//retreiveStringOutArg = theText;//set the pointer
 	retreivePropertyCallback = func;
 	StaticJsonBuffer<500> jb;
@@ -192,7 +192,7 @@ String GUIElement::retrieveProperty(int clientNumber, String propertyName, int t
 	{
 		return "ERROR_RETRIEVING_PROPERTY";
 	}
-	Serial.println("waiting for property response");
+	tghDbg("waiting for property response");
 	unsigned long startMillis = millis();
 	while (millis() < (startMillis + timeout))
 	{
@@ -218,8 +218,8 @@ Stores the response to "retrieveProperty" into the propertyResponseString field
 */
 void GUIElement::storePropertyResponse(String s)
 {
-	Serial.println("storing property response");
-	Serial.println(s);
+	tghDbg("storing property response");
+	tghDbg(s);
 	this->propertyResponseString = s;
 	this->responseFlag = true;
 }

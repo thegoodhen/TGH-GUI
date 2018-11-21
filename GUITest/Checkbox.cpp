@@ -28,8 +28,8 @@
 				if (isSynced)
 				{
 					String v = obj["value"];
-					Serial.println("checked:");
-					Serial.println(v);
+					tghDbg("checked:");
+					tghDbg(v);
 					this->setPropertyOfAllBut(clientNum, "checked", v);//synchronize the switch between clients
 				}
 				boolean checked = (strcmp(obj["value"], "true") == 0);
@@ -74,6 +74,21 @@
 		this->onClickCB = f;
 		this->addClientSideCallback("onclick", CBString);
 	}
+
+
+int Checkbox::retrieveIntValue(int clientNo)
+{
+	String s = this->retrieveProperty(clientNo, "checked");
+	const char* str = s.c_str();
+	if (strcmp(str, "true") == 0)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
 
 	/*
 	String Button::getHTML() 

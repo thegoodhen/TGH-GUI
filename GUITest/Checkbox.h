@@ -15,6 +15,7 @@ public:
 	void sendHtml(ESP8266WebServer & server) override;
 
 	void onClick(std::function<void(int, boolean)> f);
+	int retrieveIntValue(int clientNo) override;
 	//String getCSS() override;
 	
 	//String getHTML() override;

@@ -3,6 +3,7 @@
 // 
 
 #include "SpiffsUtils.h"
+#include "Debugging.h"
 
 
 String getContentType(String filename) { // convert the file extension to the MIME type
@@ -15,7 +16,7 @@ String getContentType(String filename) { // convert the file extension to the MI
 
 //Taken from the tutorial here: https://tttapa.github.io/ESP8266/Chap11%20-%20SPIFFS.html
 bool handleFileRead(ESP8266WebServer& server, String path) { // send the right file to the client (if it exists)
-  Serial.println("handleFileRead: " + path);
+  tghDbg("handleFileRead: " + path);
   if (path.endsWith("/")) path += "index.html";         // If a folder is requested, send the index file
   String contentType = getContentType(path);            // Get the MIME type
   if (SPIFFS.exists(path)) {                            // If the file exists
@@ -24,6 +25,6 @@ bool handleFileRead(ESP8266WebServer& server, String path) { // send the right f
     file.close();                                       // Then close the file again
     return true;
   }
-  Serial.println("\tFile Not Found");
+  tghDbg("\tFile Not Found");
   return false;                                         // If the file doesn't exist, return false
 }
