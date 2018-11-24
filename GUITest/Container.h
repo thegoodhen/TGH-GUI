@@ -16,7 +16,8 @@ class Container : public GUIElement
 public:
 	virtual void openContainer(ESP8266WebServer& server);
 	virtual void closeContainer(ESP8266WebServer& server);
-	void sendHtml(ESP8266WebServer& server) override;
+	virtual void sendHtml(ESP8266WebServer& server) override;
+	void sendContainerItemsHtml(ESP8266WebServer& server);
 	void add(GUIElement* ge);
 	String getElementType() override;
 };

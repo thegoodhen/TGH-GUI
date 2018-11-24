@@ -6,6 +6,8 @@
  *
  */
 
+#include "Tab.h"
+#include "TabbedPane.h"
 #include <Arduino.h>
 
 #include <ESP8266WiFi.h>
@@ -77,8 +79,15 @@ void setup() {
 	Slider* s = new Slider("sl1", "Some slider: ");
 	vb->add(s);
 
+	ListBox* lb = new ListBox("lb1", "some ListBox:");
+	lb->addItem(new ListItem("Some first item"));
+	lb->addItem(new ListItem("A second item"));
+	lb->addItem(new ListItem("And yet another (third) item!"));
+	vb->add(lb);
+
 	Button* b = new Button("btn", "Submit", buttonCB);
 	vb->add(b);
+
 
 }
 
@@ -99,4 +108,11 @@ void buttonCB(int user)
 	USE_SERIAL.println(gui.find("cb1")->retrieveIntValue(user));
 	USE_SERIAL.println("Slider:");
 	USE_SERIAL.println(gui.find("sl1")->retrieveIntValue(user));
+	USE_SERIAL.println("ListBox");
+	USE_SERIAL.println(gui.find("lb1")->retrieveText(user));
+	USE_SERIAL.println(gui.find("lb1")->retrieveIntValue(user));
+}
+void lbCb(int user, ListItem li)
+{
+	USE_SERIAL.println(li.getValue());
 }

@@ -84,6 +84,12 @@
     <ClInclude Include="ListItem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TabbedPane.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tab.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GUIElement.cpp">
@@ -132,6 +138,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ListBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TabbedPane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tab.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

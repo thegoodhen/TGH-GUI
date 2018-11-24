@@ -196,14 +196,16 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 		return R"(<!DOCTYPE html>
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" type="text/css" href="./generalElement.css">
-<link rel="stylesheet" type="text/css" href="./slider.css">
-<link rel="stylesheet" type="text/css" href="./switch.css">
-<link rel="stylesheet" type="text/css" href="./button.css">
-<link rel="stylesheet" type="text/css" href="./textInput.css">
-<link rel="stylesheet" type="text/css" href="./hBox.css">
-<link rel="stylesheet" type="text/css" href="./vBox.css">
-<link rel="stylesheet" type="text/css" href="./text.css">
+<!--<link rel="stylesheet" type="text/css" href="./generalElement.css">-->
+<!--//<link rel="stylesheet" type="text/css" href="./slider.css-->
+<!--//<link rel="stylesheet" type="text/css" href="./switch.css-->
+<!--//<link rel="stylesheet" type="text/css" href="./button.css-->
+<!--//<link rel="stylesheet" type="text/css" href="./textInput.css-->
+<!--//<link rel="stylesheet" type="text/css" href="./hBox.css-->
+<!--//<link rel="stylesheet" type="text/css" href="./vBox.css-->
+<!--//<link rel="stylesheet" type="text/css" href="./text.css-->
+<link rel="stylesheet" type="text/css" href="./kokon.css">
+<script src="./javaScript.js"></script>
 )";
 	}
 	String GUI::getFooter()
@@ -213,50 +215,7 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 
 	String GUI::getScript()
 	{
-		return R"(<head>
-<script>
-var theSocket = new WebSocket("ws://"+location.hostname+":81", ['arduino']);
-
-function sendJSON(theJSON)
-{
-  theSocket.send(JSON.stringify(theJSON));
-}
-
-theSocket.onmessage = function (event) {
-  var msg=JSON.parse(event.data);
-  switch(msg.type)
-  {
-	case "setText":
-		document.getElementById(msg.id).innerHTML = msg.newText;		
-	break;
-	case "getText":
-		sendJSON({type: "response", id: msg.id, subType: "getText", text: document.getElementById(msg.id).innerHTML});
-		break;
-	case "getProperty":
-		sendJSON({type: "response", id: msg.id, subType: "getProperty", propertyName: msg.propertyName, value: document.getElementById(msg.id)[msg.propertyName]});
-		break;
-	case "evalAndTell"://this is probably ok... js is sandboxed anyway, I guess... #yolo
-		sendJSON({type: "response", id:msg.id, subType:"evalAndTell", value: eval(msg.value)});
-		break;
-	case "setProperty":
-		if(msg.value=="false")//do we want to do it like this actually?
-		{
-			msg.value=false;
-		}
-		if(msg.value=="true")//do we want to do it like this actually?
-		{
-			msg.value=true;
-		}
-		document.getElementById(msg.id)[msg.propertyName]=msg.value;
-		break;
-	default:
-		console.log("got invalid request");
-	break;
-
-  }
-}
-</script>
-</head>)";
+		return R"(<head></head>)";
 	}
 
 	void GUI::addln(GUIElement* ge)

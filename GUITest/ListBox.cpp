@@ -86,7 +86,7 @@ String ListBox::retrieveText(int clientNo)
 
 int ListBox::retrieveIntValue(int clientNo)
 {
-	String s = this->retrieveProperty(clientNo, "selectedIndex");
+	String s=this->evalAndTell(clientNo, "var theLb=document.getElementById(\"" + id + "\"); theLb.selectedIndex");
 	const char* str = s.c_str();
 	char* ptr;
 	return strtol(str, &ptr, 10);//yea, but handle some error checking as well please

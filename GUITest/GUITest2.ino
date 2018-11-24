@@ -6,6 +6,8 @@
  *
  */
 
+#include "Tab.h"
+#include "TabbedPane.h"
 #include <Arduino.h>
 
 #include <ESP8266WiFi.h>
@@ -55,38 +57,12 @@ void setup() {
 
 	//First, we create a new horizontal box - all items in this box will be centered around the middle and will fit side-by-side,
 	//as long as the screen width of the target device permits that. We do this just to center the content on screen now!
-	hBox* hb = new hBox("hBox");
-	gui.add(hb);//We add it to the user interface (otherwise it wouldn't be visible anywhere!)
-	vBox* vb = new vBox("vBox");//we create a new vertical box - the things in this box will go one under another
-	hb->add(vb);//we add the vertical box inside the horizontal box we created
-
-	Heading* h = new Heading("heading1", 1, "Simple form example");//We create heading of level "1", name it "heading1" and change its text.
-	vb->add(h);//Always remember to actually add the elements somewhere!
-	Text* t = new Text("text1", R"(In this example, we demonstrate a simple form that gets submitted when the "Submit" button is clicked. See serial output!)");//We add some explanation
-	vb->add(t);
-
-	TextInput* ti = new TextInput("ti1", "First text input: ");
-	vb->add(ti);
-
-	TextInput* ti2 = new TextInput("ti2", "Second text input: ");
-	vb->add(ti2);
-
-	Checkbox* ch = new Checkbox("cb1", "Some checkbox: ");
-	vb->add(ch);
-
-	Slider* s = new Slider("sl1", "Some slider: ");
-	vb->add(s);
-
-	ListBox* lb = new ListBox("lb1", "My awesome Listbox!");
-	lb->addItem(new ListItem("Some first item"));
-	lb->addItem(new ListItem("A second item"));
-	lb->addItem(new ListItem("And yet another (third) item!"));
-	vb->add(lb);
-
-	Button* b = new Button("btn", "Submit", buttonCB);
-	vb->add(b);
-
-
+	TabbedPane* tp = new TabbedPane("tp1");
+	gui.add(tp);
+	Tab* tab1 = new Tab("tab1");
+	tp->addTab(tab1);
+	Tab* tab2 = new Tab("tab2");
+	tp->addTab(tab2);
 }
 
 
@@ -94,22 +70,3 @@ void loop() {
 	gui.loop();//you have to call this function in loop() for this library to work!
 }
 
-void buttonCB(int user)
-{
-	USE_SERIAL.println("User clicked the button! User number: ");
-	USE_SERIAL.println(user);
-	USE_SERIAL.println("First text input:");
-	USE_SERIAL.println(gui.find("ti1")->retrieveText(user));
-	USE_SERIAL.println("Second text input:");
-	USE_SERIAL.println(gui.find("ti2")->retrieveText(user));
-	USE_SERIAL.println("Checkbox:");
-	USE_SERIAL.println(gui.find("cb1")->retrieveIntValue(user));
-	USE_SERIAL.println("Slider:");
-	USE_SERIAL.println(gui.find("sl1")->retrieveIntValue(user));
-	USE_SERIAL.println("ListBox");
-	USE_SERIAL.println(gui.find("lb1")->retrieveText(user));
-}
-void lbCb(int user, ListItem li)
-{
-	USE_SERIAL.println(li.getValue());
-}
