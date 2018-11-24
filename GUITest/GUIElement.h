@@ -43,12 +43,16 @@ public:
 	//String retrieveProperty(String propertyName);
 	String retrieveProperty(int clientNumber, String propertyName);
 	String retrieveProperty(int clientNumber, String propertyName, int timeout);
+	String waitForResponse(int timeout);
 	//int setProperty(String propertyName, String propertyValue);
 	int setProperty(int clientNumber, String propertyName, String propertyValue);
 	int setPropertyOfAllBut(int clientNo, String propertyName, String propertyValue);
 	//String retrieveProperty(String propertyName, int timeout);
 	//void retreiveText(String * theText);
 	String id;
+	int evalAndTell(int clientNumber, std::function<void(String)> func, String whatToEval);
+	String evalAndTell(int clientNumber, String propertyName);
+	String evalAndTell(int clientNumber, String propertyName, int timeout);
 	void setLineBreak(boolean theBreak);
 	void setSynced(boolean _synced);
 	void setContainer(Container* c);
@@ -61,7 +65,7 @@ protected:
 	GUI* gui;
 	//String* retreiveStringOutArg;//the pointer to the string to which we store the reply when requesting the textual value of the element
 	std::function<void(String)> retreiveTextCallback;
-	std::function<void(String)> retreivePropertyCallback;
+	std::function<void(String)> responseCallback;
 	boolean responseFlag=false;
 	void storePropertyResponse(String s);
 	//a flag which gets set to true when the reply arrives

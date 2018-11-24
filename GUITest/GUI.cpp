@@ -2,6 +2,7 @@
 
 
 #include "GUI.h"
+//#define TGH_DEBUG kokon
 using namespace std::placeholders;  // For _1 in the bind call
 
 ESP8266WebServer server(80);
@@ -69,15 +70,18 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 		switch (type) {
 		case WStype_DISCONNECTED:
 
-			#ifdef TGH_DEBUG
+			//#ifdef TGH_DEBUG
 			USE_SERIAL.printf("[%u] Disconnected!\n", num);
-			#endif
+			//#endif
 			break;
 		case WStype_CONNECTED: {
 			IPAddress ip = webSocket.remoteIP(num);
 
 			#ifdef TGH_DEBUG
+				#pragma message "Já jsem asi slepice"
 			USE_SERIAL.printf("[%u] Connected from %d.%d.%d.%d url: %s\n", num, ip[0], ip[1], ip[2], ip[3], payload);
+			#else
+				#pragma message "Já nejsem vùbec slepice"
 			#endif
 
 			// send message to client
@@ -86,9 +90,9 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 							   break;
 		case WStype_TEXT:
 
-			#ifdef TGH_DEBUG
+			//#ifdef TGH_DEBUG
 			USE_SERIAL.printf("[%u] get Text: %s\n", num, payload);
-			#endif
+			//#endif
 			//StaticJsonBuffer<1000> jb;
 			//JsonObject& obj = jb.parseObject(payload);
 			//this->handleRequest(obj);
@@ -136,7 +140,7 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 		String returnString;
 		returnString += getHeader();
 		returnString += getScript();
-		for (std::vector<int>::size_type i = 0; i != elements.size(); i++) {
+		for (std::vector<int>::size_type i = 0; i != elements.size(); i++) {//TODO: wait, std::vector...int? wat
 			{
 				//Serial.println(i);
 				returnString += elements[i]->getHTML();
@@ -231,6 +235,9 @@ theSocket.onmessage = function (event) {
 	case "getProperty":
 		sendJSON({type: "response", id: msg.id, subType: "getProperty", propertyName: msg.propertyName, value: document.getElementById(msg.id)[msg.propertyName]});
 		break;
+	case "evalAndTell"://this is probably ok... js is sandboxed anyway, I guess... #yolo
+		sendJSON({type: "response", id:msg.id, subType:"evalAndTell", value: eval(msg.value)});
+		break;
 	case "setProperty":
 		if(msg.value=="false")//do we want to do it like this actually?
 		{
@@ -292,12 +299,11 @@ theSocket.onmessage = function (event) {
 	{
 		if (strcmp(obj["type"], "event")==0)
 		{
-			//Serial.println("je to event");
+			//tghDbg(("je to event"));//PROÈ NEFACHÁ?!!?	
 			String id = obj["id"];
 			GUIElement* ge = find(id);
 			if (ge != NULL)
 			{
-			//Serial.println("neni to null");
 				return ge->handleEvent(clNum, obj);
 			}
 			else

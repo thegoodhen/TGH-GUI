@@ -33,12 +33,12 @@ int GUIElement::handleResponse(JsonObject& obj)
 		retreiveTextCallback(str);
 	}
 
-	if (strcmp(obj["subType"], "getProperty") == 0)
+	if (strcmp(obj["subType"], "getProperty") == 0||strcmp(obj["subType"], "evalAndTell")==0)
 	{
 		String str = (obj["value"]);
 		tghDbg("got some getProperty response");
 		//*retreiveStringOutArg = str;
-		retreivePropertyCallback(str);
+		responseCallback(str);
 	}
 	return 0;
 }
@@ -165,7 +165,7 @@ int GUIElement::retrieveProperty(int clientNumber, std::function<void(String)> f
 	tghDbg("retProperty");
 	tghDbg((String)millis());
 	//retreiveStringOutArg = theText;//set the pointer
-	retreivePropertyCallback = func;
+	responseCallback = func;
 	StaticJsonBuffer<500> jb;
 	JsonObject& obj = jb.createObject();
 	obj["type"] = "getProperty";
@@ -192,6 +192,11 @@ String GUIElement::retrieveProperty(int clientNumber, String propertyName, int t
 	{
 		return "ERROR_RETRIEVING_PROPERTY";
 	}
+	return waitForResponse(timeout);
+}
+
+String GUIElement::waitForResponse(int timeout)
+{
 	tghDbg("waiting for property response");
 	unsigned long startMillis = millis();
 	while (millis() < (startMillis + timeout))
@@ -206,6 +211,48 @@ String GUIElement::retrieveProperty(int clientNumber, String propertyName, int t
 		}
 	}
 	return "";
+}
+
+
+/*
+A non-blocking function, which allows the user to request that a the String supplied by them will sometime
+in the future be filled up with a textual representation of a return value of whatever happense when the "whatToEval" string gets passed to the JavaScript eval
+*/
+int GUIElement::evalAndTell(int clientNumber, std::function<void(String)> func, String whatToEval)//TODO: handle multiple requests at the same time!
+{
+	tghDbg("evalAndTell");
+	tghDbg((String)millis());
+	//retreiveStringOutArg = theText;//set the pointer
+	responseCallback = func;
+	StaticJsonBuffer<500> jb;
+	JsonObject& obj = jb.createObject();
+	obj["type"] = "evalAndTell";
+	obj["id"] = id;
+	obj["value"] = whatToEval;
+	String str;
+	obj.printTo(str);
+	return this->gui->sendText(clientNumber, str);
+}
+
+
+
+String GUIElement::evalAndTell(int clientNumber, String whatToEval)
+{
+	return evalAndTell(clientNumber, whatToEval, 250);
+}
+
+/*
+Blocking function, which requests the call of js eval() on the string provided and then blocks until it gets the response; returns empty string on timeout
+*/
+String GUIElement::evalAndTell(int clientNumber, String whatToEval, int timeout)
+{
+	clearResponseFlag();
+	auto f1 = std::bind(&GUIElement::storePropertyResponse, this, _1);
+	if (evalAndTell(clientNumber, f1, whatToEval) != 0)//something went wrong!
+	{
+		return "ERROR_WAITING_FOR_EVAL";
+	}
+	return waitForResponse(timeout);
 }
 
 void GUIElement::setLineBreak(boolean theBreak)

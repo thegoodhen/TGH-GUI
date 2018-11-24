@@ -118,6 +118,8 @@
     <ClInclude Include="hBox.h" />
     <ClInclude Include="Heading.h" />
     <ClInclude Include="Label.h" />
+    <ClInclude Include="ListBox.h" />
+    <ClInclude Include="ListItem.h" />
     <ClInclude Include="Slider.h" />
     <ClInclude Include="SpiffsUtils.h" />
     <ClInclude Include="Text.h" />
@@ -137,6 +139,8 @@
     <ClCompile Include="hBox.cpp" />
     <ClCompile Include="Heading.cpp" />
     <ClCompile Include="Label.cpp" />
+    <ClCompile Include="ListBox.cpp" />
+    <ClCompile Include="ListItem.cpp" />
     <ClCompile Include="Slider.cpp" />
     <ClCompile Include="SpiffsUtils.cpp" />
     <ClCompile Include="Text.cpp" />
