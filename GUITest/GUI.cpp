@@ -223,6 +223,7 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 		this->add(ge);
 		ge->setLineBreak(true);
 	}
+
 	void GUI::add(GUIElement* ge)
 	{
 		if (this->find(ge->getId()))//if already there, fail; TODO: change the return type to int to signal errors
@@ -232,6 +233,7 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 		elements.push_back(ge);
 		ge->setGUI(this);
 	}
+
 	GUIElement* GUI::find(String s)
 	{
 		for (std::vector<int>::size_type i = 0; i != elements.size(); i++) {

@@ -10,6 +10,7 @@
 using namespace std::placeholders;  // For _1 in the bind call
 
 //#pragma once
+#include "Container.h"
 
 
 
@@ -17,6 +18,23 @@ void GUIElement::setGUI(GUI* _gui)
 {
 	gui = _gui;
 }
+
+GUI* GUIElement::getGUI()
+{
+	if (gui != NULL)
+	{
+		return gui;
+	}
+	else
+	{
+		if (enclosingContainer != NULL)
+		{
+			return this->enclosingContainer->getGUI();
+		}
+	}
+	return NULL;
+}
+
 int GUIElement::handleEvent(int clientNum, JsonObject& obj)
 {
 	return 1;
@@ -201,7 +219,7 @@ String GUIElement::waitForResponse(int timeout)
 	unsigned long startMillis = millis();
 	while (millis() < (startMillis + timeout))
 	{
-		this->gui->loop();
+		this->getGUI()->loop();
 		run_scheduled_functions();
 		ets_post(1, 0, 0);
 		//esp_schedule();
@@ -231,7 +249,7 @@ int GUIElement::evalAndTell(int clientNumber, std::function<void(String)> func, 
 	obj["value"] = whatToEval;
 	String str;
 	obj.printTo(str);
-	return this->gui->sendText(clientNumber, str);
+	return this->getGUI()->sendText(clientNumber, str);
 }
 
 

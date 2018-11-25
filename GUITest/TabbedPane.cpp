@@ -21,7 +21,7 @@ void TabbedPane::addTab(Tab* t)
 {
 	this->theTabs.push_back(t);
 	t->setContainer(this);
-	t->setGUI(this->gui);
+	t->setGUI(this->getGUI());
 }
 
 void TabbedPane::add(Tab* t)

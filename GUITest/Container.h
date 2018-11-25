@@ -19,5 +19,9 @@ public:
 	virtual void sendHtml(ESP8266WebServer& server) override;
 	void sendContainerItemsHtml(ESP8266WebServer& server);
 	void add(GUIElement* ge);
+	GUIElement * find(String s);
 	String getElementType() override;
+
+private:
+	std::vector<GUIElement*> elements;
 };
