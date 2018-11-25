@@ -10,6 +10,8 @@ Numerous GUI elements are supported.
 
 ## Supported GUI elements
 
+![image of some nice GUI elements](https://i.imgur.com/ZF3XQDp.png)
+
 - Text
 
 Any text can be placed on the page and then can be updated dynamically from the ESP. Rich HTML can be optionally used to style this text.
@@ -53,6 +55,8 @@ A container, which organises the components inside it vertically.
 - tabbedPane, tab
 
 The content can be organized into tabs, grouped by context. 
+
+![image of tabs](https://i.imgur.com/OVA1Pbr.png)
 
 ## Synchronization
 
