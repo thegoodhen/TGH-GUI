@@ -39,11 +39,14 @@ theSocket.onmessage = function (event) {
   }
 }
 
-function activateTab(theEvent, tabName) {
+function activateTab(theEvent, tabName, tabbedPaneId) {
   var allTabContents = document.getElementsByClassName("tabContent");
   //iterate over tabs and hide them all
   for (var i = 0; i < allTabContents.length; i++) {
-    allTabContents[i].style.display = "none";
+    if(allTabContents[i].dataset.tabbedPaneId==tabbedPaneId)
+    {
+    	allTabContents[i].style.display = "none";//Only hide those in the current tabbedPane
+    }
   }
   //display the current one
   document.getElementById(tabName).style.display = "block";

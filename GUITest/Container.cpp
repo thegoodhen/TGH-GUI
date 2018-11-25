@@ -26,7 +26,6 @@ void Container::sendContainerItemsHtml(ESP8266WebServer& server)
 	std::vector<GUIElement*>* elements = this->gui->getElements();
 	for (std::vector<int>::size_type i = 0; i != elements->size(); i++) {
 		{
-			//Serial.println(i);
 			GUIElement* ge = (*elements)[i];
 			if (ge->getContainer() == this)
 			{

@@ -18,6 +18,9 @@ void Tab::sendHeaderHtml(ESP8266WebServer& server)
 {
 	server.sendContent("<button class=\"tabLink\" onclick='activateTab(event, \""); 
 	server.sendContent(this->id); 
+	server.sendContent("\", "); 
+	server.sendContent("\""); 
+	server.sendContent(this->enclosingContainer->getId()); 
 	server.sendContent("\")\'>"); 
 	server.sendContent(this->text);
 	server.sendContent("</button>\n");
@@ -29,6 +32,8 @@ void Tab::openContainer(ESP8266WebServer& server)
 {
 	server.sendContent("<div class=\"tabContent\" id=\"");
 	server.sendContent(this->id);
+	server.sendContent("\" data-tabbed-pane-id=\"");
+	server.sendContent(this->enclosingContainer->getId());
 	server.sendContent("\">\n");
 }
 

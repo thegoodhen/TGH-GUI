@@ -21,6 +21,7 @@ void TabbedPane::addTab(Tab* t)
 {
 	this->theTabs.push_back(t);
 	t->setContainer(this);
+	t->setGUI(this->gui);
 }
 
 void TabbedPane::add(Tab* t)
@@ -42,7 +43,6 @@ void TabbedPane::sendHtml(ESP8266WebServer& server)
 	}
 
 	server.sendContent("</div>\n");//close the header
-	Serial.println("poslal jsme hedr");
 	
 
 	//the loop actually has to be iterated twice, this isn't a pointles code duplication...
@@ -50,7 +50,6 @@ void TabbedPane::sendHtml(ESP8266WebServer& server)
 		{
 			//Serial.println(i);
 			Tab* t = theTabs[i];
-			Serial.println("kokokokokokokokokokokokokokokoko");
 			t->sendHtml(server);	
 		}
 	}
