@@ -1,7 +1,12 @@
 // SpiffsUtils.h
 
 #pragma once
+#ifdef ESP8266
 #include <FS.h>   // Include the SPIFFS library
+#else
+#include <SPIFFS.h>   // Include the SPIFFS library
+#endif
+
 #include "WebServerIncludes.h"
 
 

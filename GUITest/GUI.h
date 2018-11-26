@@ -18,10 +18,11 @@
 
 #ifdef ESP8266
 #include <ESP8266mDNS.h>
+#include <Hash.h>
 #else
 #include <ESPmDNS.h>
+#include <WiFiClientSecure.h>
 #endif
-#include <Hash.h>
 
 #include <WebSocketsServer.h>
 #include "SpiffsUtils.h"
