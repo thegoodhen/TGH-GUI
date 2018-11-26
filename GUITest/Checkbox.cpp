@@ -49,7 +49,7 @@
 		return tempStr;
 	}
 
-	void Checkbox::sendHtml(ESP8266WebServer& server)
+	void Checkbox::sendHtml(ESPWebServer& server)
 	{
 		this->startElementContainer(server);
 

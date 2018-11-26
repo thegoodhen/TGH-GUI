@@ -14,7 +14,7 @@
 		return this->retrieveProperty(clientNo, "value");
 	}
 
-	void TextArea::sendHtml(ESP8266WebServer& server)
+	void TextArea::sendHtml(ESPWebServer& server)
 	{
 		this->startElementContainer(server);
 

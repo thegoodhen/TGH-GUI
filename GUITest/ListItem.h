@@ -1,13 +1,13 @@
 #pragma once
 #include <functional>
-#include <ESP8266WebServer.h>
+#include "WebServerIncludes.h"
 
 class  ListItem
 {
 public:
 	//String getHTML() override;
 	ListItem(String _text, String _value="", int id=-1);
-	void sendHtml(ESP8266WebServer& server);
+	void sendHtml(ESPWebServer& server);
 	int getId();
 	String getText();
 	String getValue();

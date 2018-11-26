@@ -129,6 +129,7 @@
     <ClInclude Include="TextInput.h" />
     <ClInclude Include="TGH_GUI.h" />
     <ClInclude Include="vBox.h" />
+    <ClInclude Include="WebServerIncludes.h" />
     <ClInclude Include="__vm\.GUITest.vsarduino.h" />
     <ClInclude Include="__vm\.GUITest2.vsarduino.h" />
   </ItemGroup>

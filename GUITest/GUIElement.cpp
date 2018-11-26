@@ -72,7 +72,7 @@ String GUIElement::getHTML()
 }
 
 
-void GUIElement::sendHtml(ESP8266WebServer& server)
+void GUIElement::sendHtml(ESPWebServer& server)
 {
 	server.sendContent(getHTML());//this is just for now, getHtml is obsolete
 }
@@ -323,7 +323,7 @@ void GUIElement::setSynced(boolean _synced)
 }
 
 //TODO: this is not related to vBoxes and hBoxes at all, it's just the wrapper containing the label of this element and the element itself, it should be renamed!
-void GUIElement::startElementContainer(ESP8266WebServer& server)
+void GUIElement::startElementContainer(ESPWebServer& server)
 {
 	server.sendContent("<div class=\"elementContainer\">\n");
 	char labelStr[400];
@@ -333,7 +333,7 @@ void GUIElement::startElementContainer(ESP8266WebServer& server)
 }
 
 //TODO: this is not related to vBoxes and hBoxes at all, it's just the wrapper containing the label of this element and the element itself, it should be renamed!
-void GUIElement::endElementContainer(ESP8266WebServer& server)
+void GUIElement::endElementContainer(ESPWebServer& server)
 {
 	server.sendContent("</div>\n");
 }

@@ -2,7 +2,7 @@
 
 #pragma once
 #include <FS.h>   // Include the SPIFFS library
-#include <ESP8266WebServer.h>
+#include "WebServerIncludes.h"
 
 
 #if defined(ARDUINO) && ARDUINO >= 100
@@ -12,4 +12,4 @@
 #endif
 
 String getContentType(String filename) ; // convert the file extension to the MIME type
-bool handleFileRead(ESP8266WebServer& server, String path) ; // send the right file to the client (if it exists)
+bool handleFileRead(ESPWebServer& server, String path) ; // send the right file to the client (if it exists)

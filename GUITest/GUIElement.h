@@ -14,7 +14,7 @@
 #include "GUI.h"
 //#include "Container.h"
 #include <functional>
-#include <ESP8266WebServer.h>
+#include "WebServerIncludes.h"
 #include "Debugging.h"
 class GUI;
 class Container;
@@ -31,7 +31,7 @@ public:
 	virtual int handleEvent(int clientNum, JsonObject& obj);
 	int handleResponse(JsonObject & obj);
 	virtual String getHTML();
-	virtual void sendHtml(ESP8266WebServer& server);
+	virtual void sendHtml(ESPWebServer& server);
 	String getId();
 	int setText(int clientNo, String theText);
 	//int setText(String theText);
@@ -77,8 +77,8 @@ protected:
 	boolean lineBreak=false;
 	boolean isSynced=false;
 
-	void startElementContainer(ESP8266WebServer& server);
-	void endElementContainer(ESP8266WebServer& server);
+	void startElementContainer(ESPWebServer& server);
+	void endElementContainer(ESPWebServer& server);
 	Container* enclosingContainer;
 private:
 	GUI* gui;

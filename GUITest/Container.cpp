@@ -4,24 +4,24 @@
 
 #include "Container.h"
 
-void Container::openContainer(ESP8266WebServer& server)
+void Container::openContainer(ESPWebServer& server)
 {
 	server.sendContent("<div class=\"vBox\">\n");
 }
 
-void Container::closeContainer(ESP8266WebServer& server)
+void Container::closeContainer(ESPWebServer& server)
 {
 	server.sendContent("</div>\n");
 }
 
-void Container::sendHtml(ESP8266WebServer& server)
+void Container::sendHtml(ESPWebServer& server)
 {
 	openContainer(server);
 	sendContainerItemsHtml(server);
 	closeContainer(server);
 }
 
-void Container::sendContainerItemsHtml(ESP8266WebServer& server)
+void Container::sendContainerItemsHtml(ESPWebServer& server)
 {
 	for (std::vector<GUIElement*>::size_type i = 0; i != elements.size(); i++) {
 		GUIElement* ge = (elements)[i];

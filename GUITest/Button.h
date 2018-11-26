@@ -10,7 +10,7 @@ public:
 
 	int handleEvent(int clientNo, JsonObject &obj) override;
 
-	void sendHtml(ESP8266WebServer & server) override;
+	void sendHtml(ESPWebServer & server) override;
 	
 	//String getHTML() override;
 private:

@@ -14,7 +14,7 @@
 
 #include "GUIElement.h"
 #include <vector>
-#include <ESP8266WebServer.h>
+#include "WebServerIncludes.h"
 #include <ESP8266mDNS.h>
 #include <Hash.h>
 

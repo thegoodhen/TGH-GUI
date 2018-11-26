@@ -5,7 +5,7 @@
 //#define TGH_DEBUG kokon
 using namespace std::placeholders;  // For _1 in the bind call
 
-ESP8266WebServer server(80);
+ESPWebServer server(80);
 WebSocketsServer webSocket = WebSocketsServer(81);
 
 	GUI::GUI()

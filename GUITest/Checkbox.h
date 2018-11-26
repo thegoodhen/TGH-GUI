@@ -12,7 +12,7 @@ public:
 
 	String getHTML() override;
 
-	void sendHtml(ESP8266WebServer & server) override;
+	void sendHtml(ESPWebServer & server) override;
 
 	void onClick(std::function<void(int, boolean)> f);
 	int retrieveIntValue(int clientNo) override;
