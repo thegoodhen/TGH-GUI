@@ -15,7 +15,12 @@
 #include "GUIElement.h"
 #include <vector>
 #include "WebServerIncludes.h"
+
+#ifdef ESP8266
 #include <ESP8266mDNS.h>
+#else
+#include <ESPmDNS.h>
+#endif
 #include <Hash.h>
 
 #include <WebSocketsServer.h>
