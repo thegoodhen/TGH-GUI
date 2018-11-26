@@ -1,3 +1,5 @@
+# Examples don't work right now, I broke it. Will fix soon.
+
 # TGH GUI
 
 This is an alpha version of my GUI Library for ESP8266. This library allows you to write some simple code in the Arduino language, which describes the layout of some GUI, the GUI elements used, their callbacks and more.
