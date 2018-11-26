@@ -52,8 +52,8 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 		server.begin();
 
 		// Add service to MDNS
-		MDNS.addService("http", "tcp", 80);
-		MDNS.addService("ws", "tcp", 81);
+		//MDNS.addService("http", "tcp", 80);
+		//MDNS.addService("ws", "tcp", 81);
 
 	}
 	void GUI::loop()
@@ -99,6 +99,8 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 			this->msgInString = (char*)payload;
 			this->clientNo = num;
 
+			break;
+		default:
 			break;
 		}
 

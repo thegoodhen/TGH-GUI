@@ -5,7 +5,9 @@
 #include "GUIElement.h"
 
 #include <Arduino.h>
+#ifdef ESP8266
 #include "Schedule.h"
+#endif
 
 using namespace std::placeholders;  // For _1 in the bind call
 
@@ -220,8 +222,10 @@ String GUIElement::waitForResponse(int timeout)
 	while (millis() < (startMillis + timeout))
 	{
 		this->getGUI()->loop();
-		run_scheduled_functions();
-		ets_post(1, 0, 0);
+		//the following line was commented out
+		//run_scheduled_functions();
+		yield();
+		//ets_post(1, 0, 0);
 		//esp_schedule();
 		if (this->responseFlag == true)
 		{
