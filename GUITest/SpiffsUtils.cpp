@@ -15,7 +15,7 @@ String getContentType(String filename) { // convert the file extension to the MI
 }
 
 //Taken from the tutorial here: https://tttapa.github.io/ESP8266/Chap11%20-%20SPIFFS.html
-bool handleFileRead(ESP8266WebServer& server, String path) { // send the right file to the client (if it exists)
+bool handleFileRead(ESPWebServer& server, String path) { // send the right file to the client (if it exists)
   tghDbg("handleFileRead: " + path);
   if (path.endsWith("/")) path += "index.html";         // If a folder is requested, send the index file
   String contentType = getContentType(path);            // Get the MIME type

@@ -10,7 +10,7 @@
 	}
 
 
-	void ListBox::sendHtml(ESP8266WebServer& server)
+	void ListBox::sendHtml(ESPWebServer& server)
 	{
 		this->startElementContainer(server);
 
@@ -26,7 +26,7 @@
 		this->endElementContainer(server);
 	}
 
-	void ListBox::sendItemsHtml(ESP8266WebServer& server)
+	void ListBox::sendItemsHtml(ESPWebServer& server)
 	{
 		for (std::vector<ListItem*>::size_type i = 0; i != theList.size(); i++) {
 			{

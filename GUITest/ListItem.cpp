@@ -21,7 +21,7 @@ ListItem::ListItem(String _text, String _value, int _id)
 	*/
 
 
-	void ListItem::sendHtml(ESP8266WebServer& server)
+	void ListItem::sendHtml(ESPWebServer& server)
 	{
 		server.sendContent("    <option ");
 		server.sendContent("value=\"");

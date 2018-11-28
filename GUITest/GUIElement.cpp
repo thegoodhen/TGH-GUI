@@ -3,13 +3,17 @@
 // 
 
 #include "GUIElement.h"
+#include "GUI.h"
 
 #include <Arduino.h>
+#ifdef ESP8266
 #include "Schedule.h"
+#endif
 
 using namespace std::placeholders;  // For _1 in the bind call
 
 //#pragma once
+#include "Container.h"
 
 
 
@@ -17,6 +21,23 @@ void GUIElement::setGUI(GUI* _gui)
 {
 	gui = _gui;
 }
+
+GUI* GUIElement::getGUI()
+{
+	if (gui != NULL)
+	{
+		return gui;
+	}
+	else
+	{
+		if (enclosingContainer != NULL)
+		{
+			return this->enclosingContainer->getGUI();
+		}
+	}
+	return NULL;
+}
+
 int GUIElement::handleEvent(int clientNum, JsonObject& obj)
 {
 	return 1;
@@ -54,7 +75,7 @@ String GUIElement::getHTML()
 }
 
 
-void GUIElement::sendHtml(ESP8266WebServer& server)
+void GUIElement::sendHtml(ESPWebServer& server)
 {
 	server.sendContent(getHTML());//this is just for now, getHtml is obsolete
 }
@@ -201,9 +222,11 @@ String GUIElement::waitForResponse(int timeout)
 	unsigned long startMillis = millis();
 	while (millis() < (startMillis + timeout))
 	{
-		this->gui->loop();
-		run_scheduled_functions();
-		ets_post(1, 0, 0);
+		this->getGUI()->loop();
+		//the following line was commented out
+		//run_scheduled_functions();
+		yield();
+		//ets_post(1, 0, 0);
 		//esp_schedule();
 		if (this->responseFlag == true)
 		{
@@ -231,7 +254,7 @@ int GUIElement::evalAndTell(int clientNumber, std::function<void(String)> func, 
 	obj["value"] = whatToEval;
 	String str;
 	obj.printTo(str);
-	return this->gui->sendText(clientNumber, str);
+	return this->getGUI()->sendText(clientNumber, str);
 }
 
 
@@ -305,7 +328,7 @@ void GUIElement::setSynced(boolean _synced)
 }
 
 //TODO: this is not related to vBoxes and hBoxes at all, it's just the wrapper containing the label of this element and the element itself, it should be renamed!
-void GUIElement::startElementContainer(ESP8266WebServer& server)
+void GUIElement::startElementContainer(ESPWebServer& server)
 {
 	server.sendContent("<div class=\"elementContainer\">\n");
 	char labelStr[400];
@@ -315,7 +338,7 @@ void GUIElement::startElementContainer(ESP8266WebServer& server)
 }
 
 //TODO: this is not related to vBoxes and hBoxes at all, it's just the wrapper containing the label of this element and the element itself, it should be renamed!
-void GUIElement::endElementContainer(ESP8266WebServer& server)
+void GUIElement::endElementContainer(ESPWebServer& server)
 {
 	server.sendContent("</div>\n");
 }

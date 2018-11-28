@@ -33,7 +33,7 @@
 	}
 */
 
-	void Button::sendHtml(ESP8266WebServer& server)
+	void Button::sendHtml(ESPWebServer& server)
 	{
 		server.sendContent("<button class=\"button\", id=\"");
 		server.sendContent(this->id);

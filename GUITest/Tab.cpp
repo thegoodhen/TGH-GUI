@@ -14,7 +14,7 @@ Tab::Tab(String _id, String _text)
 	this->text = _text;
 }
 
-void Tab::sendHeaderHtml(ESP8266WebServer& server)
+void Tab::sendHeaderHtml(ESPWebServer& server)
 {
 	server.sendContent("<button class=\"tabLink\" onclick='activateTab(event, \""); 
 	server.sendContent(this->id); 
@@ -28,7 +28,7 @@ void Tab::sendHeaderHtml(ESP8266WebServer& server)
 
 
 
-void Tab::openContainer(ESP8266WebServer& server)
+void Tab::openContainer(ESPWebServer& server)
 {
 	server.sendContent("<div class=\"tabContent\" id=\"");
 	server.sendContent(this->id);

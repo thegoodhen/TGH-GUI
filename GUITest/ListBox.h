@@ -16,8 +16,8 @@ public:
 	//int handleEvent(JsonObject &obj) override;
 	
 	//String getHTML() override;
-	void sendHtml(ESP8266WebServer& server) override;
-	void sendItemsHtml(ESP8266WebServer& server);
+	void sendHtml(ESPWebServer& server) override;
+	void sendItemsHtml(ESPWebServer& server);
 	void addItem(ListItem* li);
 	void onChange(std::function<void(int, ListItem)> f);
 	int handleEvent(int clientNum, JsonObject &obj) override;

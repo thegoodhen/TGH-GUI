@@ -10,7 +10,7 @@ hBox::hBox(String _id)
 {
 	id = _id;
 }
-void hBox::openContainer(ESP8266WebServer& server)
+void hBox::openContainer(ESPWebServer& server)
 {
 	server.sendContent("<div class=\"hBox\">\n");
 }

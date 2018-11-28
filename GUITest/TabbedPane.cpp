@@ -21,7 +21,7 @@ void TabbedPane::addTab(Tab* t)
 {
 	this->theTabs.push_back(t);
 	t->setContainer(this);
-	t->setGUI(this->gui);
+	t->setGUI(this->getGUI());
 }
 
 void TabbedPane::add(Tab* t)
@@ -30,7 +30,7 @@ void TabbedPane::add(Tab* t)
 }
 
 
-void TabbedPane::sendHtml(ESP8266WebServer& server)
+void TabbedPane::sendHtml(ESPWebServer& server)
 {
 	server.sendContent("<div class=\"tabHeader\">\n");//open the header
 

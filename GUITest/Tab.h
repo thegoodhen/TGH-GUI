@@ -1,6 +1,6 @@
 // Tab.h
 #pragma once
-#include "ESP8266WebServer.h"
+#include "WebServerIncludes.h"
 #include "Container.h"
 
 
@@ -16,6 +16,6 @@ class Tab : public Container
 {
 public:
 	Tab(String _id, String _text="");
-	void sendHeaderHtml(ESP8266WebServer& server);
-	void openContainer(ESP8266WebServer & server) override;
+	void sendHeaderHtml(ESPWebServer& server);
+	void openContainer(ESPWebServer & server) override;
 };

@@ -17,7 +17,7 @@
 	*/
 
 
-	void Label::sendHtml(ESP8266WebServer& server)
+	void Label::sendHtml(ESPWebServer& server)
 	{
 		this->startElementContainer(server);
 

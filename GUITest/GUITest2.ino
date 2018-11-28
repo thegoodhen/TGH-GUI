@@ -1,4 +1,3 @@
-
 /*
  * WebSocketServer_LEDcontrol.ino
  *
@@ -31,7 +30,7 @@ void setup() {
 	USE_SERIAL.println();
 
 	for (uint8_t t = 3; t > 0; t--) {
-		USE_SERIAL.printf("[SETUP] BOOT WAIT %d...\n", t);//Taken from the WebSockets library... prevents bricking when you accidentally cause an excpetion; 
+		USE_SERIAL.printf("[SETUP] BOOT WAIT %d...\n", t);//Taken from the WebSockets library, nice to properly connect to the serial port
 		USE_SERIAL.flush();
 		delay(1000);
 	}
@@ -55,64 +54,38 @@ void setup() {
 	//----------------------------------------------------------
 	//----------------------------------------------------------
 
+	//First, we create a new horizontal box - all items in this box will be centered around the middle and will fit side-by-side,
+	//as long as the screen width of the target device permits that. We do this just to center the content on screen now!
+	hBox* hb = new hBox("hBox");
+	gui.add(hb);//We add it to the user interface (otherwise it wouldn't be visible anywhere!)
+	vBox* vb = new vBox("vBox");//we create a new vertical box - the things in this box will go one under another
+	hb->add(vb);//we add the vertical box inside the horizontal box we created
 
-	TabbedPane* tp = new TabbedPane("tp1");//We first need to create a tabbed pane in order to add tabs!
-	gui.add(tp);//We need to attach it to the GUI
-	Tab* tab1 = new Tab("The first tab");//We create the first tab
-	tp->addTab(tab1);//We add the tab to the tabPane
-	Heading* h1 = new Heading("h1", 1, "Some content");//We create some heading
-	Text* t = new Text("t1", "There is this text on the first tab... ");//We create some text
-	Checkbox* c = new Checkbox("cb1", "Some random checkbox, which does nothing...");//We create some checkbox
-	//We add the created elements into the first tab
-	tab1->add(h1);
-	tab1->add(t);
-	tab1->add(c);
-	//We create the second tab
-	Tab* tab2 = new Tab("The second tab");
-	tp->addTab(tab2);//Again, we add it to the tabPane
-	//We create some more elelents for the second tab...
-	Heading* h2 = new Heading("h2", 1, "Some more content");
-	Text* t2 = new Text("t2", "Now we have some other text on the second tab... ");
-	Slider* s = new Slider("s1", "Some random slider which doesn't do much, either...");
-	//...and we add them to the second tab
-	tab2->add(h2);
-	tab2->add(t2);
-	tab2->add(s);
+	Heading* h = new Heading("heading1", 1, "Simple form example");//We create heading of level "1", name it "heading1" and change its text.
+	vb->add(h);//Always remember to actually add the elements somewhere!
+	Text* t = new Text("text1", R"(In this example, we demonstrate a simple form that gets submitted when the "Submit" button is clicked. See serial output!)");//We add some explanation
+	vb->add(t);
 
+	TextInput* ti = new TextInput("ti1", "First text input: ");
+	vb->add(ti);
 
-	Tab* tab3 = new Tab("More complex tab");
-	tp->addTab(tab3);//Again, we add it to the tabPane
-	//We create some more elelents for the second tab...
-	Heading* h3 = new Heading("h3;", 1, "Complex example");
-	Text* t3 = new Text("t3", "This is a bit more complex example!");
-	hBox* hb1 = new hBox("hbox1");
-	vBox* vb1 = new vBox("vbox1");
-	vBox* vb2 = new vBox("vbox2");
+	TextInput* ti2 = new TextInput("ti2", "Second text input: ");
+	vb->add(ti2);
 
-	tab3->add(h3);
-	tab3->add(t3);
+	Checkbox* ch = new Checkbox("cb1", "Some checkbox: ");
+	vb->add(ch);
 
-	tab3->add(hb1);
-	hb1->add(vb1);
-	hb1->add(vb2);
-	
-	TabbedPane* tp2 = new TabbedPane("tp2");
+	Slider* s = new Slider("sl1", "Some slider: ");
+	vb->add(s);
 
-	vb1->add(tp2);
+	ListBox* lb = new ListBox("lb1", "some ListBox:");
+	lb->addItem(new ListItem("Some first item"));
+	lb->addItem(new ListItem("A second item"));
+	lb->addItem(new ListItem("And yet another (third) item!"));
+	vb->add(lb);
 
-	Text* t4 = new Text("t4", "This text is located in a vertical box.");
-	vb2->add(t4);
-
-	Tab* tab4 = new Tab("some inner tab");
-	Tab* tab5 = new Tab("tab5", "some inner tab");
-	tp2->add(tab4);
-	tp2->add(tab5);
-
-	Heading* h4 = new Heading("h4", 1, "Some more content in the inner tab...");
-	Heading* h5 = new Heading("h5", 1, "And yet some more stuff");
-	tab4->add(h4);
-	tab5->add(h5);
-
+	Button* b = new Button("btn", "Submit", buttonCB);
+	vb->add(b);
 
 
 }
@@ -122,3 +95,23 @@ void loop() {
 	gui.loop();//you have to call this function in loop() for this library to work!
 }
 
+void buttonCB(int user)
+{
+	USE_SERIAL.println("User clicked the button! User number: ");
+	USE_SERIAL.println(user);
+	USE_SERIAL.println("First text input:");
+	USE_SERIAL.println(gui.find("ti1")->retrieveText(user));
+	USE_SERIAL.println("Second text input:");
+	USE_SERIAL.println(gui.find("ti2")->retrieveText(user));
+	USE_SERIAL.println("Checkbox:");
+	USE_SERIAL.println(gui.find("cb1")->retrieveIntValue(user));
+	USE_SERIAL.println("Slider:");
+	USE_SERIAL.println(gui.find("sl1")->retrieveIntValue(user));
+	USE_SERIAL.println("ListBox");
+	USE_SERIAL.println(gui.find("lb1")->retrieveText(user));
+	USE_SERIAL.println(gui.find("lb1")->retrieveIntValue(user));
+}
+void lbCb(int user, ListItem li)
+{
+	USE_SERIAL.println(li.getValue());
+}

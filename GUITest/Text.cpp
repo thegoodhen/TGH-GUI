@@ -19,7 +19,7 @@
 	*/
 
 
-	void Text::sendHtml(ESP8266WebServer& server)
+	void Text::sendHtml(ESPWebServer& server)
 	{
 
 		if(oneLine)

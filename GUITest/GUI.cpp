@@ -5,7 +5,7 @@
 //#define TGH_DEBUG kokon
 using namespace std::placeholders;  // For _1 in the bind call
 
-ESP8266WebServer server(80);
+ESPWebServer server(80);
 WebSocketsServer webSocket = WebSocketsServer(81);
 
 	GUI::GUI()
@@ -52,8 +52,8 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 		server.begin();
 
 		// Add service to MDNS
-		MDNS.addService("http", "tcp", 80);
-		MDNS.addService("ws", "tcp", 81);
+		//MDNS.addService("http", "tcp", 80);
+		//MDNS.addService("ws", "tcp", 81);
 
 	}
 	void GUI::loop()
@@ -90,15 +90,17 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 							   break;
 		case WStype_TEXT:
 
-			//#ifdef TGH_DEBUG
-			USE_SERIAL.printf("[%u] get Text: %s\n", num, payload);
-			//#endif
+			#ifdef TGH_DEBUG
+				USE_SERIAL.printf("[%u] get Text: %s\n", num, payload);
+			#endif
 			//StaticJsonBuffer<1000> jb;
 			//JsonObject& obj = jb.parseObject(payload);
 			//this->handleRequest(obj);
 			this->msgInString = (char*)payload;
 			this->clientNo = num;
 
+			break;
+		default:
 			break;
 		}
 
@@ -223,6 +225,7 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 		this->add(ge);
 		ge->setLineBreak(true);
 	}
+
 	void GUI::add(GUIElement* ge)
 	{
 		if (this->find(ge->getId()))//if already there, fail; TODO: change the return type to int to signal errors
@@ -232,9 +235,31 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 		elements.push_back(ge);
 		ge->setGUI(this);
 	}
+
+	/*
 	GUIElement* GUI::find(String s)
 	{
 		for (std::vector<int>::size_type i = 0; i != elements.size(); i++) {
+			if (elements[i]->getId() == s)
+			{
+				return elements[i];
+			}
+		}
+		return NULL;
+	}
+*/
+
+	GUIElement* GUI::find(String s)
+	{
+		for (std::vector<int>::size_type i = 0; i != elements.size(); i++) {
+			if (elements[i]->getElementType() == "CONTAINER")
+			{
+				GUIElement* foundElement = ((Container*)elements[i])->find(s);
+				if (foundElement!=NULL)//if the container found it
+				{
+					return foundElement;
+				}
+			}
 			if (elements[i]->getId() == s)
 			{
 				return elements[i];
