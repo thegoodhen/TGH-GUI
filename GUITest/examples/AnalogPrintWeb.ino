@@ -65,8 +65,11 @@ to 3.3V and ground and move the potentiometer to see the results!)");//We add so
 void loop() {
 	gui.loop();//you have to call this function in loop() for this library to work!
 	String val = (String)analogRead(A0);//When we want to set the text of some label, we need to have a String. This is how we get it!
+	//Serial.println(val);
 	//Will see the same value; alternatively, you could specify which clients should see the value 
-	gui.find("lbl1")->setText(ALL_CLIENTS, val);//set the text of the label to the reading... ALL_CLIENTS means that all devices connected to this Arduino thingy
+	GUIElement* ge = gui.find("lbl1");
+	ge->setText(ALL_CLIENTS, val);//set the text of the label to the reading... ALL_CLIENTS means that all devices connected to this Arduino thingy
+	delay(10);
 }
 
 void printSerial(String s)
