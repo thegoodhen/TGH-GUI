@@ -6,18 +6,24 @@
  *
  */
 
-#include "Tab.h"
-#include "TabbedPane.h"
 #include <Arduino.h>
 
-#include <ESP8266WiFi.h>
-#include <ESP8266WiFiMulti.h>
 #include "TGH_GUI.h"//We include the library
 
 
 
-ESP8266WiFiMulti WiFiMulti;//for connecting to a router
 GUI gui;
+
+
+#ifdef ESP8266
+	#include <ESP8266WiFi.h>
+	#include <ESP8266WiFiMulti.h>
+typedef ESP8266WiFiMulti WiFiMulti ;
+#else
+	#include <WiFi.h>
+	#include <WiFiMulti.h>
+#endif
+#include "TGH_GUI.h"//We include the library
 
 
 void setup() {

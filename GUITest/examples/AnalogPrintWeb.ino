@@ -8,13 +8,19 @@
 
 #include <Arduino.h>
 
-#include <ESP8266WiFi.h>
-#include <ESP8266WiFiMulti.h>
+#ifdef ESP8266
+	#include <ESP8266WiFi.h>
+	#include <ESP8266WiFiMulti.h>
+typedef ESP8266WiFiMulti WiFiMulti ;
+#else
+	#include <WiFi.h>
+	#include <WiFiMulti.h>
+#endif
 #include "TGH_GUI.h"//We include the library
 
 
 
-ESP8266WiFiMulti WiFiMulti;//for connecting to a router
+WiFiMulti wiFiMulti;//for connecting to a router
 GUI gui;
 
 
@@ -34,9 +40,9 @@ void setup() {
 		delay(1000);
 	}
 
-	WiFiMulti.addAP("TGH_network", "r0ut3rp@$$");
+	wiFiMulti.addAP("TGH_network", "r0ut3rp@$$");
 
-	while (WiFiMulti.run() != WL_CONNECTED) {//We wait till we connect to our router
+	while (wiFiMulti.run() != WL_CONNECTED) {//We wait till we connect to our router
 		delay(100);
 	}
 	USE_SERIAL.println("WiFi.localIP()");//then we print out the IP of this device; paste it into the browser window to connect to it; alternatively, you could
