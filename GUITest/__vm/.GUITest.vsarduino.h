@@ -5,24 +5,23 @@
 			all non-arduino files created by visual micro and all visual studio project or solution files can be freely deleted and are not required to compile a sketch (do not delete your own code!).
 			note: debugger breakpoints are stored in '.sln' or '.asln' files, knowledge of last uploaded breakpoints is stored in the upload.vmps.xml file. Both files are required to continue a previous debug session without needing to compile and upload again
 	
-	Hardware: WeMos D1 R1, Platform=esp8266, Package=esp8266
+	Hardware: ESP32 Dev Module, Platform=esp32, Package=espressif
 */
 
 #if defined(_VMICRO_INTELLISENSE)
 
 #ifndef _VSARDUINO_H_
 #define _VSARDUINO_H_
-#define __ESP8266_ESp8266__
-#define __ESP8266_ESP8266__
-#define __ets__
-#define ICACHE_FLASH
-#define F_CPU 80000000L
-#define LWIP_OPEN_SRC
-#define TCP_MSS 536
+#define __ESP32_ESp32__
+#define __ESP32_ESP32__
+#define ESP_PLATFORM
+#define HAVE_CONFIG_H
+#define F_CPU 240000000L
 #define ARDUINO 106011
-#define ARDUINO_ESP8266_WEMOS_D1R1
-#define ARDUINO_ARCH_ESP8266
-#define ESP8266
+#define ARDUINO_ESP32_DEV
+#define ARDUINO_ARCH_ESP32
+#define ESP32
+#define CORE_DEBUG_LEVEL 0
 #define __cplusplus 201103L
 #undef __cplusplus
 #define __cplusplus 201103L
@@ -50,6 +49,7 @@
 #define C4005
 #define _NEW
 
+//
 //typedef int uint8_t;
 //#define __ARMCC_VERSION 400678
 //#define PROGMEM
@@ -89,20 +89,18 @@ typedef long __SIZE_TYPE__ 	;
 typedef long __PTRDIFF_TYPE__;
 
 
-#include "new"
-#include "Esp.h"
 
 
 #include <arduino.h>
 #include <pins_arduino.h> 
 
-#include "..\generic\Common.h"
-#include "..\generic\pins_arduino.h"
+//#include "..\generic\Common.h"
+//#include "..\generic\pins_arduino.h"
 
-#undef F
-#define F(string_literal) ((const PROGMEM char *)(string_literal))
-#undef PSTR
-#define PSTR(string_literal) ((const PROGMEM char *)(string_literal))
+//#undef F
+//#define F(string_literal) ((const PROGMEM char *)(string_literal))
+//#undef PSTR
+//#define PSTR(string_literal) ((const PROGMEM char *)(string_literal))
 //current vc++ does not understand this syntax so use older arduino example for intellisense
 //todo:move to the new clang/gcc project types.
 #define interrupts() sei()

@@ -42,7 +42,11 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 	server.on("/", f);
 	//this->getHTML();
 
+#ifdef ESP8266
  SPIFFS.begin();                           // Start the SPI Flash Files System
+#else
+	SPIFFS.begin(true);
+#endif
   
   server.onNotFound([]() {                              // If the client requests any URI
 		if (!handleFileRead(server, server.uri()))                  // send it if it exists
