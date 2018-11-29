@@ -1,10 +1,10 @@
-# Examples don't work right now, I broke it. Will fix soon.
-
 # TGH GUI
 
-This is an alpha version of my GUI Library for ESP8266. This library allows you to write some simple code in the Arduino language, which describes the layout of some GUI, the GUI elements used, their callbacks and more.
+This is an alpha version of my GUI Library for ESP8266 and ESP32. This library allows you to write some simple code in the Arduino language, which describes the layout of some GUI, the GUI elements used, their callbacks and more.
 
 Then, the ESP will automatically host a webpage where it provides the given GUI.
+
+The examples provided have been tested and they work for both ESP8266 and ESP32, but the library is still heavily experimental and should not yet be used for production.
 
 Everything is buttersmooth, since the communication itself uses websockets. This allows you to update the values displayed tens, if not hundreds of times per second.
 
