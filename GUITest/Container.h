@@ -19,6 +19,7 @@ public:
 	virtual void closeContainer(ESPWebServer& server);
 	virtual void sendHtml(ESPWebServer& server) override;
 	void sendContainerItemsHtml(ESPWebServer& server);
+	void sendInitialization(int clientNo) override;
 	void add(GUIElement* ge);
 	GUIElement * find(String s);
 	String getElementType() override;

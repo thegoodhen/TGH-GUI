@@ -14,6 +14,8 @@ public:
 	
 	//String getHTML() override;
 	void sendHtml(ESPWebServer& server) override;
+	void sendInitialization(int clientNo) override;
 private:
 	std::function<void()> clickCB = NULL;
+	String lastRetrievedText="slepice";
 };

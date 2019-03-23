@@ -40,6 +40,9 @@ WebSocketsServer webSocket = WebSocketsServer(81);
     //auto fcn = std::mem_fn(GUI::getHTML);
 	std::function<void(void)> f = std::bind(&GUI::sendHTML, this);
 	server.on("/", f);
+	std::function<void(void)> f2 = std::bind(&GUI::sendDeviceInfo, this);
+	server.on("/deviceinfo", f2);
+
 	//this->getHTML();
 
 #ifdef ESP8266
@@ -68,6 +71,22 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 		handleRequest();
 	}
 
+	void GUI::sendInitializations(int clientNo)
+	{
+		for (std::vector<int>::size_type i = 0; i != elements.size(); i++) {
+			{
+				//Serial.println(i);
+				// the containers publish all their elements whenever we call their "sendHtml()"; therefore we only need to publish the elements that have no container
+				//and the containers themselves.
+				if(elements[i]->getContainer()==NULL) //|| elements[i]->getElementType()=="CONTAINER")
+				{
+					elements[i]->sendInitialization(clientNo);
+				}
+				//server.sendContent(elements[i]->getHTML());
+				//returnString += elements[i]->getHTML();
+			}
+		}
+	}
 
 	void GUI::webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length) {
 
@@ -89,7 +108,9 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 			#endif
 
 			// send message to client
-			webSocket.sendTXT(num, "Connected");
+			sendInitializations(num);
+
+			//webSocket.sendTXT(num, "Connected");
 		}
 							   break;
 		case WStype_TEXT:
@@ -110,6 +131,29 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 
 	}
 
+
+	void GUI::sendDeviceInfo()
+	{
+		server.sendHeader("Expires", "-1");
+		server.sendHeader("Access-Control-Allow-Origin", "*");
+		server.setContentLength(CONTENT_LENGTH_UNKNOWN);
+		// here begin chunked transfer
+		//String returnString;
+
+		server.send(200,"text/html","");
+
+		StaticJsonBuffer<1000> jb;
+		JsonObject& obj = jb.createObject();
+		obj["name"] = "slepice";
+		obj["version"] = "1.0.0";
+		String theJson;
+		obj.printTo(theJson);
+
+		server.sendContent(theJson);
+
+		server.sendContent("");//transfer done
+		server.client().stop();
+	}
 	
 
 	/**
@@ -202,26 +246,21 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 		return R"(<!DOCTYPE html>
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!--<link rel="stylesheet" type="text/css" href="./generalElement.css">-->
-<!--//<link rel="stylesheet" type="text/css" href="./slider.css-->
-<!--//<link rel="stylesheet" type="text/css" href="./switch.css-->
-<!--//<link rel="stylesheet" type="text/css" href="./button.css-->
-<!--//<link rel="stylesheet" type="text/css" href="./textInput.css-->
-<!--//<link rel="stylesheet" type="text/css" href="./hBox.css-->
-<!--//<link rel="stylesheet" type="text/css" href="./vBox.css-->
-<!--//<link rel="stylesheet" type="text/css" href="./text.css-->
-<link rel="stylesheet" type="text/css" href="./kokon.css">
+<link rel="stylesheet" type="text/css" href="./css.css">
 <script src="./javaScript.js"></script>
+<link rel="stylesheet" href="dygraph.css">
+<script src="dygraph.min.js"></script>
+<body onload='openSocket()'>
 )";
 	}
 	String GUI::getFooter()
 	{
-		return "</html> \n";
+		return "</body></html> \n";
 	}
 
 	String GUI::getScript()
 	{
-		return R"(<head></head>)";
+		return "slepice";//R"(<head></head>)";
 	}
 
 	void GUI::addln(GUIElement* ge)

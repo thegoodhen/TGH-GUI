@@ -30,6 +30,15 @@ void Container::sendContainerItemsHtml(ESPWebServer& server)
 
 }
 
+void Container::sendInitialization(int clientNo)
+{
+	for (std::vector<GUIElement*>::size_type i = 0; i != elements.size(); i++) {
+		GUIElement* ge = (elements)[i];
+		ge->sendInitialization(clientNo);	
+	}
+}
+
+
 
 //TODO: this function might be refactored, because currently the code is duplicated between here and GUI...
 	void Container::add(GUIElement* ge)

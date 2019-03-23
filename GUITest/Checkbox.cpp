@@ -9,6 +9,7 @@
 		text = _text;
 		onClickCB = clickCallback;
 		elementType = "checkbox";
+		isSynced = true;
 
 		if(clickCallback!=NULL)
 		{
@@ -76,18 +77,34 @@
 	}
 
 
+	void Checkbox::sendInitialization(int clientNo)
+	{
+		this->setProperty(clientNo, "checked", this->lastRetrievedIntValue?"true":"false");
+		Serial.println("lastRetrievedIntValue");
+		Serial.println(lastRetrievedIntValue);
+		//getGUI()->sendText(clientNo, "initialized"+(String)this->getId());
+	}
+
+
+
 int Checkbox::retrieveIntValue(int clientNo)
 {
 	String s = this->retrieveProperty(clientNo, "checked");
 	const char* str = s.c_str();
+	int returnVal = false;
 	if (strcmp(str, "true") == 0)
 	{
-		return true;
+		returnVal = true;
 	}
 	else
 	{
-		return false;
+		returnVal = false;
 	}
+	if (isSynced)
+	{
+		lastRetrievedIntValue = returnVal;
+	}
+	return returnVal;
 }
 
 	/*

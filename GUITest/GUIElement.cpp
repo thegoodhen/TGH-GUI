@@ -16,6 +16,14 @@ using namespace std::placeholders;  // For _1 in the bind call
 #include "Container.h"
 
 
+/**
+Sends commands needed to initialize the given element to the client over websockets
+**/
+void GUIElement::sendInitialization(int clientNo)
+{
+	USE_SERIAL.println(this->getId());
+	//getGUI()->sendText(clientNo, "initialized"+(String)this->getId());
+}
 
 void GUIElement::setGUI(GUI* _gui)
 {
@@ -236,6 +244,18 @@ String GUIElement::waitForResponse(int timeout)
 	return "";
 }
 
+int GUIElement::evalAndToss(int clientNo, String whatToEval)
+{
+
+	StaticJsonBuffer<500> jb;
+	JsonObject& obj = jb.createObject();
+	obj["type"] = "evalAndToss";
+	obj["id"] = id;
+	obj["value"] = whatToEval;
+	String str;
+	obj.printTo(str);
+	return this->getGUI()->sendText(clientNo, str);
+}
 
 /*
 A non-blocking function, which allows the user to request that a the String supplied by them will sometime

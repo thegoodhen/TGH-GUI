@@ -12,4 +12,5 @@
 #include "Text.h"
 #include "TextInput.h"
 #include "ListBox.h"
+#include "Chart.h"
 //#include

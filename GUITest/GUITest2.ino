@@ -1,4 +1,5 @@
 
+
 /*
  * WebSocketServer_LEDcontrol.ino
  *
@@ -7,6 +8,13 @@
  */
 
 #include <Arduino.h>
+
+#include "TGH_GUI.h"//We include the library
+
+
+
+GUI gui;
+
 
 #ifdef ESP8266
 	#include <ESP8266WiFi.h>
@@ -18,11 +26,7 @@ typedef ESP8266WiFiMulti WiFiMulti ;
 #endif
 #include "TGH_GUI.h"//We include the library
 
-
-
-WiFiMulti wiFiMulti;//for connecting to a router
-GUI gui;
-
+WiFiMulti wifiMulti;
 
 void setup() {
 	//USE_SERIAL.begin(921600);
@@ -40,9 +44,9 @@ void setup() {
 		delay(1000);
 	}
 
-	wiFiMulti.addAP("TGH_network", "r0ut3rp@$$");
+	wifiMulti.addAP("TGH_network", "r0ut3rp@$$");
 
-	while (wiFiMulti.run() != WL_CONNECTED) {//We wait till we connect to our router
+	while (wifiMulti.run() != WL_CONNECTED) {//We wait till we connect to our router
 		delay(100);
 	}
 	USE_SERIAL.println("WiFi.localIP()");//then we print out the IP of this device; paste it into the browser window to connect to it; alternatively, you could
@@ -66,36 +70,49 @@ void setup() {
 	vBox* vb = new vBox("vBox");//we create a new vertical box - the things in this box will go one under another
 	hb->add(vb);//we add the vertical box inside the horizontal box we created
 
-	Heading* h = new Heading("heading1", 1, "Synchronization example");//We create heading of level "1", name it "heading1" and change its text.
+	Heading* h = new Heading("heading1", 1, "Fast test of battery 1");//We create heading of level "1", name it "heading1" and change its text.
 	vb->add(h);//Always remember to actually add the elements somewhere!
-	Text* t = new Text("text1", R"(In this example we show the difference between a synchronized GUI element,
- a non-synchronized one and also point out the issue of 
-synchronizing elements with no events!
-<b>To see this effect, please either connect from multiple devices, or open this site in multiple tabs!</b>)");//We add some explanation
+	Text* t = new Text("text1", R"(This test works by loading the battery for roughly 15 seconds and then letting it recover; it can be used to estimate the state of charge and also the internal resistance of the battery.)");//We add some explanation
 	vb->add(t);
 
-	//the state of the following checkbox can be different for each client!
-	Checkbox* ch = new Checkbox("cb1", "A non-synced checkbox", nonSyncedCheckboxCallback);
-	ch->setSynced(false);//default in the current API, but possible subject to change!
-	vb->add(ch);
 
-	//the state of the following checkbox is always synchronized (=the same) for each client!
-	Checkbox* ch2 = new Checkbox("cb2", "A synced checkbox", syncedCheckboxCallback);
-	ch2->setSynced(true);//TODO: check if there is a copy???? because it acts weird!
-	vb->add(ch2);
+	Text* lastResultsText = new Text("lastResults", R"(Last results are something something)");
+	vb->add(lastResultsText);
 
-	//The synchronization occurs when the Arduino learns about the state of the element. This happens when an event is fired
-	//or when you read the given property of the element manually (TODO: IMPLEMENT THE LATTER!)
-	//This gives you some degree of control over when the synchronization happens. However, observe that if you specify no
-	//callbacks and don't poll the value manually, the synchronization never really takes place!
-	Checkbox* ch3 = new Checkbox("cb3", "An (incorrectly!) synced checkbox");
-	vb->add(ch3);
+	TextInput* tiLoadCurrent = new TextInput("tiLoadCurrent", "Load current");
+	vb->add(tiLoadCurrent);
 
-	Slider* s = new Slider("sl1", "Sliders can be synchronized too! ");
-	s->setSynced(true);
-    //A workaround to the previously mentioned issue is to specify some dummy callback function which actually does nothing as such:
-	s->onInput(dummySliderCallback);
-	vb->add(s);
+	Button* btnStartFastTest = new Button("btnStartFastTest", "Start test now", buttonCB);
+	vb->add(btnStartFastTest);
+
+	Heading* hSchedulingProps = new Heading("hSchedulingProps", 2, "Scheduling settings");
+	vb->add(hSchedulingProps);
+
+	TextInput* tiFirstRun = new TextInput("tiFirstRun", "the time and date of the first scheduled run");
+	vb->add(tiFirstRun);
+
+
+	TextInput* tiPeriod= new TextInput("tiPeriod", "the period between two consecutive scheduled runs");
+	vb->add(tiPeriod);
+
+	Checkbox* cbIncludeResult= new Checkbox("cbIncludeResult", "Store historical test results");
+	vb->add(cbIncludeResult);
+
+	//Slider* s = new Slider("sl1", "Some slider: ");
+	//vb->add(s);
+
+	ListBox* lbMailSettings = new ListBox("lb1", "email settings");
+	lbMailSettings->addItem(new ListItem("Do not send an email"));
+	lbMailSettings->addItem(new ListItem("Notify about start and finish"));
+	lbMailSettings->addItem(new ListItem("Notify when finished"));
+	lbMailSettings->addItem(new ListItem("Only notify on fail"));
+	vb->add(lbMailSettings);
+
+	Button* btnSaveSettings= new Button("btnSaveSettings", "Save settings", buttonCB);
+	vb->add(btnSaveSettings);
+	Button* btnRecallSettings= new Button("btnRecallSettings", "Recall stored settings", buttonCB);
+	vb->add(btnRecallSettings);
+
 
 }
 
@@ -104,18 +121,26 @@ void loop() {
 	gui.loop();//you have to call this function in loop() for this library to work!
 }
 
-
-void nonSyncedCheckboxCallback(int user, boolean state)
+void buttonCB(int user)
 {
-	USE_SERIAL.println((String)"user number " + user + (String)" changed the state of (their!) checkbox to " + state);
+	USE_SERIAL.println("User clicked the button! User number: ");
+	USE_SERIAL.println(user);
+	USE_SERIAL.println("First text input:");
+	USE_SERIAL.println(gui.find("tiLoadCurrent")->retrieveText(user));
+	USE_SERIAL.println(gui.find("cbIncludeResult")->retrieveIntValue(user));
+	/*
+	USE_SERIAL.println("Second text input:");
+	USE_SERIAL.println(gui.find("ti2")->retrieveText(user));
+	USE_SERIAL.println("Checkbox:");
+	USE_SERIAL.println(gui.find("cb1")->retrieveIntValue(user));
+	USE_SERIAL.println("Slider:");
+	USE_SERIAL.println(gui.find("sl1")->retrieveIntValue(user));
+	USE_SERIAL.println("ListBox");
+	USE_SERIAL.println(gui.find("lb1")->retrieveText(user));
+	USE_SERIAL.println(gui.find("lb1")->retrieveIntValue(user));
+*/
 }
-
-void syncedCheckboxCallback(int user, boolean state)
+void lbCb(int user, ListItem li)
 {
-	USE_SERIAL.println((String)"user number " + user + (String)" changed the global state of  checkbox to " + state);
-}
-
-void dummySliderCallback(int user, int value)
-{
-	//do nothing
+	USE_SERIAL.println(li.getValue());
 }

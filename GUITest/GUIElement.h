@@ -25,6 +25,8 @@ class GUIElement
 {
 public:
 
+	virtual void sendInitialization(int clientNo);
+
 	void setGUI(GUI* _gui);
 	GUI * getGUI();
 	virtual int handleEvent(int clientNum, JsonObject& obj);
@@ -44,6 +46,7 @@ public:
 	String retrieveProperty(int clientNumber, String propertyName);
 	String retrieveProperty(int clientNumber, String propertyName, int timeout);
 	String waitForResponse(int timeout);
+	int evalAndToss(int clientNo, String whatToEval);
 	//int setProperty(String propertyName, String propertyValue);
 	int setProperty(int clientNumber, String propertyName, String propertyValue);
 	int setPropertyOfAllBut(int clientNo, String propertyName, String propertyValue);

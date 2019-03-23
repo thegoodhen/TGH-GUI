@@ -15,10 +15,12 @@ public:
 	void sendHtml(ESPWebServer & server) override;
 
 	void onClick(std::function<void(int, boolean)> f);
+	void sendInitialization(int clientNo) override;
 	int retrieveIntValue(int clientNo) override;
 	//String getCSS() override;
 	
 	//String getHTML() override;
 private:
 	std::function<void(int, boolean)> onClickCB = NULL;
+	int lastRetrievedIntValue = false;
 };

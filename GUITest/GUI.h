@@ -41,7 +41,11 @@ public:
 	void begin();
 	void loop();
 
+	void sendInitializations(int clientNo);
+
 	void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length);
+
+	void sendDeviceInfo();
 	
 
 
