@@ -24,7 +24,5 @@ public:
 	void sendHtml(ESPWebServer & server) override;
 	void add(GUIElement* ge) = delete;
 	void add(Tab* t);
-private:
-	std::vector<Tab*> theTabs;
 	
 };

@@ -24,6 +24,6 @@ public:
 	GUIElement * find(String s);
 	String getElementType() override;
 
-private:
+protected:
 	std::vector<GUIElement*> elements;
 };

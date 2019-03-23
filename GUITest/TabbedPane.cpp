@@ -19,7 +19,7 @@ TabbedPane::TabbedPane(String _id, String _text)
 
 void TabbedPane::addTab(Tab* t)
 {
-	this->theTabs.push_back(t);
+	this->elements.push_back(t);	
 	t->setContainer(this);
 	t->setGUI(this->getGUI());
 }
@@ -34,10 +34,10 @@ void TabbedPane::sendHtml(ESPWebServer& server)
 {
 	server.sendContent("<div class=\"tabHeader\">\n");//open the header
 
-	for (std::vector<Tab*>::size_type i = 0; i != theTabs.size(); i++) {
+	for (std::vector<Tab*>::size_type i = 0; i != elements.size(); i++) {
 		{
 			//Serial.println(i);
-			Tab* t = theTabs[i];
+			Tab* t = (Tab*)elements[i];
 			t->sendHeaderHtml(server);	
 		}
 	}
@@ -46,10 +46,10 @@ void TabbedPane::sendHtml(ESPWebServer& server)
 	
 
 	//the loop actually has to be iterated twice, this isn't a pointles code duplication...
-	for (std::vector<Tab*>::size_type i = 0; i != theTabs.size(); i++) {
+	for (std::vector<Tab*>::size_type i = 0; i != elements.size(); i++) {
 		{
 			//Serial.println(i);
-			Tab* t = theTabs[i];
+			Tab* t = (Tab*)elements[i];
 			t->sendHtml(server);	
 		}
 	}
