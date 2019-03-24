@@ -57,61 +57,41 @@ void setup() {
 
 
 
+	//TabbedPane* tp = new TabbedPane("tp1");//We first need to create a tabbed pane in order to add tabs!
+	//hBox* hb = new hBox("hb");
+	//gui.add(hb);//We need to attach it to the GUI
+	//Tab* tab1 = new Tab("Overview");//We create the first tab
+	//tp->addTab(tab1);//We add the tab to the tabPane
+
+	//Tab* tab2 = new Tab("Tests");
+	//tp->addTab(tab2);//We add the tab to the tabPane
+
+	//Tab* tab3 = new Tab("Settings");
+	//tp->addTab(tab3);//We add the tab to the tabPane
+
+	//vBox* vb = new vBox("vBox");//we create a new vertical box - the things in this box will go one under another
+	//tab2->add(vb);//we add the vertical box inside the horizontal box we created
 
 
-	//<<<<<<<<ACTUAL EXAMPLE - SPECIFIC CODE BEGINS HERE>>>>>>>>
-	//----------------------------------------------------------
-	//----------------------------------------------------------
 
-	//First, we create a new horizontal box - all items in this box will be centered around the middle and will fit side-by-side,
-	//as long as the screen width of the target device permits that. We do this just to center the content on screen now!
-	hBox* hb = new hBox("hBox");
-	gui.add(hb);//We add it to the user interface (otherwise it wouldn't be visible anywhere!)
-	vBox* vb = new vBox("vBox");//we create a new vertical box - the things in this box will go one under another
-	hb->add(vb);//we add the vertical box inside the horizontal box we created
-
-	Heading* h = new Heading("heading1", 1, "Fast test of battery 1");//We create heading of level "1", name it "heading1" and change its text.
-	vb->add(h);//Always remember to actually add the elements somewhere!
-	Text* t = new Text("text1", R"(This test works by loading the battery for roughly 15 seconds and then letting it recover; it can be used to estimate the state of charge and also the internal resistance of the battery.)");//We add some explanation
-	vb->add(t);
+	//Button* btnRecallSettings= new Button("btnRecallSettings", "Recall stored settings", NULL);
+	//vb->add(btnRecallSettings);
 
 
-	Text* lastResultsText = new Text("lastResults", R"(Last results are something something)");
-	vb->add(lastResultsText);
-
-	TextInput* tiLoadCurrent = new TextInput("tiLoadCurrent", "Load current");
-	vb->add(tiLoadCurrent);
-
-	Button* btnStartFastTest = new Button("btnStartFastTest", "Start test now", buttonCB);
-	vb->add(btnStartFastTest);
-
-	Heading* hSchedulingProps = new Heading("hSchedulingProps", 2, "Scheduling settings");
-	vb->add(hSchedulingProps);
-
-	TextInput* tiFirstRun = new TextInput("tiFirstRun", "the time and date of the first scheduled run");
-	vb->add(tiFirstRun);
+	vBox* vb2 = new vBox("vBoxComm");//we create a new vertical box - the things in this box will go one under another
+	gui.add(vb2);
+	//tab3->add(vb2);//we add the vertical box inside the horizontal box we created
 
 
-	TextInput* tiPeriod= new TextInput("tiPeriod", "the period between two consecutive scheduled runs");
-	vb->add(tiPeriod);
 
-	Checkbox* cbIncludeResult= new Checkbox("cbIncludeResult", "Store historical test results");
-	vb->add(cbIncludeResult);
+	Button* btnSaveSettings= new Button("bscs", "Save settings", buttonCB);
 
-	//Slider* s = new Slider("sl1", "Some slider: ");
-	//vb->add(s);
+	TextInput* tiPort = new TextInput("tiPort", "The port");
+	//TextInput* tiPort = new TextInput("tiPort", "The port used to communicate with the SMTP server (typically 25)");
+	vb2->add(tiPort);
 
-	ListBox* lbMailSettings = new ListBox("lb1", "email settings");
-	lbMailSettings->addItem(new ListItem("Do not send an email"));
-	lbMailSettings->addItem(new ListItem("Notify about start and finish"));
-	lbMailSettings->addItem(new ListItem("Notify when finished"));
-	lbMailSettings->addItem(new ListItem("Only notify on fail"));
-	vb->add(lbMailSettings);
+	vb2->add(btnSaveSettings);
 
-	Button* btnSaveSettings= new Button("btnSaveSettings", "Save settings", buttonCB);
-	vb->add(btnSaveSettings);
-	Button* btnRecallSettings= new Button("btnRecallSettings", "Recall stored settings", buttonCB);
-	vb->add(btnRecallSettings);
 
 
 }
@@ -123,11 +103,19 @@ void loop() {
 
 void buttonCB(int user)
 {
+	
+	Serial.println("Saving communicator settings");
+
+	String _smtpServer = gui.find("tiPort")->retrieveText(user);
+	Serial.println("smtpServer:");
+	Serial.println(_smtpServer);
+	/*
 	USE_SERIAL.println("User clicked the button! User number: ");
 	USE_SERIAL.println(user);
 	USE_SERIAL.println("First text input:");
 	USE_SERIAL.println(gui.find("tiLoadCurrent")->retrieveText(user));
 	USE_SERIAL.println(gui.find("cbIncludeResult")->retrieveIntValue(user));
+	*/
 	/*
 	USE_SERIAL.println("Second text input:");
 	USE_SERIAL.println(gui.find("ti2")->retrieveText(user));
