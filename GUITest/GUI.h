@@ -41,6 +41,10 @@ public:
 	void begin();
 	void loop();
 
+	void resetMsgIn();
+
+	void loop(bool debug);
+
 	void sendInitializations(int clientNo);
 
 	void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length);
@@ -92,4 +96,5 @@ private:
 	std::vector<GUIElement*> elements;
 	String msgInString = "";//String for storing the incoming messages
 	int clientNo = 0;
+	static int debugNum ;
 };

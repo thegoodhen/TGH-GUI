@@ -10,3 +10,4 @@
 
 
 void tghDbg(String s);
+#define TGH_DEBUG

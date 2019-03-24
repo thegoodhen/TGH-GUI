@@ -210,27 +210,44 @@ Blocking function, which requests a property to be retrieved and then waits for 
 */
 String GUIElement::retrieveProperty(int clientNumber, String propertyName)//TODO: exit if client not connected
 {
+	Serial.println("propertyName");
+	Serial.println(propertyName);
 	return GUIElement::retrieveProperty(clientNumber, propertyName, 250);
 }
 
 String GUIElement::retrieveProperty(int clientNumber, String propertyName, int timeout)
 {
 	clearResponseFlag();
+	/*
 	auto f1 = std::bind(&GUIElement::storePropertyResponse, this, _1);
 	if (retrieveProperty(clientNumber, f1, propertyName) != 0)//something went wrong!
 	{
 		return "ERROR_RETRIEVING_PROPERTY";
 	}
-	return waitForResponse(timeout);
+	*/
+	
+
+	
+	GUI* g = getGUI();
+
+    Serial.println("a tady unvitr je to...");
+    Serial.println((unsigned long)g);
+    Serial.println("ale to gui je...");
+
+    Serial.println((unsigned long)gui);
+
+	this->getGUI()->resetMsgIn();
+	//return waitForResponse(timeout);
+	return "";
 }
 
 String GUIElement::waitForResponse(int timeout)
 {
 	tghDbg("waiting for property response");
 	unsigned long startMillis = millis();
-	while (millis() < (startMillis + timeout))
+	while (millis() < (startMillis + timeout))//TODO: flip around for safety
 	{
-		this->getGUI()->loop();
+		this->getGUI()->loop(true);
 		//the following line was commented out
 		//run_scheduled_functions();
 		yield();

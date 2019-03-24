@@ -27,6 +27,7 @@ typedef ESP8266WiFiMulti WiFiMulti ;
 #include "TGH_GUI.h"//We include the library
 
 WiFiMulti wifiMulti;
+TextInput* tiPort;
 
 void setup() {
 	//USE_SERIAL.begin(921600);
@@ -86,7 +87,8 @@ void setup() {
 
 	Button* btnSaveSettings= new Button("bscs", "Save settings", buttonCB);
 
-	TextInput* tiPort = new TextInput("tiPort", "The port");
+	//TextInput* tiPort = new TextInput("tiPort", "The port");
+	tiPort = new TextInput("tiPort", "The port");
 	//TextInput* tiPort = new TextInput("tiPort", "The port used to communicate with the SMTP server (typically 25)");
 	vb2->add(tiPort);
 
@@ -99,6 +101,22 @@ void setup() {
 
 void loop() {
 	gui.loop();//you have to call this function in loop() for this library to work!
+	static unsigned long lastStuff;
+	if (millis() > lastStuff + 10000&& millis()>20000)
+	{
+		Serial.println("ted se to posere!");
+		//Serial.println(gui.find("tiPort")->getId());
+		delay(500);
+		//String _smtpServer = gui.find("tiPort")->retrieveText(0);
+		//String _smtpServer = tiPort->retrieveText(0);
+		Serial.println("tady venku je gui");
+		Serial.println((unsigned long)&gui);
+		String _smtpServer = tiPort->retrieveProperty(0, "value", 250);
+		//gui.resetMsgIn();
+		//Serial.println("smtpServer:");
+		//Serial.println(_smtpServer);
+	}
+
 }
 
 void buttonCB(int user)

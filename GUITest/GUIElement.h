@@ -83,5 +83,5 @@ protected:
 	void endElementContainer(ESPWebServer& server);
 	Container* enclosingContainer;
 private:
-	GUI* gui;
+	GUI* gui = NULL;
 };

@@ -13,6 +13,7 @@
 
 	String TextInput::retrieveText(int clientNo) 
 	{
+		Serial.println("jo, sanity check ok, jsem v ty spravny fci tyvole");
 		String s=retrieveProperty(clientNo, "value");
 		if (isSynced)
 		{

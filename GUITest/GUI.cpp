@@ -7,10 +7,11 @@ using namespace std::placeholders;  // For _1 in the bind call
 
 ESPWebServer server(80);
 WebSocketsServer webSocket = WebSocketsServer(81);
+int GUI::debugNum = 0;
 
 	GUI::GUI()
 	{
-
+		debugNum++;
 	}
 	void GUI::begin()
 	{
@@ -63,8 +64,25 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 		//MDNS.addService("ws", "tcp", 81);
 
 	}
+
 	void GUI::loop()
 	{
+		//Serial.println(debugNum);
+		loop(false);
+	}
+
+	void GUI::resetMsgIn()
+	{
+			this->msgInString = "";
+	}
+
+	void GUI::loop(bool debug)
+	{
+		if (debug)
+		{
+			this->msgInString = "";
+			return;
+		}
 		this->msgInString = "";
 		webSocket.loop();//handle the websocket events and what not
 		server.handleClient();
