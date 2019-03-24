@@ -57,16 +57,17 @@ void setup() {
 
 
 
-	TabbedPane* tp = new TabbedPane("tp1");//We first need to create a tabbed pane in order to add tabs!
-	gui.add(tp);//We need to attach it to the GUI
+	//TabbedPane* tp = new TabbedPane("tp1");//We first need to create a tabbed pane in order to add tabs!
+	//hBox* hb = new hBox("hb");
+	//gui.add(hb);//We need to attach it to the GUI
 	//Tab* tab1 = new Tab("Overview");//We create the first tab
 	//tp->addTab(tab1);//We add the tab to the tabPane
 
 	//Tab* tab2 = new Tab("Tests");
 	//tp->addTab(tab2);//We add the tab to the tabPane
 
-	Tab* tab3 = new Tab("Settings");
-	tp->addTab(tab3);//We add the tab to the tabPane
+	//Tab* tab3 = new Tab("Settings");
+	//tp->addTab(tab3);//We add the tab to the tabPane
 
 	//vBox* vb = new vBox("vBox");//we create a new vertical box - the things in this box will go one under another
 	//tab2->add(vb);//we add the vertical box inside the horizontal box we created
@@ -78,7 +79,8 @@ void setup() {
 
 
 	vBox* vb2 = new vBox("vBoxComm");//we create a new vertical box - the things in this box will go one under another
-	tab3->add(vb2);//we add the vertical box inside the horizontal box we created
+	gui.add(vb2);
+	//tab3->add(vb2);//we add the vertical box inside the horizontal box we created
 
 
 
