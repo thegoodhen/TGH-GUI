@@ -23,9 +23,9 @@ public:
 	void addItem(ListItem* li);
 	void onChange(std::function<void(int, ListItem)> f);
 	int handleEvent(int clientNum, JsonObject &obj) override;
-private:
-	void updateItemsDisplay(int clientNo);
 	void clearList();
+	void updateItemsDisplay(int clientNo);
+private:
 	std::function<void(int, ListItem)> onChangeCB = NULL;
 	std::vector<ListItem*> theList;
 	int lastRetrievedIndex = -1;

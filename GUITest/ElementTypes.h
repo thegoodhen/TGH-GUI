@@ -13,4 +13,5 @@
 #include "TextInput.h"
 #include "ListBox.h"
 #include "Chart.h"
+#include "WiFiManager.h"
 //#include

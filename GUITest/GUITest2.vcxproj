@@ -131,6 +131,7 @@
     <ClInclude Include="TGH_GUI.h" />
     <ClInclude Include="vBox.h" />
     <ClInclude Include="WebServerIncludes.h" />
+    <ClInclude Include="WiFiManager.h" />
     <ClInclude Include="__vm\.GUITest.vsarduino.h" />
     <ClInclude Include="__vm\.GUITest2.vsarduino.h" />
   </ItemGroup>
@@ -154,6 +155,7 @@
     <ClCompile Include="TextArea.cpp" />
     <ClCompile Include="TextInput.cpp" />
     <ClCompile Include="vBox.cpp" />
+    <ClCompile Include="WiFiManager.cpp" />
   </ItemGroup>
   <PropertyGroup>
     <DebuggerFlavor>VisualMicroDebugger</DebuggerFlavor>
