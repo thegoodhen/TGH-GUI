@@ -2,11 +2,13 @@
 #include "ListBox.h"
 #include <functional>
 
+
 	ListBox::ListBox(String _id, String _text)
 	{
 		id = _id;
 		text = _text;
-		elementType = "TextArea";
+		elementType = "ListBox";
+		this->isSynced = true;
 	}
 
 
@@ -62,6 +64,7 @@
 				int index = obj["index"];
 				String value = obj["value"];
 				String text = obj["text"];
+				this->lastRetrievedIndex = index;
 				//Serial.println("teïkonc jsem tady");
 				//Serial.println(value);
 
@@ -81,6 +84,7 @@
 
 String ListBox::retrieveText(int clientNo)
 {
+	this->retrieveIntValue(clientNo);//necessary for updating the last value
 	return this->evalAndTell(clientNo, "var theLb=document.getElementById(\"" + id + "\"); theLb.options[theLb.selectedIndex].value");
 }
 
@@ -89,8 +93,24 @@ int ListBox::retrieveIntValue(int clientNo)
 	String s=this->evalAndTell(clientNo, "var theLb=document.getElementById(\"" + id + "\"); theLb.selectedIndex");
 	const char* str = s.c_str();
 	char* ptr;
-	return strtol(str, &ptr, 10);//yea, but handle some error checking as well please
+	int intVal=strtol(str, &ptr, 10);//yea, but handle some error checking as well please
+	this->lastRetrievedIndex = intVal;
+	return intVal;
 }
+
+
+	void ListBox::sendInitialization(int clientNo)
+	{
+		if (lastRetrievedIndex != -1 && isSynced)
+		{
+			this->setProperty(clientNo, "selectedIndex", (String)lastRetrievedIndex);//synchronize the switch between clients
+		}
+		else
+		{
+			this->setProperty(clientNo, "value", (String)this->defaultSelectedIndex);
+		}
+		//getGUI()->sendText(clientNo, "initialized"+(String)this->getId());
+	}
 
 	/*
 	String Button::getHTML() 

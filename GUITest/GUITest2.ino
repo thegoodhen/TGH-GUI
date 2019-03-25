@@ -91,6 +91,12 @@ void setup() {
 	//TextInput* tiPort = new TextInput("tiPort", "The port used to communicate with the SMTP server (typically 25)");
 	vb2->add(tiPort);
 
+    ListBox* lb = new ListBox("lb1", "some ListBox:");
+	lb->addItem(new ListItem("Some first item"));
+	lb->addItem(new ListItem("A second item"));
+	lb->addItem(new ListItem("And yet another (third) item!"));
+	vb2->add(lb);
+
 	vb2->add(btnSaveSettings);
 
 
@@ -108,6 +114,7 @@ void buttonCB(int user)
 	Serial.println("Saving communicator settings");
 
 	String _smtpServer = gui.find("tiPort")->retrieveText(user);
+	String slepice = gui.find("lb1")->retrieveText(user);
 	Serial.println("smtpServer:");
 	Serial.println(_smtpServer);
 	gui.showInfo(user, "KOKOKODAAAAK");

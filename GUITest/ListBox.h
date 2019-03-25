@@ -13,6 +13,8 @@ public:
 
 	int retrieveIntValue(int clientNo) override;
 
+	void sendInitialization(int clientNo) override;
+
 	//int handleEvent(JsonObject &obj) override;
 	
 	//String getHTML() override;
@@ -24,4 +26,6 @@ public:
 private:
 	std::function<void(int, ListItem)> onChangeCB = NULL;
 	std::vector<ListItem*> theList;
+	int lastRetrievedIndex = -1;
+	int defaultSelectedIndex = 0;
 };
