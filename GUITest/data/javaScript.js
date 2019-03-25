@@ -108,3 +108,19 @@ function showToast(message, messageType) {
   x.className = messageType;
   setTimeout(function(){ x.className = x.className.replace(messageType, ""); }, 8500);
 }
+
+function clearListBox(listbox)
+{
+  listbox=document.getElementById(listbox);
+  while (listbox.options.length>0)
+  {
+    listbox.options[0]=null;
+  }
+     
+}
+
+function addOption(listbox,itemName, itemId)
+{
+  listbox=document.getElementById(listbox);
+  listbox.options[listbox.options.length]=new Option(itemName, itemId);
+}

@@ -45,6 +45,32 @@
 		theList.push_back(li);
 	}
 
+	/*update the list of items on client side (i.e. in the browser)*/
+	void ListBox::updateItemsDisplay(int clientNo)
+	{
+		this->evalAndTell(clientNo, "clearListBox(\"" + this->getId() + "\");");//clears the listBox contents
+
+		for (std::vector<ListItem*>::size_type i = 0; i != theList.size(); i++) {
+			{
+				//Serial.println(i);
+				String theValue = "\""+theList[i]->getValue()+"\"";
+				String theText= "\""+theList[i]->getText()+"\"";
+				String theId = "\"" + this->getId() + "\"";
+				this->evalAndTell(clientNo, "addOption("+theId+", "+theValue+", "+theText+");");//clears the listBox contents
+			}
+		}
+	}
+
+	void ListBox::clearList()
+	{
+		for (std::vector<ListItem*>::size_type i = 0; i != theList.size(); i++) 
+			{
+				delete(theList[i]);
+			}
+		theList.clear();
+
+	}
+
 
 	void ListBox::onChange(std::function<void(int, ListItem)> f)
 	{
@@ -101,6 +127,9 @@ int ListBox::retrieveIntValue(int clientNo)
 
 	void ListBox::sendInitialization(int clientNo)
 	{
+		//clearList();
+		//this->addItem(new ListItem("kokon gekon"));
+		updateItemsDisplay(clientNo);//provide the fresh list of options
 		if (lastRetrievedIndex != -1 && isSynced)
 		{
 			this->setProperty(clientNo, "selectedIndex", (String)lastRetrievedIndex);//synchronize the switch between clients

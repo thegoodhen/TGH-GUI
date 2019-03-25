@@ -24,8 +24,11 @@ public:
 	void onChange(std::function<void(int, ListItem)> f);
 	int handleEvent(int clientNum, JsonObject &obj) override;
 private:
+	void updateItemsDisplay(int clientNo);
+	void clearList();
 	std::function<void(int, ListItem)> onChangeCB = NULL;
 	std::vector<ListItem*> theList;
 	int lastRetrievedIndex = -1;
 	int defaultSelectedIndex = 0;
 };
+
