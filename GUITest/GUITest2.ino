@@ -87,6 +87,7 @@ void setup() {
 	Button* btnSaveSettings= new Button("bscs", "Save settings", buttonCB);
 
 	TextInput* tiPort = new TextInput("tiPort", "The port");
+	tiPort->setIsPassword(true);
 	//TextInput* tiPort = new TextInput("tiPort", "The port used to communicate with the SMTP server (typically 25)");
 	vb2->add(tiPort);
 

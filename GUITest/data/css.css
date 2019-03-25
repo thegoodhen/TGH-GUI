@@ -332,7 +332,7 @@ color: DodgerBlue;
 text-align: left;
 font-family: "Arial", "Helvetica", sans-serif;
 color: #505050;
-}input[type=text], select, textarea{
+}input[type=text], input[type=password], select, textarea{
   width: 75%;
   padding: 12px;
   border: 1px solid #ccc;

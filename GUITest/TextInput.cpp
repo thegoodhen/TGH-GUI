@@ -24,6 +24,7 @@
 
 	void TextInput::sendInitialization(int clientNo)
 	{
+		this->setProperty(clientNo, "type", this->isPassword?"password":"text");
 		if (lastRetrievedText != "")
 		{
 			this->setProperty(clientNo, "value", this->lastRetrievedText);
@@ -33,6 +34,11 @@
 			this->setProperty(clientNo, "value", this->defaultText);
 		}
 		//getGUI()->sendText(clientNo, "initialized"+(String)this->getId());
+	}
+
+	void TextInput::setIsPassword(boolean isAPass)
+	{
+		isPassword = isAPass;
 	}
 
 	void TextInput::sendHtml(ESPWebServer& server)
