@@ -34,6 +34,11 @@ function openSocket()
 	}
 	document.getElementById(msg.id)[msg.propertyName]=msg.value;
 	break;
+      case "showToast":
+	{
+	  showToast(msg.text, msg.toastType);
+	}
+	break;
       default:
 	console.log("got invalid request");
 	break;
@@ -95,4 +100,11 @@ function initChart(divName)
   theDiv.theChart=g;
   theDiv.theData=data;
 
+}
+
+function showToast(message, messageType) {
+  var x = document.getElementById("toast");
+  x.innerHTML=message;
+  x.className = messageType;
+  setTimeout(function(){ x.className = x.className.replace(messageType, ""); }, 8500);
 }

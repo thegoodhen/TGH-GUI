@@ -17,5 +17,5 @@ public:
 	void sendInitialization(int clientNo) override;
 private:
 	std::function<void()> clickCB = NULL;
-	String lastRetrievedText="slepice";
+	String lastRetrievedText="";
 };

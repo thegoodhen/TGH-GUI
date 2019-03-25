@@ -393,3 +393,56 @@ color: #505050;
     padding: 6px 12px;
     border: 1px solid #f2f2f2;
 }
+
+
+/* The toast (popup message)*/
+
+#toast {
+  visibility: hidden;
+  min-width: 400px;
+  margin-left: -200px;
+  background-color: DodgerBlue;
+  color: #fff;
+  text-align: center;
+  border-radius: 8px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 30px;
+  font-size: 17px;
+}
+
+#toast.info {
+  visibility: visible;
+  -webkit-animation: showtoast 0.5s, hidetoast 0.5s 8s;
+  animation: showtoast 0.5s, hidetoast 0.5s 8s;
+}
+
+#toast.error {
+  background-color:Red;
+  visibility: visible;
+  -webkit-animation: showtoast 0.5s, hidetoast 0.5s 8s;
+  animation: showtoast 0.5s, hidetoast 0.5s 8s;
+}
+
+
+@-webkit-keyframes showtoast {
+  from {bottom: 0; opacity: 0;} 
+  to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes showtoast {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes hidetoast {
+  from {opacity: 1;} 
+  to {opacity: 0;}
+}
+
+@keyframes hidetoast {
+  from { opacity: 1;}
+  to { opacity: 0;}
+}

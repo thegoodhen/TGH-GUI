@@ -27,6 +27,8 @@ public:
 
 	virtual void sendInitialization(int clientNo);
 
+	void setDefaultText(String text);
+
 	void setGUI(GUI* _gui);
 	GUI * getGUI();
 	virtual int handleEvent(int clientNum, JsonObject& obj);
@@ -63,6 +65,7 @@ public:
 	virtual String getElementType();
 protected:
 	String text;
+	String defaultText;
 	String elementType = "div";
 	String callbacksString = "";
 	//String* retreiveStringOutArg;//the pointer to the string to which we store the reply when requesting the textual value of the element
@@ -81,7 +84,7 @@ protected:
 
 	void startElementContainer(ESPWebServer& server);
 	void endElementContainer(ESPWebServer& server);
-	Container* enclosingContainer;
+	Container* enclosingContainer=NULL;
 private:
 	GUI* gui=NULL;
 };

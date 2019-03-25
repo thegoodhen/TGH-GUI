@@ -109,6 +109,7 @@ void buttonCB(int user)
 	String _smtpServer = gui.find("tiPort")->retrieveText(user);
 	Serial.println("smtpServer:");
 	Serial.println(_smtpServer);
+	gui.showInfo(user, "KOKOKODAAAAK");
 	/*
 	USE_SERIAL.println("User clicked the button! User number: ");
 	USE_SERIAL.println(user);

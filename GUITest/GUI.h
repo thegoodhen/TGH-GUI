@@ -86,9 +86,15 @@ public:
 
 	//int handleRequest(JsonObject& obj);
 	std::vector<GUIElement*>* getElements();
+
+	void showInfo(int userNo, String text);
+
+
+	void showError(int userNo, String text);//show a toast popup in the browser
 	
 
 private:
+	void showToast(int userNo, String text, String toastType);
 	std::vector<GUIElement*> elements;
 	String msgInString = "";//String for storing the incoming messages
 	int clientNo = 0;

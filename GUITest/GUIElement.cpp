@@ -25,6 +25,11 @@ void GUIElement::sendInitialization(int clientNo)
 	//getGUI()->sendText(clientNo, "initialized"+(String)this->getId());
 }
 
+void GUIElement::setDefaultText(String text)
+{
+	this->defaultText = text;
+}
+
 void GUIElement::setGUI(GUI* _gui)
 {
 	gui = _gui;

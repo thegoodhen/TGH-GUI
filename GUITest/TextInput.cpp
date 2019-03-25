@@ -24,7 +24,14 @@
 
 	void TextInput::sendInitialization(int clientNo)
 	{
-		this->setProperty(clientNo, "value", this->lastRetrievedText);
+		if (lastRetrievedText != "")
+		{
+			this->setProperty(clientNo, "value", this->lastRetrievedText);
+		}
+		else
+		{
+			this->setProperty(clientNo, "value", this->defaultText);
+		}
 		//getGUI()->sendText(clientNo, "initialized"+(String)this->getId());
 	}
 

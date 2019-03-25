@@ -211,9 +211,12 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 		//String returnString;
 
 		server.send(200,"text/html","");
+		Serial.println("sending header...");
 		server.sendContent(getHeader());
-		server.sendContent(getScript());//TODO: move script to SPIFFS
+		//server.sendContent(getScript());//TODO: move script to SPIFFS
 
+		Serial.println("the number of elements is:");
+		Serial.println(elements.size());
 		for (std::vector<int>::size_type i = 0; i != elements.size(); i++) {
 			{
 				//Serial.println(i);
@@ -221,6 +224,7 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 				//and the containers themselves.
 				if(elements[i]->getContainer()==NULL) //|| elements[i]->getElementType()=="CONTAINER")
 				{
+					Serial.println("sendin some html, yall");
 					elements[i]->sendHtml(server);
 				}
 				//server.sendContent(elements[i]->getHTML());
@@ -255,7 +259,7 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 	}
 	String GUI::getFooter()
 	{
-		return "</body></html> \n";
+		return "<div id=\"toast\"></div></body></html> \n";
 	}
 
 	String GUI::getScript()
@@ -362,3 +366,28 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 	{
 		return &(this->elements);
 	}
+
+	void GUI::showInfo(int userNo, String text)
+	{
+		this->showToast(userNo, text, "info");
+	}
+
+	void GUI::showError(int userNo, String text)
+	{
+		this->showToast(userNo, text, "error");
+	}
+
+	void GUI::showToast(int userNo, String text, String toastType)
+	{
+
+		StaticJsonBuffer<500> jb;
+		JsonObject& obj = jb.createObject();
+		obj["type"] = "showToast";
+		obj["toastType"] = toastType;
+		obj["text"] = text;
+		String str;
+		obj.printTo(str);
+		this->sendText(userNo, str);
+	}
+
+
