@@ -29,6 +29,8 @@ public:
 
 	void setDefaultText(String text);
 
+	virtual void setDefaultIntValue(int _intVal);
+
 	void setGUI(GUI* _gui);
 	GUI * getGUI();
 	virtual int handleEvent(int clientNum, JsonObject& obj);
@@ -85,6 +87,8 @@ protected:
 	void startElementContainer(ESPWebServer& server);
 	void endElementContainer(ESPWebServer& server);
 	Container* enclosingContainer=NULL;
+	int defaultIntValue=-1;
+	int lastRetrievedIntValue = -1;
 private:
 	GUI* gui=NULL;
 };

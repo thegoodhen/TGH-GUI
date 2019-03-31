@@ -136,9 +136,16 @@ int ListBox::retrieveIntValue(int clientNo)
 		}
 		else
 		{
-			this->setProperty(clientNo, "value", (String)this->defaultSelectedIndex);
+			this->setProperty(clientNo, "selectedIndex", (String)this->defaultSelectedIndex);
 		}
 		//getGUI()->sendText(clientNo, "initialized"+(String)this->getId());
+	}
+
+	void ListBox::setDefaultIntValue(int _val)
+	{
+		Serial.println("pustila se ta spravna funkce to vypada!");
+		this->defaultSelectedIndex = _val;
+		this->defaultIntValue = _val;
 	}
 
 	/*

@@ -79,7 +79,14 @@
 
 	void Checkbox::sendInitialization(int clientNo)
 	{
-		this->setProperty(clientNo, "checked", this->lastRetrievedIntValue?"true":"false");
+		if (this->lastRetrievedIntValue == -1)
+		{
+		   this->setProperty(clientNo, "checked", this->defaultIntValue?"true":"false");
+		}
+		else
+		{
+			this->setProperty(clientNo, "checked", this->lastRetrievedIntValue ? "true" : "false");
+		}
 		Serial.println("lastRetrievedIntValue");
 		Serial.println(lastRetrievedIntValue);
 		//getGUI()->sendText(clientNo, "initialized"+(String)this->getId());

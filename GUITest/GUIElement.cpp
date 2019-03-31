@@ -30,6 +30,12 @@ void GUIElement::setDefaultText(String text)
 	this->defaultText = text;
 }
 
+void GUIElement::setDefaultIntValue(int _intVal)
+{
+	Serial.println("Ajta krajta, ona se pustila blba funkce! :V");
+	this->defaultIntValue = _intVal;
+}
+
 void GUIElement::setGUI(GUI* _gui)
 {
 	gui = _gui;

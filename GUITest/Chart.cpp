@@ -2,12 +2,74 @@
 #include "Chart.h"
 #include <functional>
 
-	Chart::Chart(String _id, String _text)
+	Chart::Chart(String _id, String _text, String _label0, String _label1, String _label2, String _label3, String _label4)
 	{
 		id = _id;
 		text = _text;
 		elementType = "TextArea";
+		labelsCount = 0;
+
+		//don't know of a better way than the following... Matlab would handle this using varargin...
+		if (_label0 != "")
+		{
+			_label0.toCharArray(labels[0], 20);
+			labelsCount++;
+		}
+		if (_label1 != "")
+		{
+			_label1.toCharArray(labels[1], 20);
+			labelsCount++;
+		}
+		if (_label2 != "")
+		{
+			_label2.toCharArray(labels[2], 20);
+			labelsCount++;
+		}
+		if (_label3 != "")
+		{
+			_label3.toCharArray(labels[3], 20);
+			labelsCount++;
+		}
+		if (_label4 != "")
+		{
+			_label4.toCharArray(labels[4], 20);
+			labelsCount++;
+		}
 	}
+
+	String Chart::getLabels()
+	{
+		String returnString = "[";
+		for (int i = 0;i < labelsCount-1;i++)
+		{
+			returnString += "\""+(String)labels[i] +"\", ";
+		}
+		returnString += "\"" + (String)labels[labelsCount - 1] + "\"]";
+		return returnString;
+	}
+
+	String Chart::floatArrayToBracketedList(float* f, int len)
+	{
+		String returnString = "[";
+		for (int i = 0;i < len-1;i++)
+		{
+			returnString += "\""+(String)f[i] +"\", ";
+		}
+		returnString += "\"" + (String)f[len- 1] + "\"]";
+		return returnString;
+	}
+
+	String Chart::floatArrayToTabbedList(float* f, int len)
+	{
+		String returnString = "";
+		for (int i = 0;i < len-1;i++)
+		{
+			returnString += f[i] + (String)"\t";
+		}
+		returnString += (String)f[len-1];
+		return returnString;
+	}
+
 
 
 	void Chart::sendHtml(ESPWebServer& server)
@@ -25,21 +87,63 @@
 		this->endElementContainer(server);
 	}
 
+	void Chart::setPersistency(boolean _isPersistent)
+	{
+		if (_isPersistent)
+		{
+			SPIFFS.begin();
+		}
+		this->isPersistent = _isPersistent;
+	}
+
+	void Chart::savePointsToSpiffs(float* pts, int n)
+	{
+		String nextLine = this->floatArrayToTabbedList(pts, n);
+	    File file = SPIFFS.open(getFilename(), "a");    
+		file.println(nextLine);
+		file.close();
+	}
 
 /**
 Sends commands needed to initialize the given element to the client over websockets
 **/
 void Chart::sendInitialization(int clientNo)
 {
-	String theInit = "initChart(\""+this->getId()+"\");";
+	String theInit = "initChart(\""+this->getId()+"\", "+this->getLabels()+");";
+	Serial.println("theInit");
+	Serial.println(theInit);
 	evalAndTell(clientNo, theInit);
+	String theLoad = "loadChart(\"" + this->getId() + "\")";
+	evalAndTell(clientNo, theLoad);
 	//getGUI()->sendText(clientNo, "initialized"+(String)this->getId());
 }
 
-void Chart::addPoint(int clientNo, int lineNo, double x, double y)
+void Chart::addPoint(int clientNo, float* arr, int n)
 {
-	String command = (String)"plot(\""+this->getId()+"\", "+lineNo+", ["+x+", "+y+"])";
+	String command = (String)"plot2(\""+this->getId()+"\", "+this->floatArrayToBracketedList(arr,n)+", true);";
+	Serial.println(command);
+	if (isPersistent)
+	{
+		this->savePointsToSpiffs(arr, n);
+	}
 	evalAndToss(clientNo, command);
+}
+
+String Chart::getFilename()
+{
+	return "/" + this->getId() + "_data.txt";
+}
+
+void Chart::clear()
+{
+	evalAndTell(-1, "clearChart(\""+this->getId()+"\")");
+	if (isPersistent)
+	{
+		//delete the file
+		SPIFFS.remove(getFilename());
+		File f=SPIFFS.open(getFilename(),"w");
+		f.close();
+	}
 }
 
 	/*

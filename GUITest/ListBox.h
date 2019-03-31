@@ -15,6 +15,8 @@ public:
 
 	void sendInitialization(int clientNo) override;
 
+	void setDefaultIntValue(int _val) override;
+
 	//int handleEvent(JsonObject &obj) override;
 	
 	//String getHTML() override;

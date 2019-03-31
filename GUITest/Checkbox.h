@@ -22,5 +22,4 @@ public:
 	//String getHTML() override;
 private:
 	std::function<void(int, boolean)> onClickCB = NULL;
-	int lastRetrievedIntValue = false;
 };

@@ -79,28 +79,70 @@ function plot(chartContainerID, lineID, val)
   //console.log("slepice");
   //
   setTimeout(function(){
-  var chartDiv=document.getElementById(chartContainerID);
-  chartDiv.theData.push(val);
-  chartDiv.theChart.updateOptions({'file':chartDiv.theData});
-  //var now = new Date().getTime();
-  //while(new Date().getTime() < now + 500){ /* do nothing */ } 
+    var chartDiv=document.getElementById(chartContainerID);
+    chartDiv.theData.push(val);
+    chartDiv.theChart.updateOptions({'file':chartDiv.theData});
+    //var now = new Date().getTime();
+    //while(new Date().getTime() < now + 500){ /* do nothing */ } 
   },0);
 }
 
-function initChart(divName)
+
+
+function loadChart(chartName)
+{
+  fetch("/"+chartName+"_data.txt")
+    .then( response => response.text() )
+    .then( text => processFetchedChartData(chartName, text) )
+}
+
+function processFetchedChartData(chartName, text)
+{
+  var lines=text.split("\n");
+
+  for(i=0;i<lines.length-1;i++)
+  {
+    var line=lines[i].split('\t');
+    plot2(chartName, line.map(Number),false);
+  }
+
+  var chartDiv=document.getElementById(chartName);
+  chartDiv.theChart.updateOptions({'file':chartDiv.theData});
+  chartDiv.theChart.updateOptions({'file':chartDiv.theData});
+  //console.log("updated");
+}
+
+function plot2(chartContainerID, vals, update)
+{
+  //console.log("slepice");
+  //
+
+  var chartDiv=document.getElementById(chartContainerID);
+  chartDiv.theData.push(vals);
+  if(update)
+  {
+    setTimeout(function(){
+      chartDiv.theChart.updateOptions({'file':chartDiv.theData});
+    },0);
+  }
+}
+
+function initChart(divName, theLabels)
 {
   var data=[];
   var theDiv=document.getElementById(divName);
   var g = new Dygraph(theDiv, data,
       {
 	drawPoints: true,
-	showRoller: false,
-	labels: ['Time', 'Data'] 
-     });
+      showRoller: false,
+      labels: theLabels
+      });
   theDiv.theChart=g;
   theDiv.theData=data;
 
 }
+
+
 
 function showToast(message, messageType) {
   var x = document.getElementById("toast");
@@ -116,11 +158,17 @@ function clearListBox(listbox)
   {
     listbox.options[0]=null;
   }
-     
+
 }
 
 function addOption(listbox,itemName, itemId)
 {
   listbox=document.getElementById(listbox);
   listbox.options[listbox.options.length]=new Option(itemName, itemId);
+}
+
+function clearChart(chartName)
+{
+  var theDiv=document.getElementById(chartName);
+  theDiv.theData=[];
 }

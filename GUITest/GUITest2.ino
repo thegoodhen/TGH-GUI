@@ -78,34 +78,25 @@ void setup() {
 	//vb->add(btnRecallSettings);
 
 
-	vBox* vb2 = new vBox("vBoxComm");//we create a new vertical box - the things in this box will go one under another
-	gui.add(vb2);
-	//tab3->add(vb2);//we add the vertical box inside the horizontal box we created
-
-
-
-	Button* btnSaveSettings= new Button("bscs", "Save settings", buttonCB);
-
-	TextInput* tiPort = new TextInput("tiPort", "The port");
-	tiPort->setIsPassword(true);
-	//TextInput* tiPort = new TextInput("tiPort", "The port used to communicate with the SMTP server (typically 25)");
-	//vb2->add(tiPort);
-
-    ListBox* lb = new ListBox("lb1", "some ListBox:");
-	lb->addItem(new ListItem("Some first item"));
-	lb->addItem(new ListItem("A second item"));
-	lb->addItem(new ListItem("And yet another (third) item!"));
-	//vb2->add(lb);
-
-	//vb2->add(btnSaveSettings);
-
-	WiFiManager* wfm = new WiFiManager("wfm");
-	vb2->add(wfm);
-
+	vBox* vb = new vBox("vb");
+	gui.add(vb);
+	Chart* ch = new Chart("ch","some chart","cas","slepice");
+	vb->add(ch);
+	ch->setPersistency(true);
 }
 
 
 void loop() {
+	static unsigned long lastMillis;
+	if (millis() - lastMillis > 1000)
+	{
+		lastMillis = millis();
+		Chart* ch = (Chart*) gui.find("ch");
+		float pts[2];
+		pts[0] = millis();
+		pts[1] = random(10);
+		ch->addPoint(ALL_CLIENTS, pts,2);
+	}
 	gui.loop();//you have to call this function in loop() for this library to work!
 }
 
