@@ -80,20 +80,22 @@ void setup() {
 
 	vBox* vb = new vBox("vb");
 	gui.add(vb);
-	Chart* ch = new Chart("ch","some chart","cas","slepice");
+	Chart* ch = new Chart("ch","some chart",true,"cas","slepice");
 	vb->add(ch);
 	ch->setPersistency(true);
+	ch->clear();
 }
 
 
 void loop() {
 	static unsigned long lastMillis;
-	if (millis() - lastMillis > 1000)
+	if (millis() - lastMillis > 250)
 	{
 		lastMillis = millis();
 		Chart* ch = (Chart*) gui.find("ch");
-		float pts[2];
-		pts[0] = millis();
+		double pts[2];
+		pts[0] = (double)1554797625UL + (double)millis() / 1000;
+		Serial.println(pts[0], 10);
 		pts[1] = random(10);
 		ch->addPoint(ALL_CLIENTS, pts,2);
 	}

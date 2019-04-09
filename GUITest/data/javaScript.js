@@ -118,7 +118,14 @@ function plot2(chartContainerID, vals, update)
   //
 
   var chartDiv=document.getElementById(chartContainerID);
+
+  if(chartDiv.xIsDate)
+  {
+    vals[0]=new Date(vals[0]*1000);
+  }
+
   chartDiv.theData.push(vals);
+
   if(update)
   {
     setTimeout(function(){
@@ -127,7 +134,7 @@ function plot2(chartContainerID, vals, update)
   }
 }
 
-function initChart(divName, theLabels)
+function initChart(divName, theLabels, xIsDate)
 {
   var data=[];
   var theDiv=document.getElementById(divName);
@@ -139,7 +146,7 @@ function initChart(divName, theLabels)
       });
   theDiv.theChart=g;
   theDiv.theData=data;
-
+  theDiv.xIsDate=xIsDate;
 }
 
 

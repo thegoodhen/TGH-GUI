@@ -2,12 +2,13 @@
 #include "Chart.h"
 #include <functional>
 
-	Chart::Chart(String _id, String _text, String _label0, String _label1, String _label2, String _label3, String _label4)
+	Chart::Chart(String _id, String _text, boolean _xIsDate, String _label0, String _label1, String _label2, String _label3, String _label4)
 	{
 		id = _id;
 		text = _text;
 		elementType = "TextArea";
 		labelsCount = 0;
+		xIsDate = _xIsDate;
 
 		//don't know of a better way than the following... Matlab would handle this using varargin...
 		if (_label0 != "")
@@ -48,18 +49,18 @@
 		return returnString;
 	}
 
-	String Chart::floatArrayToBracketedList(float* f, int len)
+	String Chart::doubleArrayToBracketedList(double* f, int len)
 	{
 		String returnString = "[";
 		for (int i = 0;i < len-1;i++)
 		{
-			returnString += "\""+(String)f[i] +"\", ";
+			returnString += (String)f[i] +", ";
 		}
-		returnString += "\"" + (String)f[len- 1] + "\"]";
+		returnString +=  (String)f[len- 1] + "]";
 		return returnString;
 	}
 
-	String Chart::floatArrayToTabbedList(float* f, int len)
+	String Chart::doubleArrayToTabbedList(double* f, int len)
 	{
 		String returnString = "";
 		for (int i = 0;i < len-1;i++)
@@ -96,9 +97,9 @@
 		this->isPersistent = _isPersistent;
 	}
 
-	void Chart::savePointsToSpiffs(float* pts, int n)
+	void Chart::savePointsToSpiffs(double* pts, int n)
 	{
-		String nextLine = this->floatArrayToTabbedList(pts, n);
+		String nextLine = this->doubleArrayToTabbedList(pts, n);
 	    File file = SPIFFS.open(getFilename(), "a");    
 		file.println(nextLine);
 		file.close();
@@ -109,7 +110,7 @@ Sends commands needed to initialize the given element to the client over websock
 **/
 void Chart::sendInitialization(int clientNo)
 {
-	String theInit = "initChart(\""+this->getId()+"\", "+this->getLabels()+");";
+	String theInit = "initChart(\""+this->getId()+"\", "+this->getLabels()+", "+xIsDate+");";
 	Serial.println("theInit");
 	Serial.println(theInit);
 	evalAndTell(clientNo, theInit);
@@ -118,9 +119,9 @@ void Chart::sendInitialization(int clientNo)
 	//getGUI()->sendText(clientNo, "initialized"+(String)this->getId());
 }
 
-void Chart::addPoint(int clientNo, float* arr, int n)
+void Chart::addPoint(int clientNo, double * arr, int n)
 {
-	String command = (String)"plot2(\""+this->getId()+"\", "+this->floatArrayToBracketedList(arr,n)+", true);";
+	String command = (String)"plot2(\""+this->getId()+"\", "+this->doubleArrayToBracketedList(arr,n)+", true);";
 	Serial.println(command);
 	if (isPersistent)
 	{

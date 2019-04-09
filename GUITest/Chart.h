@@ -15,23 +15,26 @@ public:
 
 	//int handleEvent(JsonObject &obj) override;
 	
-	Chart(String _id, String _text, String _label1="x", String _label2="y", String _label3="", String _label4="", String _label5="");
+	Chart(String _id, String _text, boolean _xIsDate, String _label1="x", String _label2="y", String _label3="", String _label4="", String _label5="");
+
 
 	String getLabels();
 
-	String floatArrayToBracketedList(float * f, int len);
+	String doubleArrayToBracketedList(double * f, int len);
 
-	String floatArrayToTabbedList(float * f, int len);
+
+	String doubleArrayToTabbedList(double * f, int len);
+
 
 	//String getHTML() override;
 	void sendHtml(ESPWebServer& server) override;
 	void setPersistency(boolean _isPersistent);
-	void savePointsToSpiffs(float * pts, int n);
+	void savePointsToSpiffs(double * pts, int n);
 	void sendItemsHtml(ESPWebServer& server);
 	void addItem(ListItem* li);
 	void onChange(std::function<void(int, ListItem)> f);
 	void sendInitialization(int clientNo) override;
-	void addPoint(int clientNo, float * arr, int n);
+	void addPoint(int clientNo, double* arr, int n);
 	String getFilename();
 	void clear();
 	int handleEvent(int clientNum, JsonObject &obj) override;
@@ -41,4 +44,5 @@ private:
 	char labels[5][20];
 	int labelsCount = 0;
 	boolean isPersistent = false;
+	boolean xIsDate = false;
 };
