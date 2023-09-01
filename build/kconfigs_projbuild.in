@@ -1,0 +1,7 @@
+source "C:/Users/thego/esp/esp-idf/components/app_update/Kconfig.projbuild"
+source "C:/Users/thego/esp/esp-idf/components/bootloader/Kconfig.projbuild"
+source "C:/Users/thego/esp/esp-idf/components/esp_rom/Kconfig.projbuild"
+source "C:/Users/thego/esp/esp-idf/components/esptool_py/Kconfig.projbuild"
+source "C:/Users/thego/esp/esp-idf/components/partition_table/Kconfig.projbuild"
+source "D:/personal/TGH_GUI/TGH-GUI/ESP32/TGH_GUI/components/AsyncTCP/Kconfig.projbuild"
+source "D:/personal/TGH_GUI/TGH-GUI/ESP32/TGH_GUI/components/arduino/Kconfig.projbuild"

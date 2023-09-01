@@ -1,0 +1,36 @@
+{
+    "C_Cpp.intelliSenseEngine": "default",
+    "idf.adapterTargetName": "esp32c3",
+    "idf.customExtraPaths": "C:\\Users\\thego\\.espressif\\tools\\xtensa-esp32-elf\\esp-2021r2-patch5-8.4.0\\xtensa-esp32-elf\\bin;C:\\Users\\thego\\.espressif\\tools\\xtensa-esp32s2-elf\\esp-2021r2-patch5-8.4.0\\xtensa-esp32s2-elf\\bin;C:\\Users\\thego\\.espressif\\tools\\xtensa-esp32s3-elf\\esp-2021r2-patch5-8.4.0\\xtensa-esp32s3-elf\\bin;C:\\Users\\thego\\.espressif\\tools\\riscv32-esp-elf\\esp-2021r2-patch5-8.4.0\\riscv32-esp-elf\\bin;C:\\Users\\thego\\.espressif\\tools\\esp32ulp-elf\\2.35_20220830\\esp32ulp-elf\\bin;C:\\Users\\thego\\.espressif\\tools\\cmake\\3.23.1\\bin;C:\\Users\\thego\\.espressif\\tools\\openocd-esp32\\v0.11.0-esp32-20220706\\openocd-esp32\\bin;C:\\Users\\thego\\.espressif\\tools\\ninja\\1.10.2;C:\\Users\\thego\\.espressif\\tools\\idf-exe\\1.0.3;C:\\Users\\thego\\.espressif\\tools\\ccache\\4.3\\ccache-4.3-windows-64;C:\\Users\\thego\\.espressif\\tools\\dfu-util\\0.9\\dfu-util-0.9-win64",
+    "idf.customExtraVars": {
+        "OPENOCD_SCRIPTS": "C:\\Users\\thego\\.espressif\\tools\\openocd-esp32\\v0.11.0-esp32-20220706/openocd-esp32/share/openocd/scripts",
+        "IDF_CCACHE_ENABLE": "1"
+    },
+    "idf.espIdfPathWin": "C:\\Users\\thego\\esp\\esp-idf",
+    "idf.openOcdConfigs": [
+        "board/esp32c3-builtin.cfg"
+    ],
+    "idf.portWin": "COM7",
+    "idf.pythonBinPathWin": "C:\\Users\\thego\\.espressif\\python_env\\idf4.4_py3.8_env\\Scripts\\python.exe",
+    "idf.toolsPathWin": "C:\\Users\\thego\\.espressif",
+    "files.associations": {
+        "cstring": "cpp",
+        "array": "cpp",
+        "deque": "cpp",
+        "list": "cpp",
+        "string": "cpp",
+        "unordered_map": "cpp",
+        "unordered_set": "cpp",
+        "vector": "cpp",
+        "string_view": "cpp",
+        "initializer_list": "cpp",
+        "regex": "cpp",
+        "chrono": "cpp",
+        "type_traits": "cpp",
+        "*.ipp": "cpp",
+        "*.tcc": "cpp",
+        "memory": "cpp",
+        "random": "cpp",
+        "new": "cpp"
+    }
+}

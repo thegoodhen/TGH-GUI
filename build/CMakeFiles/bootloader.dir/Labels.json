@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "D:/personal/TGH_GUI/TGH-GUI/ESP32/TGH_GUI/build/CMakeFiles/bootloader"
+		},
+		{
+			"file" : "D:/personal/TGH_GUI/TGH-GUI/ESP32/TGH_GUI/build/CMakeFiles/bootloader.rule"
+		},
+		{
+			"file" : "D:/personal/TGH_GUI/TGH-GUI/ESP32/TGH_GUI/build/CMakeFiles/bootloader-complete.rule"
+		},
+		{
+			"file" : "D:/personal/TGH_GUI/TGH-GUI/ESP32/TGH_GUI/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule"
+		},
+		{
+			"file" : "D:/personal/TGH_GUI/TGH-GUI/ESP32/TGH_GUI/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule"
+		},
+		{
+			"file" : "D:/personal/TGH_GUI/TGH-GUI/ESP32/TGH_GUI/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule"
+		},
+		{
+			"file" : "D:/personal/TGH_GUI/TGH-GUI/ESP32/TGH_GUI/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule"
+		},
+		{
+			"file" : "D:/personal/TGH_GUI/TGH-GUI/ESP32/TGH_GUI/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule"
+		},
+		{
+			"file" : "D:/personal/TGH_GUI/TGH-GUI/ESP32/TGH_GUI/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule"
+		},
+		{
+			"file" : "D:/personal/TGH_GUI/TGH-GUI/ESP32/TGH_GUI/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"bootloader"
+		],
+		"name" : "bootloader"
+	}
+}

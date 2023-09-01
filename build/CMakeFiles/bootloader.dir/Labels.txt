@@ -1,0 +1,13 @@
+# Target labels
+ bootloader
+# Source files and their labels
+D:/personal/TGH_GUI/TGH-GUI/ESP32/TGH_GUI/build/CMakeFiles/bootloader
+D:/personal/TGH_GUI/TGH-GUI/ESP32/TGH_GUI/build/CMakeFiles/bootloader.rule
+D:/personal/TGH_GUI/TGH-GUI/ESP32/TGH_GUI/build/CMakeFiles/bootloader-complete.rule
+D:/personal/TGH_GUI/TGH-GUI/ESP32/TGH_GUI/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule
+D:/personal/TGH_GUI/TGH-GUI/ESP32/TGH_GUI/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule
+D:/personal/TGH_GUI/TGH-GUI/ESP32/TGH_GUI/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule
+D:/personal/TGH_GUI/TGH-GUI/ESP32/TGH_GUI/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule
+D:/personal/TGH_GUI/TGH-GUI/ESP32/TGH_GUI/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule
+D:/personal/TGH_GUI/TGH-GUI/ESP32/TGH_GUI/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule
+D:/personal/TGH_GUI/TGH-GUI/ESP32/TGH_GUI/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule
